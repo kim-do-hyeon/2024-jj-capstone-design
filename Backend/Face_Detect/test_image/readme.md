@@ -1,0 +1,1 @@
+This folder has face test image.
