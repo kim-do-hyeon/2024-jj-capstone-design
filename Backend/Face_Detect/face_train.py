@@ -13,12 +13,22 @@ if "known_face_names.pickle" in os.listdir() :
         known_face_names = pickle.load(f)
 else : known_face_names = [] 
 
-FACE_TRAIN_IMAGE = "Backend/Face_Detect/train_image/user1/"
-file_list = os.listdir(FACE_TRAIN_IMAGE)
+
+''' Select Train User Image '''
+FACE_TRAIN_IMAGE = "Backend/Face_Detect/train_image/"
+
+face_image_user_list = os.listdir(FACE_TRAIN_IMAGE)
+print(">>>> Select Train User Image")
+for i in range(len(face_image_user_list)) :
+    print("[{}] {}".format(i + 1, face_image_user_list[i]))
+username = face_image_user_list[int(input(">> ")) - 1]
+''' End Train User Image '''
+
+file_list = os.listdir(FACE_TRAIN_IMAGE + "/" + username)
 
 for i in file_list :
     try :
-        add_known_face("Backend/Face_Detect/train_image/user1/" + i, "User1", known_face_encodings, known_face_names)
+        add_known_face(file_list + "/" + i, username, known_face_encodings, known_face_names)
     except Exception as e :
         print(e)
 
@@ -29,8 +39,3 @@ with open(file='known_face_names.pickle', mode='wb') as f:
     pickle.dump(known_face_names, f)
 
 print("TRAIN IMAGE COUNT : {}".format(len(known_face_encodings)))
-
-''' Predict '''
-predict_image_path = 'Backend/Face_Detect/test_image/user1_test.jpg'
-predict_image = cv2.imread(predict_image_path)
-print(name_labeling(predict_image, known_face_encodings, known_face_names))
