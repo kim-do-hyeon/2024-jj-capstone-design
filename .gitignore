@@ -1,0 +1,3 @@
+__pycache__
+Backend/Face_Detect/train_image/*
+Backend/Face_Detect/test_image/*
