@@ -1,0 +1,1 @@
+This folder has face train image.
