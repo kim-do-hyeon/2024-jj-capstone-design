@@ -31,7 +31,7 @@ def plt_imshow(title='image', img=None, figsize=(8 ,5)):
         plt.xticks([]), plt.yticks([])
         plt.show()
 
-def name_labeling(input_image, known_face_encodings, known_face_names):
+def name_labeling(input_image, known_face_encodings, known_face_names, isshow = False):
     image = input_image.copy()
     face_locations = face_recognition.face_locations(image)
     face_encodings = face_recognition.face_encodings(image, face_locations)
@@ -54,8 +54,9 @@ def name_labeling(input_image, known_face_encodings, known_face_names):
         cv2.rectangle(image, (left, bottom - 10), (right, bottom), color, cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(image, name, (left + 3, bottom - 3), font, 0.2, (0, 0, 0), 1)
-        
-    # plt_imshow("Output", image, figsize=(24, 15))
+    
+    if isshow == True :
+        plt_imshow("Output", image, figsize=(24, 15))
     return name
 
 def draw_label(input_image, coordinates, label):

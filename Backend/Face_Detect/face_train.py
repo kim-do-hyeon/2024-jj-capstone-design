@@ -25,10 +25,10 @@ username = face_image_user_list[int(input(">> ")) - 1]
 ''' End Train User Image '''
 
 file_list = os.listdir(FACE_TRAIN_IMAGE + "/" + username)
-
+train_path = FACE_TRAIN_IMAGE + "/" + username
 for i in file_list :
     try :
-        add_known_face(file_list + "/" + i, username, known_face_encodings, known_face_names)
+        add_known_face(train_path + "/" + i, username, known_face_encodings, known_face_names)
     except Exception as e :
         print(e)
 
