@@ -58,23 +58,29 @@ def register(subpath) :
             face_model.save(file_path)
         except Exception as e:
             return jsonify(result = "fail", message = str(e))
+        
         known_face_encodings = train_face(username, file_path)
+
         new_face_data = Faces(username = username, face = known_face_encodings)
         db.session.add(new_face_data)
         db.session.commit()
+
         return jsonify(result = "success")
     
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
     face_image = request.files['face_image']
     upload_dir = "upload/predict/"
+    
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
     filename = secure_filename(face_image.filename)
     file_path = os.path.join(upload_dir, filename)
+
     try:
         face_image.save(file_path)
     except Exception as e:
-        return jsonify(result = "faile", message = str(e))
+        return jsonify(result = "fail", message = str(e))
+    
     result = (predict_face(file_path))
     return jsonify(result = "success", face = str(result))
