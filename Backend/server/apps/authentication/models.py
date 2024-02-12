@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from flask_login import UserMixin
 from apps import db, login_manager
+from sqlalchemy import PickleType
 from apps.authentication.util import hash_pass
 
 class Users(db.Model, UserMixin):
@@ -19,3 +20,9 @@ class Users(db.Model, UserMixin):
             setattr(self, property, value)
     def __repr__(self):
         return str(self.username)
+
+class Faces(db.Model, UserMixin) :
+    __tablename__ = 'Faces'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64))
+    face = db.Column(PickleType)
