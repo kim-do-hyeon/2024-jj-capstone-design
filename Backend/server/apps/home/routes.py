@@ -75,8 +75,9 @@ def face() :
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
     filename = secure_filename(face_image.filename)
+    if len(filename.split(".")) == 1 :
+        filename = "noname." + filename.split(".")[-1]
     file_path = os.path.join(upload_dir, filename)
-
     try:
         face_image.save(file_path)
     except Exception as e:
