@@ -10,7 +10,7 @@ pip3 install -r requirement.txt
 python3 run.py
 ```
 
-## Authorization
+## User Register
 
 ```http
 POST /register/user
@@ -22,7 +22,7 @@ POST /register/user
 | `password` | `string` | **Required**. Your Password |
 | `email` | `string` | **Required**. Your Email |
 
-## User Register
+## Responses
 
 ```javascript
 {
