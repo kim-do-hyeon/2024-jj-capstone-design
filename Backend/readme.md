@@ -1,5 +1,15 @@
 > API Documentation
 
+## Installation
+```
+pip3 install -r requirement.txt
+```
+
+## Run
+```python
+python3 run.py
+```
+
 ## Authorization
 
 ```http
@@ -12,7 +22,7 @@ POST /register/user
 | `password` | `string` | **Required**. Your Password |
 | `email` | `string` | **Required**. Your Email |
 
-## Responses
+## User Register
 
 ```javascript
 {
