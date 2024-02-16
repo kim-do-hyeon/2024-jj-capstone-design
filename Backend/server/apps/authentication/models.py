@@ -10,7 +10,6 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.LargeBinary)
-    authentication_2fa = db.Column(db.Text)
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             if hasattr(value, '__iter__') and not isinstance(value, str):
