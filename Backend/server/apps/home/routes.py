@@ -40,7 +40,7 @@ def register(subpath) :
                               email = email)
             db.session.add(new_user)
             db.session.commit()
-            return jsonify(result = "success")
+            return jsonify(result = "success", type = "register_user")
     elif path_type[0] == "face" :
         '''
             username <- required
@@ -58,7 +58,7 @@ def register(subpath) :
         try:
             face_model.save(file_path)
         except Exception as e:
-            return jsonify(result = "fail", message = str(e))
+            return jsonify(result = "fail", type = "save_image", message = str(e))
         
         known_face_encodings = train_face(username, file_path)
 
@@ -66,7 +66,7 @@ def register(subpath) :
         db.session.add(new_face_data)
         db.session.commit()
 
-        return jsonify(result = "success")
+        return jsonify(result = "success", type = "register_face")
     
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
@@ -82,10 +82,10 @@ def face() :
     try:
         face_image.save(file_path)
     except Exception as e:
-        return jsonify(result = "fail", message = str(e))
+        return jsonify(result = "fail", type = "save_image", message = str(e))
     
     result = (predict_face(file_path))
-    return jsonify(result = "success", face = str(result))
+    return jsonify(result = "success", type = "face", face = str(result))
 
 @blueprint.route("/distance", methods = ['GET', 'POST'])
 def distnace() :
@@ -111,7 +111,7 @@ def distnace() :
     try:
         distance_image.save(file_path)
     except Exception as e:
-        return jsonify(result = "fail", message = str(e))
+        return jsonify(result = "fail", type = "save_image", message = str(e))
     
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     distance_image = cv2.imread(file_path)

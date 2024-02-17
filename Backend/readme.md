@@ -23,11 +23,20 @@ POST /register/user
 | `email` | `string` | **Required**. Your Email |
 
 ## Responses
-
+### Success
 ```javascript
 {
-  "result" : string
+  "result" : string,
+  "type" : "register_user"
 }
+```
+### Fail (Exist User)
+```javascript
+{
+  "result" : "fail",
+  "message" : "exist user"
+}
+```
 ```
 
 ## Face Register
@@ -42,13 +51,21 @@ POST /register/face
 | `face_image` | `file` | **Required**. Your Face Image |
 
 ## Responses
-
+### Success
 ```javascript
 {
-  "result" : string
+  "result" : string,
+  "type" : "register_face"
 }
 ```
-
+### Fail (Image Save Error)
+```javascript
+{
+  "result" : "fail",
+  "type" : "save_image",
+  "message" : string
+}
+```
 ## Face Recognize
 
 ```http
@@ -60,10 +77,54 @@ GET /face
 | `face_image` | `file` | **Required**. Your Face Image |
 
 ## Responses
-
+### Success
 ```javascript
 {
-  "face" : string,
-  "result" : string
+  "result" : string,
+  "type" : "face",
+  "face" : string
+}
+```
+### Fail (Image Save Error)
+```javascript
+{
+  "result" : "fail",
+  "type" : "save_image",
+  "message" : string
+}
+```
+## Distance Recognize
+
+```http
+GET /distance
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `distance_image` | `file` | **Required**. Your Image File |
+
+## Responses
+### Success
+```javascript
+{
+  "result" : string,
+  "type" : "distance",
+  "distance" : float
+}
+```
+### Fail
+```javascript
+{
+  "result" : string,
+  "type" : "distance",
+  "distance" : 0
+}
+```
+### Fail (Image Save Error)
+```javascript
+{
+  "result" : "fail",
+  "type" : "save_image",
+  "message" : string
 }
 ```
