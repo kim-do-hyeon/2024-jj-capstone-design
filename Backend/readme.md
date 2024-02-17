@@ -128,3 +128,31 @@ GET /distance
   "message" : string
 }
 ```
+
+## Personal Color Analysis
+
+```http
+GET /personal_color
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `face_image` | `file` | **Required**. Your Image File |
+
+## Responses
+### Success
+```javascript
+{
+  "result" : string,
+  "type" : "personal_color",
+  "tone" : string
+}
+```
+### Fail (Image Save Error)
+```javascript
+{
+  "result" : "fail",
+  "type" : "save_image",
+  "message" : string
+}
+```

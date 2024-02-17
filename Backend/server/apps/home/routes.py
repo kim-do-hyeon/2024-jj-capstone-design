@@ -144,7 +144,7 @@ def personal_color() :
     try:
         face_image.save(file_path)
     except Exception as e:
-        return jsonify(result = "fail", type = "perosnal_color", message = str(e))
+        return jsonify(result = "fail", type = "save_image", message = str(e))
     
     tone = analysis(file_path)
     return jsonify(result = "success", type = "perosnal_color", tone = tone)
