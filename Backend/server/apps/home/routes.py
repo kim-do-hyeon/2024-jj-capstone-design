@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 ''' Import Apps Module '''
 from apps.home import blueprint
 from apps.home.face_module import train_face, predict_face
+from apps.home.personal_color_moudle import analysis
 
 ''' Import DB '''
 from apps import db
@@ -126,6 +127,24 @@ def distnace() :
     else :
         return jsonify(result = "success", type = "distance", distance = result_distance)
 
-        
+@blueprint.route("/personal_color", methods = ['GET', 'POST'])
+def personal_color() :
+    face_image = request.files['face_image']
+    upload_dir = "upload/personal/"
+    
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    filename = secure_filename(face_image.filename)
 
+    if len(filename.split(".")) == 1 :
+        filename = "noname." + filename.split(".")[-1]
 
+    file_path = os.path.join(upload_dir, filename)
+
+    try:
+        face_image.save(file_path)
+    except Exception as e:
+        return jsonify(result = "fail", type = "perosnal_color", message = str(e))
+    
+    tone = analysis(file_path)
+    return jsonify(result = "success", type = "perosnal_color", tone = tone)
