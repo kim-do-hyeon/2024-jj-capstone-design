@@ -37,7 +37,6 @@ POST /register/user
   "message" : "exist user"
 }
 ```
-```
 
 ## Face Register
 
