@@ -1,0 +1,99 @@
+.App {
+  display: grid;
+  grid-template-columns: 3fr 9fr 3fr; /* 미러 1, 2, 3의 크기를 3:9:3 비율로 설정 */
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0; /* 그리드 간격 제거 */
+  height: 100vh;
+  background-color: black;
+}
+
+.mirror-space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  font-size: 24px;
+  margin: 0; /* 미러 간격 제거 */
+}
+
+.welcomeSign {
+  /* background-color: #ffcc00;  Yellow */
+  color: white;
+  flex-direction: column;
+  margin-top: 23%;
+  margin-left: 12%;
+  font-weight: 700;
+}
+.userName {
+  font-size: 180%;
+  font-weight: 800;
+}
+.mirror {
+  /*background-color: #ff6666;*/
+  color: white;
+}
+
+.dateTime {
+  /*background-color: #66ccff;  Blue */
+  color: white;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 13%;
+  margin-left: 13%;
+}
+.date {
+  font-size:250%;
+}
+.year {
+  font-weight: 600;
+}
+.monthDay{
+  font-size: 80%;
+  font-weight: 800;
+}
+.time {
+  color: white;
+  font-size: 130%;
+  font-weight: 600;
+}
+
+
+.mirror-4 {
+  /*background-color: #99ff99; */
+}
+
+.weather {
+  font-size: 150%;
+  color: white;
+  margin-top: 17%;
+  margin-left: 15%;
+}
+
+.cityInfo {
+  font-size: 50%;
+  font-weight: 800;
+}
+.weatherInfo {
+  font-size: 75%;
+  font-weight: 500;
+}
+.tempInfo {
+  font-size: 200%;
+  font-weight: 700;
+}
+
+.register {
+  /* background-color: #99ccff;  Light blue */
+  color: white;
+  font-size: 150%;
+  text-align: center;
+  margin-top: 15%;
+}
+.registerNum {
+  font-size: 150%;
+  font-weight: 600;
+}
+
+.mirror-9 {
+  /*background-color: #cccccc; Grey */
+}
