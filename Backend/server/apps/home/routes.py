@@ -1,13 +1,14 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
-from flask import request, jsonify
+from flask import request, jsonify, session
 from werkzeug.utils import secure_filename
 
 ''' Import Apps Module '''
 from apps.home import blueprint
 from apps.home.face_module import train_face, predict_face
 from apps.home.personal_color_moudle import analysis
+from apps.authentication.util import verify_pass
 
 ''' Import DB '''
 from apps import db
@@ -68,7 +69,21 @@ def register(subpath) :
         db.session.commit()
 
         return jsonify(result = "success", type = "register_face")
-    
+
+@blueprint.route('/login')
+def login() :
+    data = request.args.to_dict()
+    username = data['username']
+    password = data['password']
+    isUser = Users.query.filter_by(username = username).first()
+    if isUser and verify_pass(password, isUser.password) :
+                session['isLogin'] = True
+                return jsonify(result = "success", type = "login")
+    else :
+        return jsonify(result = "fail", type = "login", message = "Please check your username or password")
+
+
+ 
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
     face_image = request.files['face_image']
