@@ -11,10 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.blur.Screen.AccountManagement.FindPasswordScreen
-import com.example.blur.Screen.AccountManagement.LoginScreen
 import com.example.blur.Screen.AccountManagement.SingUpCompleteScreen
-import com.example.blur.Screen.AccountManagement.SingUpScreen
 import com.example.blur.Screen.AccountManagement.StartScreen
 import com.example.blur.Screen.AddDeviceScreen
 import com.example.blur.Screen.HomeScreen

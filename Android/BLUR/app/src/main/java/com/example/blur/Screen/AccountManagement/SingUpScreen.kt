@@ -1,6 +1,7 @@
-package com.example.blur.Screen.AccountManagement
+package com.example.blur
 
 
+import android.util.Log
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.blur.R
 import com.example.blur.components.Text.BLUE_Title
 import com.example.blur.components.Button.FillBtn
 import com.example.blur.components.TextField.IDTextField
@@ -198,15 +198,21 @@ fun SingUpScreen(
                             userEmail.isNotBlank() && userID.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
                         val passwordsMatch = password == confirmPassword
 
+
                         if (allFieldsFilled && passwordsMatch && !emailError && !userIDError && !passwordError) {
+
                             val apiService = RetrofitClient.getApiService()
 
                             apiService.registerUser(username = userID, password = password, email = userEmail)
                                 .enqueue(object : Callback<Void> {
-                                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                    override fun onResponse(
+                                        call: Call<Void>,
+                                        response: Response<Void>
+                                    ) {
                                         if (response.isSuccessful) {
                                             // 회원가입 성공 처리
                                             navController.navigate("SingUpComplete")
+                                            Log.d("API요청 성공", "회원가입 성공")
                                         } else {
                                             // 회원가입 실패 처리
                                             scope.launch {

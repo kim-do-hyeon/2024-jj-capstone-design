@@ -1,4 +1,4 @@
-package com.example.blur.Screen.AccountManagement
+package com.example.blur
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
