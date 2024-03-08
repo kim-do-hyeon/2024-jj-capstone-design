@@ -12,7 +12,7 @@ from apps.authentication.util import verify_pass, hash_pass, get_random_string
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users, Faces
+from apps.authentication.models import Users, Faces, Production
 
 @blueprint.route('/index')
 def index():
@@ -69,6 +69,24 @@ def register(subpath) :
         db.session.commit()
 
         return jsonify(result = "success", type = "register_face")
+    elif path_type[0] == "product" :
+        if session['isLogin'] :
+            username = session['username']
+            try :
+                data = request.args.to_dict()
+                if data == {} :
+                    return jsonify(result = "fail", type = "register_productiion", message = "Key Error")
+                code = data['code']
+                if code == "" :
+                    return jsonify(result = "fail", type = "register_productiion", message = "Args is Blank")
+                new_production = Production(username = username, code = code)
+                db.session.add(new_production)
+                db.session.commit()
+            except :
+                return jsonify(result = "fail", type = "register_productiion", message = "DB Error")
+            return jsonify(result = "success", type = "register_productiion")
+        else :
+            return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
 
 @blueprint.route('/login')
 def login() :
@@ -100,6 +118,7 @@ def reset_password() :
         return jsonify(result = "success", type = "reset_password", message = str(new_password))
     else :
         return jsonify(result = "fail", type = "reset_password", message = "Not Found User")
+
  
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :

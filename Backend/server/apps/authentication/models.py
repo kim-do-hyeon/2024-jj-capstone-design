@@ -25,3 +25,9 @@ class Faces(db.Model, UserMixin) :
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64))
     face = db.Column(PickleType)
+
+class Production(db.Model, UserMixin) :
+    __tablename__ = 'production'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64))
+    code = db.Column(db.String(64))
