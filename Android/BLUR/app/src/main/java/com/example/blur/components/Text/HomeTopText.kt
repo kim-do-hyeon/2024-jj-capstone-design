@@ -30,7 +30,7 @@ fun HomeTopText(){
             style = TextStyle(
                 fontSize = 32.sp,
                 lineHeight = 20.sp,
-                fontFamily = FontFamily(Font(R.font.gmarketsans_medium)),
+                fontFamily = FontFamily(Font(R.font.roboto_bold)),
                 fontWeight = FontWeight(500),
                 color = Color(0xFF000000),
                 letterSpacing = 0.08.sp,
@@ -46,7 +46,7 @@ fun HomeTopText(){
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.gmarketsans_bold)),
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     letterSpacing = 0.04.sp
@@ -57,7 +57,7 @@ fun HomeTopText(){
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.gmarketsans_bold)),
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
                     fontWeight = FontWeight(700),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,

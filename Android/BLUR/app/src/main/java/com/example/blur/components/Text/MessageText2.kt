@@ -19,7 +19,7 @@ fun MessageText2(value:String, Size:Int){
         style = TextStyle(
             fontSize = Size.sp,
             lineHeight = 22.5.sp,
-            fontFamily = FontFamily(Font(R.font.bmhannapro)),
+            fontFamily = FontFamily(Font(R.font.roboto_bold)),
             fontWeight = FontWeight(500),
             color = Color(0xFFAAB3BE),
             textAlign = TextAlign.Center,

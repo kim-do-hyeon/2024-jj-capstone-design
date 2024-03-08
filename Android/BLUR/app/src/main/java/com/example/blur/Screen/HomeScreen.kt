@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.blur.components.Card.SmartMirrorCard
 import com.example.blur.components.Text.HaveNoIotText
 import com.example.blur.components.Text.HomeTopText
 
@@ -82,6 +83,7 @@ fun HomeScreen(
             HomeTopText()
             Spacer(modifier = Modifier.height(224.dp))
             if (deviceRegistered) {
+                SmartMirrorCard()
                 // 기기가 등록되었을 때 표시할 내용
                 // 예를 들어 등록된 기기의 목록을 표시할 수 있습니다.
             } else {
@@ -97,6 +99,6 @@ fun HomeScreen(
 fun HomeScreenPreview(){
     HomeScreen(
         rememberNavController(),
-        deviceRegistered = false
+        deviceRegistered = true
     )
 }

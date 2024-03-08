@@ -108,7 +108,7 @@ fun AddDeviceScreen(
                 style = TextStyle(
                     fontSize = 30.sp,
                     lineHeight = 39.sp,
-                    fontFamily = FontFamily(Font(R.font.gmarketsans_bold)),
+                    fontFamily = FontFamily(Font(R.font.roboto_bold)),
                     fontWeight = FontWeight(700),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
@@ -120,7 +120,7 @@ fun AddDeviceScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     lineHeight = 23.4.sp,
-                    fontFamily = FontFamily(Font(R.font.gmarketsans_medium)),
+                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF828282),
                     textAlign = TextAlign.Center,

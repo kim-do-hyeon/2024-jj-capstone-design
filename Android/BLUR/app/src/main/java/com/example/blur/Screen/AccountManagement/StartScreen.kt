@@ -49,8 +49,8 @@ fun StartScreen(
                 painter = painterResource(id = R.drawable.logo_l),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(200.dp)
-                    .heightIn(220.dp),
+                    .width(120.dp)
+                    .heightIn(170.dp),
                 contentScale = ContentScale.Fit
             )
 

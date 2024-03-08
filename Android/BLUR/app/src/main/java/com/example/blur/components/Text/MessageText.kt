@@ -18,7 +18,7 @@ fun MessageText(value: String,  size: Int){
         style = TextStyle(
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = size.sp,
-            fontFamily = FontFamily(Font(R.font.bmhannapro)),
+            fontFamily = FontFamily(Font(R.font.roboto_bold)),
             fontWeight = FontWeight(700),
             textAlign = TextAlign.Center
         )

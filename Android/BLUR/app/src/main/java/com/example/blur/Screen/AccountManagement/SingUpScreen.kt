@@ -106,7 +106,7 @@ fun SingUpScreen(
         content = { contentPadding ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 53.dp)
@@ -114,14 +114,16 @@ fun SingUpScreen(
                     .padding(contentPadding)
             ) {
                 BLUE_Title()
+
                 Spacer(modifier = Modifier.height(31.dp))
+
                 Text(
                     text = "새로운 계정을\n만들어 볼까요?",
                     style = TextStyle(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 30.sp,
                         lineHeight = 39.sp,
-                        fontFamily = FontFamily(Font(R.font.bmhannapro)),
+                        fontFamily = FontFamily(Font(R.font.roboto_bold)),
                         fontWeight = FontWeight(400),
                         textAlign = TextAlign.Center
                     )

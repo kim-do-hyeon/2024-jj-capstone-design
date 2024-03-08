@@ -9,9 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.example.blur.R
 
 val GmarketSansFontFamily = FontFamily(
-    Font(R.font.gmarketsans_bold, FontWeight.Bold),
-    Font(R.font.gmarketsans_light, FontWeight.Light),
-    Font(R.font.gmarketsans_medium, FontWeight.Medium)
+    Font(R.font.gmarketsans_bold, FontWeight.Bold)
 )
 
 // Set of Material typography styles to start with

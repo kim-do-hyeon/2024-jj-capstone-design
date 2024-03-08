@@ -23,7 +23,7 @@ fun HaveNoIotText(){
         style = TextStyle(
             fontSize = 22.sp,
             lineHeight = 28.sp,
-            fontFamily = FontFamily(Font(R.font.gmarketsans_bold)),
+            fontFamily = FontFamily(Font(R.font.roboto_bold)),
             fontWeight = FontWeight(700),
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
@@ -37,7 +37,7 @@ fun HaveNoIotText(){
         style = TextStyle(
             fontSize = 20.sp,
             lineHeight = 28.sp,
-            fontFamily = FontFamily(Font(R.font.gmarketsans_medium)),
+            fontFamily = FontFamily(Font(R.font.roboto_regular)),
             fontWeight = FontWeight(500),
             color = Color(0xFF838383),
             textAlign = TextAlign.Center,

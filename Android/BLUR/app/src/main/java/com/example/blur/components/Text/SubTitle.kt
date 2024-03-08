@@ -18,7 +18,7 @@ fun SubTitle(){
         style = TextStyle(
             fontSize = 12.sp,
             lineHeight = 21.sp,
-            fontFamily = FontFamily(Font(R.font.gmarketsans_light)),
+            fontFamily = FontFamily(Font(R.font.roboto_bold)),
             fontWeight = FontWeight(300),
             color = MaterialTheme.colorScheme.onBackground,
 

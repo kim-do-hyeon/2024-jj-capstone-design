@@ -23,7 +23,7 @@ fun FindPassword(value: String, onClick: () -> Unit = {}) {
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
-                fontFamily = FontFamily(Font(R.font.gmarketsans_bold)),
+                fontFamily = FontFamily(Font(R.font.roboto_bold)),
                 fontWeight = FontWeight(400),
                 color = Color(0xFF68548E),
 
