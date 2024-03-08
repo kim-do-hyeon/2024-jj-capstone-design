@@ -125,3 +125,11 @@ def admin(subpath) :
     isAdmin = Users.query.filter_by(username = session['username']).first().admin
     if isAdmin :
         return admin_module(path_type)
+
+@blueprint.route('/widgets')
+def widgets():
+    widget_names = {}
+    widget_list = Widget.query.all()
+    for i in widget_list :
+        widget_names[i.id] = i.widget_name
+    return jsonify(result = "success", type = "widget_list", message = widget_names)
