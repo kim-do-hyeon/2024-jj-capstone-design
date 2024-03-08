@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from apps.home import blueprint
 from apps.home.face_module import train_face, predict_face
 from apps.home.personal_color_moudle import analysis
-from apps.authentication.util import verify_pass
+from apps.authentication.util import verify_pass, hash_pass, get_random_string
 
 ''' Import DB '''
 from apps import db
@@ -77,12 +77,29 @@ def login() :
     password = data['password']
     isUser = Users.query.filter_by(username = username).first()
     if isUser and verify_pass(password, isUser.password) :
-                session['isLogin'] = True
-                return jsonify(result = "success", type = "login")
+        session['isLogin'] = True
+        session['username'] = username
+        return jsonify(result = "success", type = "login")
     else :
         return jsonify(result = "fail", type = "login", message = "Please check your username or password")
 
 
+
+
+
+@blueprint.route('/reset_password')
+def reset_password() :
+    data = request.args.to_dict()
+    username = data['username']
+    email = data['email']
+    isUser = Users.query.filter_by(username = username, email = email).first()
+    if isUser :
+        new_password = get_random_string(8)
+        Users.query.filter_by(username = username, email = email).update((dict(password = hash_pass(new_password))))
+        db.session.commit()
+        return jsonify(result = "success", type = "reset_password", message = str(new_password))
+    else :
+        return jsonify(result = "fail", type = "reset_password", message = "Not Found User")
  
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
