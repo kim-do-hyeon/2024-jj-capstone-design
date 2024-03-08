@@ -9,11 +9,12 @@ from apps.home import blueprint
 from apps.home.face_module import predict_face
 from apps.home.personal_color_moudle import analysis
 from apps.home.user_module import *
+from apps.home.admin_module import *
 
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users, Widget
+from apps.authentication.models import Users
 
 @blueprint.route('/index')
 def index():
@@ -123,10 +124,4 @@ def admin(subpath) :
     path_type = subpath.split("/")
     isAdmin = Users.query.filter_by(username = session['username']).first().admin
     if isAdmin :
-        if path_type[0] == "management" :
-            if path_type[1] == "user" :
-                user_list = Users.query.all()
-                return str(user_list)
-            elif path_type[1] == "widgets" :
-                widget_list = Widgets.query.all()
-            
+        return admin_module(path_type)
