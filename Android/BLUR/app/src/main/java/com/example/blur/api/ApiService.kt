@@ -22,4 +22,12 @@ interface ApiService {
         @Query("username") username: String,
         @Query("password") password: String
     ): Call<LoginResponse>
+
+
+    @GET("/reset_password")
+    fun findPassword(
+        @Query("username") username: String,
+        @Query("email") email: String
+    ): Call<Void>
+
 }

@@ -126,7 +126,7 @@ fun LoginScreen(
                     val allFieldsFilled = userID.isNotBlank() && password.isNotBlank()
 
                     if (allFieldsFilled && !userIDError && !passwordError) {
-                        Log.d("LoginScreen", "로그인 버튼 클릭 - 사용자 아이디: $userID, 비밀번호: $password")
+
                         val apiService = RetrofitClient.getApiService()
 
                         apiService.loginUser(username = userID, password = password)
