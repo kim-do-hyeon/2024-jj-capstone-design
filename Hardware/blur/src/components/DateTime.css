@@ -1,0 +1,26 @@
+.dateTime {
+    color: white;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 13%;
+    margin-left: 13%;
+}
+
+.date {
+    font-size:250%;
+}
+
+.year {
+    font-weight: 600;
+}
+
+.monthDay{
+    font-size: 80%;
+    font-weight: 800;
+}
+
+.time {
+    color: white;
+    font-size: 130%;
+    font-weight: 600;
+}
