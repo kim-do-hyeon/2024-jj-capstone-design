@@ -10,7 +10,7 @@ import { WiShowers } from "react-icons/wi";
 import { WiRain } from "react-icons/wi";
 import { WiThunderstorm } from "react-icons/wi";
 import { WiSnowflakeCold } from "react-icons/wi";
-import { WiFog } from "react-icons/wi";//*/
+import { WiFog } from "react-icons/wi";*/
 
 function App() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
