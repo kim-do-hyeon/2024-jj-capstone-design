@@ -37,3 +37,9 @@ class Widget(db.Model, UserMixin) :
     __tablename__ = 'widget'
     id = db.Column(db.Integer, primary_key = True)
     widget_name = db.Column(db.String)
+
+class AuthenticationAPI(db.Model, UserMixin) :
+    __tablename__ = 'authenticationAPI'
+    id = db.Column(db.Integer, primary_key = True)
+    model_code = db.Column(db.String(64))
+    api_key = db.Column(db.String)

@@ -122,9 +122,7 @@ def personal_color() :
 @blueprint.route('/admin/<path:subpath>', methods = ['GET', 'POST'])
 def admin(subpath) :
     path_type = subpath.split("/")
-    isAdmin = Users.query.filter_by(username = session['username']).first().admin
-    if isAdmin :
-        return admin_module(path_type)
+    return admin_module(path_type)
 
 @blueprint.route('/widgets')
 def widgets():
