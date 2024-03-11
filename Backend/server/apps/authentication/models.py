@@ -10,6 +10,7 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.LargeBinary)
+    admin = db.Column(db.Integer, default = 0)
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             if hasattr(value, '__iter__') and not isinstance(value, str):
@@ -25,3 +26,20 @@ class Faces(db.Model, UserMixin) :
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64))
     face = db.Column(PickleType)
+
+class Production(db.Model, UserMixin) :
+    __tablename__ = 'production'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64))
+    code = db.Column(db.String(64))
+
+class Widget(db.Model, UserMixin) :
+    __tablename__ = 'widget'
+    id = db.Column(db.Integer, primary_key = True)
+    widget_name = db.Column(db.String)
+
+class AuthenticationAPI(db.Model, UserMixin) :
+    __tablename__ = 'authenticationAPI'
+    id = db.Column(db.Integer, primary_key = True)
+    model_code = db.Column(db.String(64))
+    api_key = db.Column(db.String)

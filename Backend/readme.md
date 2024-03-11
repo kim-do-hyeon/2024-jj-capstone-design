@@ -10,6 +10,34 @@ pip3 install -r requirement.txt
 python3 run.py
 ```
 
+## User Login
+
+```http
+POST /login
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `username` | `string` | **Required**. Your UserName |
+| `password` | `string` | **Required**. Your Password |
+
+## Responses
+### Success
+```javascript
+{
+  "result" : "success",
+  "type" : "login"
+}
+```
+### Fail
+```javascript
+{
+  "result" : "fail",
+  "type" : "login",
+  "message" : "Please check your username or password"
+}
+```
+
 ## User Register
 
 ```http
@@ -26,7 +54,7 @@ POST /register/user
 ### Success
 ```javascript
 {
-  "result" : string,
+  "result" : "success",
   "type" : "register_user"
 }
 ```
@@ -37,6 +65,36 @@ POST /register/user
   "message" : "exist user"
 }
 ```
+
+## Reset Password
+
+```http
+POST /reset_password
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `username` | `string` | **Required**. Your UserName |
+| `email` | `string` | **Required**. Your Email |
+
+## Responses
+### Success
+```javascript
+{
+  "result" : "success",
+  "type" : "reset_password",
+  "message" : string
+}
+```
+### Fail
+```javascript
+{
+  "result" : "fail",
+  "type" : "reset_password",
+  "message" : "Not Found User"
+}
+```
+
 
 ## Face Register
 
@@ -53,7 +111,7 @@ POST /register/face
 ### Success
 ```javascript
 {
-  "result" : string,
+  "result" : "success",
   "type" : "register_face"
 }
 ```
@@ -87,7 +145,7 @@ GET /face
 ### Fail (Image Save Error)
 ```javascript
 {
-  "result" : "fail",
+  "result" : string,
   "type" : "save_image",
   "message" : string
 }

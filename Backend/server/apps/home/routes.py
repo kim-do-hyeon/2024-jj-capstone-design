@@ -1,74 +1,46 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
-from flask import request, jsonify
+from flask import request, jsonify, session
 from werkzeug.utils import secure_filename
 
 ''' Import Apps Module '''
 from apps.home import blueprint
-from apps.home.face_module import train_face, predict_face
+from apps.home.face_module import predict_face
 from apps.home.personal_color_moudle import analysis
+from apps.home.user_module import *
+from apps.home.admin_module import *
+
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users, Faces
+from apps.authentication.models import Users
 
 @blueprint.route('/index')
 def index():
     return ""
 
+''' Start User Section '''
 @blueprint.route('/register/<path:subpath>', methods = ['GET', 'POST'])
 def register(subpath) :
     path_type = subpath.split("/")
-    if path_type[0] == "user" :
-        '''
-            username <- required
-            password <- required
-            email <- required
-        '''
-        data = request.args.to_dict()
-        username = data['username']
-        password = data['password']
-        email = data['email']
+    return register_module(path_type)
+   
+@blueprint.route('/login')
+def login() :
+    return login_module()
 
-        ''' Exist User Check '''
-        isUser = Users.query.filter_by(username = username).first()
-        if isUser :
-            return jsonify(result = "fail", message = "exist user")
-        else :
-            new_user = Users(username = username,
-                              password = password,
-                              email = email)
-            db.session.add(new_user)
-            db.session.commit()
-            return jsonify(result = "success", type = "register_user")
-    elif path_type[0] == "face" :
-        '''
-            username <- required
-            face_model <- required
-        '''
-        username = request.form['username']
-        face_model = request.files['face_image']
-        upload_dir = "upload/user/" + username + "/"
-    
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)
-    
-        filename = secure_filename(face_model.filename)
-        file_path = os.path.join(upload_dir, filename)
-        try:
-            face_model.save(file_path)
-        except Exception as e:
-            return jsonify(result = "fail", type = "save_image", message = str(e))
-        
-        known_face_encodings = train_face(username, file_path)
+@blueprint.route('/reset_password')
+def reset_password() :
+    return reset_password_module()
 
-        new_face_data = Faces(username = username, face = known_face_encodings)
-        db.session.add(new_face_data)
-        db.session.commit()
+@blueprint.route('/change_password')
+def change_password() :
+    return change_password_module()
 
-        return jsonify(result = "success", type = "register_face")
-    
+''' End User Section '''
+ 
+''' Start Face Section '''
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
     face_image = request.files['face_image']
@@ -148,3 +120,18 @@ def personal_color() :
     
     tone = analysis(file_path)
     return jsonify(result = "success", type = "perosnal_color", tone = tone)
+
+''' End Face Section '''
+
+@blueprint.route('/admin/<path:subpath>', methods = ['GET', 'POST'])
+def admin(subpath) :
+    path_type = subpath.split("/")
+    return admin_module(path_type)
+
+@blueprint.route('/widgets')
+def widgets():
+    widget_names = {}
+    widget_list = Widget.query.all()
+    for i in widget_list :
+        widget_names[i.id] = i.widget_name
+    return jsonify(result = "success", type = "widget_list", message = widget_names)

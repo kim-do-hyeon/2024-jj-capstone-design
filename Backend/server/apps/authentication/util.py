@@ -1,5 +1,7 @@
 import os
 import hashlib
+import string
+import random
 import binascii
 
 def hash_pass(password):
@@ -24,3 +26,8 @@ def verify_pass(provided_password, stored_password):
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
+
+def get_random_string(length):
+    letters = string.ascii_uppercase + string.digits
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str

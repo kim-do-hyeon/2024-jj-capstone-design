@@ -1,0 +1,26 @@
+.weather {
+    font-size: 150%;
+    color: white;
+    margin-top: 17%;
+    margin-left: 15%;
+}
+
+.tempInfo {
+    font-size: 200%;
+    font-weight: 700;
+}
+
+.weatherInfo {
+    font-size: 75%;
+    font-weight: 500;
+}
+
+.cityInfo {
+    font-size: 50%;
+    font-weight: 800;
+}
+
+.weatherIcon{
+    color: white;
+    font-size: 100px;
+}
