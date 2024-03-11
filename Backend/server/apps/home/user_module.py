@@ -103,3 +103,16 @@ def reset_password_module() :
         return jsonify(result = "success", type = "reset_password", message = str(new_password))
     else :
         return jsonify(result = "fail", type = "reset_password", message = "Not Found User")
+
+def change_password_module() :
+    data = request.args.to_dict()
+    current_password = data['current_password']
+    new_password = data['new_password']
+    isUser = Users.query.filter_by(username = session['username']).first()
+    if isUser and verify_pass(current_password, isUser.password):
+        Users.query.filter_by(username = session['username']).update((dict(password = hash_pass(new_password))))
+        return jsonify(result = "success", type = "change_password")
+    else :
+        return jsonify(result = "fail", type = "reset_password", message = "Check Your Password")
+
+

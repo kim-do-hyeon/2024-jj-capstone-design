@@ -34,6 +34,10 @@ def login() :
 def reset_password() :
     return reset_password_module()
 
+@blueprint.route('/change_password')
+def change_password() :
+    return change_password_module()
+
 ''' End User Section '''
  
 ''' Start Face Section '''
