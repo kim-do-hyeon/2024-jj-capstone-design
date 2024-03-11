@@ -111,6 +111,7 @@ def change_password_module() :
     isUser = Users.query.filter_by(username = session['username']).first()
     if isUser and verify_pass(current_password, isUser.password):
         Users.query.filter_by(username = session['username']).update((dict(password = hash_pass(new_password))))
+        db.session.commit()
         return jsonify(result = "success", type = "change_password")
     else :
         return jsonify(result = "fail", type = "reset_password", message = "Check Your Password")
