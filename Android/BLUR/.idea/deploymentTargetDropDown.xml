@@ -5,11 +5,33 @@
       <entry key="AddDeviceScreenPreview">
         <State />
       </entry>
+      <entry key="CameraScreen2Preview">
+        <State />
+      </entry>
+      <entry key="HomeScreenPreview">
+        <State />
+      </entry>
       <entry key="SmartMirrorCardPreview">
         <State />
       </entry>
-      <entry key="app">
+      <entry key="WidgetsListPreview">
         <State />
+      </entry>
+      <entry key="app">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\yelle\.android\avd\Pixel_7_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-12T04:18:41.204026200Z" />
+        </State>
       </entry>
     </value>
   </component>

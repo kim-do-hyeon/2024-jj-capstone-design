@@ -11,9 +11,11 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.blur.Screen.CameraScreen
 import com.example.blur.Screen.AccountManagement.SingUpCompleteScreen
 import com.example.blur.Screen.AccountManagement.StartScreen
 import com.example.blur.Screen.AddDeviceScreen
+import com.example.blur.Screen.DeviceScreen
 import com.example.blur.Screen.HomeScreen
 import com.example.blur.ui.theme.BLURTheme
 
@@ -44,5 +46,7 @@ fun NavigationView() {
         composable("FindPassword") { FindPasswordScreen(navController) }
         composable("Home") { HomeScreen(navController, deviceRegistered) } // deviceRegistered 전달
         composable("AddDevice") { AddDeviceScreen(navController) }
+        composable("Device") { DeviceScreen(navController) }
+        composable("Camera") { CameraScreen(navController) }
     }
 }

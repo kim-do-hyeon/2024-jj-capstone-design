@@ -1,12 +1,14 @@
 package com.example.blur.Screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -21,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,19 +61,12 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate("AddDevice")    }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "add"
-                )
+            FloatingActionButton(onClick = { navController.navigate("AddDevice") }) {
+                Icon(Icons.Filled.Add, contentDescription = "add")
             }
         }
     ) { contentPadding ->
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp)
@@ -81,22 +75,20 @@ fun HomeScreen(
         ) {
             Spacer(modifier = Modifier.height(30.dp))
             HomeTopText()
-            Spacer(modifier = Modifier.height(224.dp))
-            if (deviceRegistered) {
-                SmartMirrorCard()
-                // 기기가 등록되었을 때 표시할 내용
-                // 예를 들어 등록된 기기의 목록을 표시할 수 있습니다.
-            } else {
-                HaveNoIotText()
-            }
+            SmartMirrorCard(
+                deviceName = "스마트미러", // 여기서 각 디바이스 이름을 전달
+                onClick = {
+                    // TODO: Detail view navigation
+                    navController.navigate("Device")
+                }
+            )
         }
     }
 }
 
-
 @Preview
 @Composable
-fun HomeScreenPreview(){
+fun HomeScreenPreview() {
     HomeScreen(
         rememberNavController(),
         deviceRegistered = true

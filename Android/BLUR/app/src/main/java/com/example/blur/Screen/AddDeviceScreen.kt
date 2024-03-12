@@ -127,12 +127,14 @@ fun AddDeviceScreen(
                 )
             )
             Spacer(modifier = Modifier.height(70.dp))
+
             AddDeviceTextField(
                 onValueChange ={
                     DeviceId = it
                     isButtonEnabled = it.length == 9
                 }
             )
+
             Spacer(modifier = Modifier.height(40.dp))
             FillBtn(
                 value = "제품 등록",
