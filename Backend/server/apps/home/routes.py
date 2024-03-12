@@ -135,3 +135,31 @@ def widgets():
     for i in widget_list :
         widget_names[i.id] = i.widget_name
     return jsonify(result = "success", type = "widget_list", message = widget_names)
+
+''' For development image upload function with android '''
+@blueprint.route('/development_image', methods = ['GET', 'POST'])
+def development_image() :
+    face_image = request.files['image']
+    upload_dir = "upload/development_image/"
+    
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    filename = secure_filename(face_image.filename)
+    if len(filename.split(".")) == 1 :
+        filename = "noname." + filename.split(".")[-1]
+    file_path = os.path.join(upload_dir, filename)
+    try:
+        face_image.save(file_path)
+    except Exception as e:
+        return jsonify(result = "fail", type = "development_image", message = str(e))
+    return jsonify(result = "success", type = "development_image", message = "")
+
+@blueprint.route('/view_image', methods = ['GET', 'POST'])
+def download_image() :
+    upload_dir = "upload/development_image/"
+    image_lists = os.listdir(upload_dir)
+    image_sizes = []
+    for i in image_lists :
+        image_sizes.append(os.path.getsize(upload_dir + i))
+    image_dict = dict(zip(image_lists, image_sizes))
+    return jsonify(result = "success", type = "view_image", message = image_dict)
