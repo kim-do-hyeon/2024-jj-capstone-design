@@ -158,12 +158,10 @@ def development_image() :
 def view_image() :
     upload_dir = "upload/development_image/"
     image_lists = os.listdir(upload_dir)
-    image_sizes = []
-    image_download_url = []
+    image_info = []
     for i in image_lists :
-        image_sizes.append(os.path.getsize(upload_dir + i))
-        image_download_url.append("http://jj.system32.kr/download_image/" + i)
-    image_dict = dict(zip(image_lists, [image_sizes, image_download_url]))
+        image_info.append([os.path.getsize(upload_dir + i), "http://jj.system32.kr/download_image/" + i])
+    image_dict = dict(zip(image_lists, image_info))
     return jsonify(result = "success", type = "view_image", message = image_dict)
 
 @blueprint.route('/download_image/<path:subpath>')
