@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
-from flask import request, jsonify, session
+from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
 
 ''' Import Apps Module '''
@@ -155,11 +155,19 @@ def development_image() :
     return jsonify(result = "success", type = "development_image", message = "")
 
 @blueprint.route('/view_image', methods = ['GET', 'POST'])
-def download_image() :
+def view_image() :
     upload_dir = "upload/development_image/"
     image_lists = os.listdir(upload_dir)
     image_sizes = []
+    image_download_url = []
     for i in image_lists :
         image_sizes.append(os.path.getsize(upload_dir + i))
-    image_dict = dict(zip(image_lists, image_sizes))
+        image_download_url.append("http://jj.system32.kr/download_image/" + i)
+    image_dict = dict(zip(image_lists, [image_sizes, image_download_url]))
     return jsonify(result = "success", type = "view_image", message = image_dict)
+
+@blueprint.route('/download_image/<path:subpath>')
+def download_image(subpath) :
+    upload_dir = "../upload/development_image/"
+    PATH = upload_dir + subpath
+    return send_file(PATH, as_attachment=True)
