@@ -56,6 +56,8 @@ fun FindPasswordScreen(
     navController: NavHostController
 ) {
 
+    var sendingEmail by remember { mutableStateOf(false) } // 이메일을 보내는 중인지 여부를 나타내는 변수
+
     var emailError by remember { mutableStateOf(false) } // 이메일 유효성 검사 결과를 나타내는 변수
 
     var userEmail by remember { mutableStateOf("") }
@@ -144,7 +146,9 @@ fun FindPasswordScreen(
                                             // 백그라운드에서 이메일 보내기
                                             scope.launch {
                                                 sendEmail(userEmail, "임시 비밀번호: $message")
+                                                snackbarHostState.showSnackbar("해당 메일로 임시비밀번호를 발송하였습니다.")
                                             }
+                                            navController.navigate("Login")
                                         } catch (e: Exception) {
                                             // JSON 파싱 실패 시 처리
                                             scope.launch {
@@ -185,6 +189,7 @@ fun FindPasswordScreen(
             )
         }
     )
+
 }
 
 
@@ -204,7 +209,6 @@ fun sendEmail(userEmail: String, message: String) {
             // 발신자 이메일 비밀번호
             val password = "xqsg kewg jgak vsuq"
 
-            println("이메일을 보내는 중: $userEmail") // 이 부분이 추가된 부분입니다.
 
             val properties = Properties().apply {
                 put("mail.smtp.auth", "true")
@@ -236,3 +240,5 @@ fun sendEmail(userEmail: String, message: String) {
         }
     }
 }
+
+
