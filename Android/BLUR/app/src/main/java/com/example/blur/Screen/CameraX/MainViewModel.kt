@@ -12,7 +12,5 @@ class MainViewModel : ViewModel() {
 
     fun onTakePhoto(bitmap: Bitmap) {
         _bitmaps.value += bitmap
-
     }
 }
-
