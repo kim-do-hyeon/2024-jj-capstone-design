@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
+from datetime import datetime
 from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
 
@@ -141,12 +142,18 @@ def widgets():
 def development_image() :
     face_image = request.files['image']
     upload_dir = "upload/development_image/"
+    try : 
+        username = session['username']
+    except :
+        return jsonify(result = "fail", type = "development_image", message = "Not Loggined")
     
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
+
     filename = secure_filename(face_image.filename)
-    if len(filename.split(".")) == 1 :
-        filename = "noname." + filename.split(".")[-1]
+    current_time = (datetime.now().strftime("%Y%m%d%H%M%S"))
+    filename = str(username) + "_" + current_time + "." + filename.split(".")[-1]
+    
     file_path = os.path.join(upload_dir, filename)
     try:
         face_image.save(file_path)
