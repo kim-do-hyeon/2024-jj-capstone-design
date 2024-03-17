@@ -1,5 +1,6 @@
 package com.example.blur.Screen
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,12 +32,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.blur.R
+import com.example.blur.Screen.CameraX.CameraXActivity
 import com.example.blur.components.ListItems
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +49,7 @@ fun DeviceScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -88,8 +93,7 @@ fun DeviceScreen(
                 supportingText = "나의 사진을 찍어서 기기에 얼굴을 등록해보세요",
                 icon = Icons.Filled.Person,
                 onClick = {
-                    // 여기에 클릭했을 때 원하는 동작을 구현합니다.
-                    navController.navigate("Camera")
+                    context.startActivity(Intent(context, CameraXActivity::class.java))
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))

@@ -63,9 +63,7 @@ fun AddDeviceScreen(
 
     // 기기 등록 함수
     fun registerDevice() {
-        // 기기 등록 로직을 여기에 추가
-        // 예를 들어 기기를 서버에 등록하고 등록 결과를 받아올 수 있습니다.
-        // 등록 성공 시 deviceRegistered 값을 true로 설정합니다.
+
         deviceRegistered = true
     }
 

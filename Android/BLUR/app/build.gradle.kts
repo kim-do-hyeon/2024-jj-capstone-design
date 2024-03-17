@@ -70,9 +70,12 @@ dependencies {
     // If you want to additionally use the CameraX Extensions library
     implementation("androidx.camera:camera-extensions:${camerax_version}")
 
-    //ML Kit
-    implementation("com.google.mlkit:face-detection:16.1.6")
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
+    // JavaMail API
+    implementation ("com.sun.mail:android-mail:1.6.5")
+    implementation ("com.sun.mail:android-activation:1.6.5")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
