@@ -167,7 +167,7 @@ def view_image() :
     image_lists = os.listdir(upload_dir)
     image_info = []
     for i in image_lists :
-        image_info.append([os.path.getsize(upload_dir + i), "http://jj.system32.kr/download_image/" + i])
+        image_info.append([os.path.getsize(upload_dir + i), "https://jj.system32.kr/download_image/" + i])
     image_dict = dict(zip(image_lists, image_info))
     return jsonify(result = "success", type = "view_image", message = image_dict)
 
