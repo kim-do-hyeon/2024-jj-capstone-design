@@ -1,7 +1,7 @@
 .weather {
-    font-size: 150%;
+    font-size: 180%;
     color: white;
-    margin-top: 17%;
+    margin-top: 60%;
     margin-left: 15%;
 }
 
@@ -22,5 +22,6 @@
 
 .weatherIcon{
     color: white;
+    padding-top: 20%;
     font-size: 100px;
 }

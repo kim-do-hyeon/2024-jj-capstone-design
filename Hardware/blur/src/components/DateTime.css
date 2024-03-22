@@ -1,13 +1,14 @@
+
 .dateTime {
     color: white;
     flex-direction: column;
     text-align: left;
-    margin-top: 13%;
-    margin-left: 13%;
+    margin-top: 50%;
 }
 
 .date {
     font-size:250%;
+    font-weight: 500;
 }
 
 .year {

@@ -12,7 +12,7 @@ import {
     WiThunderstorm,
     WiSnowflakeCold,
     WiFog
-} from "react-icons/wi";
+} from "react-icons/wi"; 
 
 function Weather() {
     const [weather, setWeather] = useState("");
@@ -42,9 +42,11 @@ function Weather() {
             try {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
-                    const API_KEY = process.env.BLUR_APP_OPEN_WEATHER_API_KEY;
+                    const API_KEY = 'e4699688bda8af6d121b61b33727cbe4';
+                    //const API_KEY = process.env.BLUR_APP_OPEN_WEATHER_API_KEY; API KEY 로딩 오류로 인한 주석처리
                     const response = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
-                    
+                    //const response1 = await axios.get("https://jj.system32.kr/widgets");
+                    //console.log(response1);
                     console.log(response.data); // 전체 응답 로깅
                     console.log("Icon code from API:", response.data.current.weather[0].icon); // 아이콘 코드 로깅
         

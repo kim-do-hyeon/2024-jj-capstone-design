@@ -1,6 +1,6 @@
 .App {
   display: grid;
-  grid-template-columns: 3fr 9fr 3fr; /* 미러 1, 2, 3의 크기를 3:9:3 비율로 설정 */
+  grid-template-columns: 1fr 3fr 1fr; /* 미러 1, 2, 3의 크기를 3:9:3 비율로 설정 */
   grid-template-rows: repeat(3, 1fr);
   gap: 0; /* 그리드 간격 제거 */
   height: 100vh;
