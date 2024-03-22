@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
-from flask import request, jsonify, session
+from datetime import datetime
+from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
 
 ''' Import Apps Module '''
@@ -135,3 +136,43 @@ def widgets():
     for i in widget_list :
         widget_names[i.id] = i.widget_name
     return jsonify(result = "success", type = "widget_list", message = widget_names)
+
+''' For development image upload function with android '''
+@blueprint.route('/development_image', methods = ['GET', 'POST'])
+def development_image() :
+    face_image = request.files['image']
+    upload_dir = "upload/development_image/"
+    try : 
+        username = session['username']
+    except :
+        return jsonify(result = "fail", type = "development_image", message = "Not Loggined")
+    
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+
+    filename = secure_filename(face_image.filename)
+    current_time = (datetime.now().strftime("%Y%m%d%H%M%S"))
+    filename = str(username) + "_" + current_time + "." + filename.split(".")[-1]
+    
+    file_path = os.path.join(upload_dir, filename)
+    try:
+        face_image.save(file_path)
+    except Exception as e:
+        return jsonify(result = "fail", type = "development_image", message = str(e))
+    return jsonify(result = "success", type = "development_image", message = "")
+
+@blueprint.route('/view_image', methods = ['GET', 'POST'])
+def view_image() :
+    upload_dir = "upload/development_image/"
+    image_lists = os.listdir(upload_dir)
+    image_info = []
+    for i in image_lists :
+        image_info.append([os.path.getsize(upload_dir + i), "https://jj.system32.kr/download_image/" + i])
+    image_dict = dict(zip(image_lists, image_info))
+    return jsonify(result = "success", type = "view_image", message = image_dict)
+
+@blueprint.route('/download_image/<path:subpath>')
+def download_image(subpath) :
+    upload_dir = "../upload/development_image/"
+    PATH = upload_dir + subpath
+    return send_file(PATH, as_attachment=True)

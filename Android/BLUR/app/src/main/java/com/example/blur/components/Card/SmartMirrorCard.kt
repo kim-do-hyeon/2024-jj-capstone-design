@@ -1,6 +1,7 @@
 package com.example.blur.components.Card
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -40,8 +41,9 @@ import androidx.compose.ui.unit.sp
 import com.example.blur.R
 
 @Composable
-fun SmartMirrorCard(){
-    var checked by remember { mutableStateOf(true)}
+fun SmartMirrorCard(deviceName: String, onClick: () -> Unit) {
+
+    var checked by remember { mutableStateOf(true) }
 
     Card(
         colors = CardDefaults.cardColors(
@@ -51,13 +53,14 @@ fun SmartMirrorCard(){
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .size(width = 176.dp, height = 200.dp )
-    ){
+            .size(width = 176.dp, height = 200.dp)
+    ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .clickable(onClick = onClick)
         ) {
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -97,7 +100,7 @@ fun SmartMirrorCard(){
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "스마트 미러",
+                text = deviceName,
                 style = TextStyle(
                     fontSize = 22.sp,
                     lineHeight = 28.sp,
@@ -130,6 +133,9 @@ fun SmartMirrorCard(){
 
 @Preview
 @Composable
-fun SmartMirrorCardPreview(){
-    SmartMirrorCard()
+fun SmartMirrorCardPreview() {
+    SmartMirrorCard(
+        deviceName = "화장실 스마트 미러",
+        onClick = {}
+    )
 }

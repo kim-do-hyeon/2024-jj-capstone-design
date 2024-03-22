@@ -2,12 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AddDeviceScreenPreview">
-        <State />
-      </entry>
-      <entry key="SmartMirrorCardPreview">
-        <State />
-      </entry>
       <entry key="app">
         <State />
       </entry>
