@@ -18,3 +18,4 @@ Flask-Minify==0.37
 scikit-learn==1.2.2
 imutils==0.5.4
 colormath==3.0.0
+flask-cors==3.0.10
