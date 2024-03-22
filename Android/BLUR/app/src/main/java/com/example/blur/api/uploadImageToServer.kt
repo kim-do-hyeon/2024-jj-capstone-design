@@ -1,6 +1,9 @@
 package com.example.blur.api
-
 import ApiService
+import com.example.blur.Screen.AccountManagement.Login.SharedPreferencesManager
+import com.example.blur.Screen.CameraX.CameraXActivity
+
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -8,11 +11,34 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import java.io.File
+import java.io.IOException
 
-fun uploadImageToServer(imageFile: File) {
+fun uploadImageToServer(imageFile: File, cameraXActivity: CameraXActivity) {
+    // OkHttpClient에 Interceptor를 추가하여 쿠키를 요청에 함께 보내기
+    val sessionToken = SharedPreferencesManager.getSessionToken(cameraXActivity.applicationContext)
+
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(object : Interceptor {
+            @Throws(IOException::class)
+            override fun intercept(chain: Interceptor.Chain): Response {
+                // 기존의 요청
+                val originalRequest = chain.request()
+
+                // 쿠키를 요청 헤더에 추가
+                val requestWithCookie = originalRequest.newBuilder()
+                    .header("Cookie", "session=$sessionToken") // 세션 토큰을 요청 헤더에 추가합니다.
+                    .build()
+
+                // 요청 실행
+                return chain.proceed(requestWithCookie)
+            }
+        })
+        .build()
+
     // Retrofit 클라이언트 생성
     val retrofit = Retrofit.Builder()
         .baseUrl("http://jj.system32.kr/")
+        .client(okHttpClient)
         .build()
 
     val service = retrofit.create(ApiService::class.java)

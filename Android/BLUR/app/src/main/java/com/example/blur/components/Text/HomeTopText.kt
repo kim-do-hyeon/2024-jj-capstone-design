@@ -32,7 +32,7 @@ fun HomeTopText(){
                 lineHeight = 20.sp,
                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                 fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
+                color = MaterialTheme.colorScheme.onBackground,
                 letterSpacing = 0.08.sp,
             ),
             modifier = Modifier.align(Alignment.CenterVertically)

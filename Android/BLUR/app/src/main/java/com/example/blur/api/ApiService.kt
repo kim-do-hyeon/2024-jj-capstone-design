@@ -1,3 +1,4 @@
+import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -18,7 +19,8 @@ interface ApiService {
 
     data class LoginResponse(
         val result: String,
-        val message: String?
+        val message: String?,
+        val sessionToken: String
     )
 
     @GET("/login")
@@ -38,6 +40,20 @@ interface ApiService {
     fun uploadImage(
         @Part image: MultipartBody.Part
     ): Call<ResponseBody>
+
+    @GET("/widgets")
+    fun getWidgets(): Call<WidgetResponse>
+
+    data class WidgetData(
+        val widgetId: Int,
+        val widgetName: String
+    )
+
+    data class WidgetResponse(
+        val result: String,
+        val type: String,
+        val message: Map<Int, String>
+    )
 }
 
 

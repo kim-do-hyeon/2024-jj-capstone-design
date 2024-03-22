@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class
 )
 
@@ -107,13 +108,12 @@ class CameraXActivity : ComponentActivity() {
 
                             val context = LocalContext.current
                             val userId = remember { SharedPreferencesManager.getUserId(context) }
-
                             FullScreenImage(
                                 bitmap = bitmap,
                                 file = file,
                                 userId = userId ?: "", // 사용자 이름 전달
                                 onDismiss = { selectedBitmap = null },
-                                onUploadClicked = { uploadImageToServer(file) }
+                                onUploadClicked = { uploadImageToServer(file, this@CameraXActivity) }
                             )
                         }
                     }

@@ -142,6 +142,19 @@ fun LoginScreen(
                                         if (loginResponse?.result == "success") {
                                             // 로그인에 성공했으므로 아이디를 저장
                                             SharedPreferencesManager.saveUserId(context, userID)
+
+                                            // Set-Cookie를 추출하여 토큰을 저장
+                                            val headers = response.headers()
+                                            for (i in 0 until headers.size) {
+                                                val name = headers.name(i)
+                                                val value = headers.value(i)
+                                                if (name.equals("Set-Cookie", ignoreCase = true)) {
+                                                    val sessionToken = value.substringAfter("session=").substringBefore(";")
+                                                    SharedPreferencesManager.saveSessionToken(context, sessionToken)
+                                                    break
+                                                }
+                                            }
+
                                             navController.navigate("Home")
                                         } else {
                                             scope.launch {

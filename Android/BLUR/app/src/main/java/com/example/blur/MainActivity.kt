@@ -1,5 +1,6 @@
 package com.example.blur
 
+import WidgetScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -50,5 +51,6 @@ fun NavigationView() {
         composable("AddDevice") { AddDeviceScreen(navController) }
         composable("Device") { DeviceScreen(navController) }
         composable("Camera") { CameraXActivity() }
+        composable("Widget") { WidgetScreen(navController) }
     }
 }

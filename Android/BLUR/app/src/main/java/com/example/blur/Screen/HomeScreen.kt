@@ -41,6 +41,8 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val userId = remember { SharedPreferencesManager.getUserId(context) }
+    val sessionToken = remember { SharedPreferencesManager.getSessionToken(context) }
+
 
     Scaffold(
         topBar = {
@@ -85,6 +87,7 @@ fun HomeScreen(
                 }
             )
             Text(text = "저장된 아이디: $userId") // 아이디 표시
+            Text(text = "저장된 세션 토큰: $sessionToken") // 세션 토큰 표시
         }
     }
 }

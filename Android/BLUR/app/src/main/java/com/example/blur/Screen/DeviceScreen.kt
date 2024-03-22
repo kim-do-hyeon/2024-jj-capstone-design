@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -98,17 +99,13 @@ fun DeviceScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            ListItem(
-                headlineContent = { Text("제목") },
-                overlineContent = { Text(text = "오버라인")},
-                supportingContent = { Text(text = "서포팅")},
-                leadingContent = {
-                    Icon(
-                        Icons.Filled.Person,
-                        contentDescription = "Localized description",
-                    )
-                },
-                trailingContent = { Text(text = "trailing")}
+            ListItems(
+                headlineText = "위젯 설정",
+                supportingText = "스마트 미러의 위젯을 설정해보세요.",
+                icon = Icons.Filled.Widgets,
+                onClick = {
+                    navController.navigate("Widget")
+                }
             )
 
             ListItem(
