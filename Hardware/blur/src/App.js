@@ -16,7 +16,9 @@ function App() {
       try {
         const response = await axios.get('https://jj.system32.kr/widgets');
         console.log(response.data);
-        setWidgets(response.data);
+        const messageOnly = response.data.message; 
+        console.log(messageOnly);
+        setWidgets(messageOnly);
       } catch (error) {
         console.error('Error fetching widgets:', error);
       }
