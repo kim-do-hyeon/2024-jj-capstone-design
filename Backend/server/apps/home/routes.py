@@ -176,3 +176,11 @@ def download_image(subpath) :
     upload_dir = "../upload/development_image/"
     PATH = upload_dir + subpath
     return send_file(PATH, as_attachment=True)
+
+@blueprint.route('/widgets_index')
+def widgets_index() :
+    return jsonify(result = "success",
+                   message = {'weather' : [1, 1],
+                              'time' : [1, 2],
+                              'login' : [1, 3],
+                              'cheerup' : [1, 4]})
