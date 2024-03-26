@@ -3,11 +3,12 @@
     color: white;
     flex-direction: column;
     text-align: left;
-    margin-top: 50%;
+    padding-top: 50%;
+    padding-left: 10%;
 }
 
 .date {
-    font-size:250%;
+    font-size:300%;
     font-weight: 500;
 }
 
@@ -15,13 +16,8 @@
     font-weight: 600;
 }
 
-.monthDay{
-    font-size: 80%;
-    font-weight: 800;
-}
-
 .time {
     color: white;
-    font-size: 130%;
+    font-size: 190%;
     font-weight: 600;
 }

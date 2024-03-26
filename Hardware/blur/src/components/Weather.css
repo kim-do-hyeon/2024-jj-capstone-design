@@ -1,27 +1,31 @@
 .weather {
     font-size: 180%;
     color: white;
-    margin-top: 55%;
-    margin-left: 15%;
+    padding-top: 90%;
+    padding-left: 10%;
 }
 
 .tempInfo {
     font-size: 200%;
     font-weight: 700;
+    margin-bottom: -4%;
 }
 
 .weatherInfo {
-    font-size: 75%;
+    font-size: 90%;
     font-weight: 500;
 }
 
 .cityInfo {
-    font-size: 50%;
+    font-size: 75%;
     font-weight: 800;
+    
 }
 
 .weatherIcon{
     color: white;
-    padding-top: 20%;
-    font-size: 100px;
+    font-size: 120px;
+    padding-left: 9%;
+    margin-bottom: -17%;
+    margin-left: -6%;
 }

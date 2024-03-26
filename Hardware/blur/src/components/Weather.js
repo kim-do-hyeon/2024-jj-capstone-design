@@ -75,8 +75,12 @@ function Weather() {
                 "날씨 정보 가져오는 중..."
             ) : (
                 <div>
-                <div>{getWeatherIcon(iconCode)}</div>
-                <div className="tempInfo">{parseFloat(temperature).toFixed(1)}°C</div>
+                <div>
+                  {getWeatherIcon(iconCode)}
+                </div>
+                <div className="tempInfo">
+                    {parseFloat(temperature).toFixed(1)}°C
+                    </div>
                 <div className="weatherInfo">{weather}</div>
                 <div className="cityInfo">{city}</div>
                 </div>
