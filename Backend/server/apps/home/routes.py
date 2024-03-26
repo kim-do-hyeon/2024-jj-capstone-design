@@ -180,7 +180,7 @@ def download_image(subpath) :
 @blueprint.route('/widgets_index')
 def widgets_index() :
     return jsonify(result = "success",
-                   message = {'weather' : [1, 1],
-                              'time' : [1, 2],
-                              'login' : [1, 3],
-                              'cheerup' : [1, 4]})
+                   message = {'Weather' : [1, 1],
+                              'DateTime' : [1, 2],
+                              'Login' : [1, 3],
+                              'CheerUp' : [1, 4]})
