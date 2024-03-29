@@ -15,7 +15,7 @@ from apps.home.admin_module import *
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users
+from apps.authentication.models import Users, CustomLocation
 
 @blueprint.route('/index')
 def index():
@@ -136,6 +136,38 @@ def widgets():
     for i in widget_list :
         widget_names[i.id] = i.widget_name
     return jsonify(result = "success", type = "widget_list", message = widget_names)
+
+@blueprint.route('/widgets_custom', methods = ['POST'])
+def widgets_custom() :
+    data = request.args.to_dict()
+    location = data['index']
+    model_code = data['model_code']
+    try :
+        if (CustomLocation.query.filter_by(username = session['username'], model_code = str(model_code)).first()) == None :
+            new_data = CustomLocation(username = session['username'], model_code = str(model_code), index = str(location))
+            db.session.add(new_data)
+            db.session.commit()
+            return jsonify(result = "success", type = "widget_custom", message = "New Widget")
+        else :
+            CustomLocation.query.filter_by(username = session['username'], model_code = str(model_code)).update(dict(index = str(location)))
+            db.session.commit()
+            return jsonify(result = "success", type = "widget_custom", message = "Update Widget")
+    except Exception as e :
+        return jsonify(result = "fail", type = "widget_custom", message = "Fail : {}".format(str(e)))
+
+@blueprint.route('/get_widgets_custom')
+def get_widgets_custom() :
+    data = request.args.to_dict()
+    username = session['username']
+    model_code = data['model_code']
+    user_data = CustomLocation.query.filter_by(username = username, model_code = str(model_code)).first()
+    if user_data != None :
+        return jsonify(result = "success", type = "get_widgets_custom", message = user_data.index)
+    else :
+        return jsonify(result = "fail", type = "get_widgets_custom", message = "Empyt Database")
+
+
+
 
 ''' For development image upload function with android '''
 @blueprint.route('/development_image', methods = ['GET', 'POST'])
