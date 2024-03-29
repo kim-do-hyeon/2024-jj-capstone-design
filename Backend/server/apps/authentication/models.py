@@ -43,3 +43,10 @@ class AuthenticationAPI(db.Model, UserMixin) :
     id = db.Column(db.Integer, primary_key = True)
     model_code = db.Column(db.String(64))
     api_key = db.Column(db.String)
+
+class CustomLocation(db.Model, UserMixin) :
+    __tablename__ = 'customlocation'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64))
+    model_code = db.Column(db.String(64))
+    index = db.Column(db.String)
