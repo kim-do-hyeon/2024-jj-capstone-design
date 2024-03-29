@@ -22,19 +22,10 @@ POST /login
 | `password` | `string` | **Required**. Your Password |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : "success",
   "type" : "login"
-}
-```
-### Fail
-```javascript
-{
-  "result" : "fail",
-  "type" : "login",
-  "message" : "Please check your username or password"
 }
 ```
 
@@ -51,18 +42,11 @@ POST /register/user
 | `email` | `string` | **Required**. Your Email |
 
 ## Responses
-### Success
+
 ```javascript
 {
   "result" : "success",
   "type" : "register_user"
-}
-```
-### Fail (Exist User)
-```javascript
-{
-  "result" : "fail",
-  "message" : "exist user"
 }
 ```
 
@@ -78,7 +62,6 @@ POST /reset_password
 | `email` | `string` | **Required**. Your Email |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : "success",
@@ -86,15 +69,6 @@ POST /reset_password
   "message" : string
 }
 ```
-### Fail
-```javascript
-{
-  "result" : "fail",
-  "type" : "reset_password",
-  "message" : "Not Found User"
-}
-```
-
 
 ## Face Register
 
@@ -108,19 +82,10 @@ POST /register/face
 | `face_image` | `file` | **Required**. Your Face Image |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : "success",
   "type" : "register_face"
-}
-```
-### Fail (Image Save Error)
-```javascript
-{
-  "result" : "fail",
-  "type" : "save_image",
-  "message" : string
 }
 ```
 ## Face Recognize
@@ -134,7 +99,6 @@ GET /face
 | `face_image` | `file` | **Required**. Your Face Image |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : string,
@@ -142,14 +106,7 @@ GET /face
   "face" : string
 }
 ```
-### Fail (Image Save Error)
-```javascript
-{
-  "result" : string,
-  "type" : "save_image",
-  "message" : string
-}
-```
+
 ## Distance Recognize
 
 ```http
@@ -161,28 +118,11 @@ GET /distance
 | `distance_image` | `file` | **Required**. Your Image File |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : string,
   "type" : "distance",
   "distance" : float
-}
-```
-### Fail
-```javascript
-{
-  "result" : string,
-  "type" : "distance",
-  "distance" : 0
-}
-```
-### Fail (Image Save Error)
-```javascript
-{
-  "result" : "fail",
-  "type" : "save_image",
-  "message" : string
 }
 ```
 
@@ -197,7 +137,6 @@ GET /personal_color
 | `face_image` | `file` | **Required**. Your Image File |
 
 ## Responses
-### Success
 ```javascript
 {
   "result" : string,
@@ -205,11 +144,47 @@ GET /personal_color
   "tone" : string
 }
 ```
-### Fail (Image Save Error)
+
+## Setting User Custom Widget Index
+
+```http
+POST /widgets_custom
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `model_code` | `string` | **Required**. Your Machine Model Code |
+| `index` | `string` | **Required**. Your Widget Location (Json) |
+
+## Requests Example
 ```javascript
 {
-  "result" : "fail",
-  "type" : "save_image",
+  "model_code" : "1234-5678",
+  "index" : "{'weather' : [1, 1], 'time' : [1, 2]}"
+}
+```
+## Responses
+```javascript
+{
+  "result" : string,
+  "type" : "widget_custom",
+  "message" : string("New Widget" or "Update Widget")
+}
+```
+
+## Get User Custom Widget Index
+```http
+GET /get_widgets_custom
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `model_code` | `string` | **Required**. Your Machine Model Code |
+
+## Responses
+```javascript
+{
+  "result" : string,
+  "type" : "get_widget_custom",
   "message" : string
 }
 ```
