@@ -27,15 +27,15 @@ def register(subpath) :
     path_type = subpath.split("/")
     return register_module(path_type)
    
-@blueprint.route('/login')
+@blueprint.route('/login', methods = ['GET', 'POST'])
 def login() :
     return login_module()
 
-@blueprint.route('/reset_password')
+@blueprint.route('/reset_password', methods = ['GET', 'POST'])
 def reset_password() :
     return reset_password_module()
 
-@blueprint.route('/change_password')
+@blueprint.route('/change_password', methods = ['GET', 'POST'])
 def change_password() :
     return change_password_module()
 
@@ -137,7 +137,7 @@ def widgets():
         widget_names[i.id] = i.widget_name
     return jsonify(result = "success", type = "widget_list", message = widget_names)
 
-@blueprint.route('/widgets_custom', methods = ['POST'])
+@blueprint.route('/widgets_custom', methods = ['GET', 'POST'])
 def widgets_custom() :
     data = request.args.to_dict()
     location = data['index']
@@ -155,7 +155,7 @@ def widgets_custom() :
     except Exception as e :
         return jsonify(result = "fail", type = "widget_custom", message = "Fail : {}".format(str(e)))
 
-@blueprint.route('/get_widgets_custom')
+@blueprint.route('/get_widgets_custom', methods = ['GET', 'POST'])
 def get_widgets_custom() :
     data = request.args.to_dict()
     username = session['username']
