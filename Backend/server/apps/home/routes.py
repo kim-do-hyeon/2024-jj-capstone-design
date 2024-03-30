@@ -232,9 +232,9 @@ def send_message():
         )
         db.session.add(new_message)
         db.session.commit()
-        return jsonify(result="success", message="Message sent"), 200
+        return jsonify(result="success", type="message_sent", message="Message sent"), 200
     else:
-        return jsonify(result="error", message="Sender or Receiver not found"), 404
+        return jsonify(result="fail", type="user_not_found", message="Sender or Receiver not found"), 404
 
 @blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
 def get_messages(receiver_username):
@@ -252,6 +252,6 @@ def get_messages(receiver_username):
             message.is_read = True
         db.session.commit()
 
-        return jsonify(result="success", messages=messages_data), 200
+        return jsonify(result="success", type="messages_retrieved", messages=messages_data), 200
     else:
-        return jsonify(result="error", message="Receiver not found"), 404
+        return jsonify(result="fail", type="receiver_not_found", message="Receiver not found"), 404
