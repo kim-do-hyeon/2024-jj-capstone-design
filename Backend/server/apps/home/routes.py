@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
 import cv2
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
 
@@ -15,7 +15,7 @@ from apps.home.admin_module import *
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users, CustomLocation
+from apps.authentication.models import Users, CustomLocation, Message
 
 @blueprint.route('/index')
 def index():
@@ -216,3 +216,42 @@ def widgets_index() :
                               'DateTime' : [1, 2],
                               'Login' : [1, 3],
                               'CheerUp' : [1, 4]})
+
+@blueprint.route('/send_message', methods=['POST'])
+def send_message():
+    data = request.json
+    sender = Users.query.filter_by(username=data['sender_username']).first()
+    receiver = Users.query.filter_by(username=data['receiver_username']).first()
+    
+    if sender and receiver:
+        new_message = Message(
+            sender_id=sender.id,
+            receiver_id=receiver.id,
+            content=data['content'],
+            timestamp=datetime.now(timezone.utc)
+        )
+        db.session.add(new_message)
+        db.session.commit()
+        return jsonify(result="success", message="Message sent"), 200
+    else:
+        return jsonify(result="error", message="Sender or Receiver not found"), 404
+
+@blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
+def get_messages(receiver_username):
+    receiver = Users.query.filter_by(username=receiver_username).first()
+    
+    if receiver:
+        messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
+        messages_data = [{
+            'sender': Users.query.get(m.sender_id).username, 
+            'content': m.content, 
+            'timestamp': m.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        } for m in messages]
+        
+        for message in messages:
+            message.is_read = True
+        db.session.commit()
+
+        return jsonify(result="success", messages=messages_data), 200
+    else:
+        return jsonify(result="error", message="Receiver not found"), 404

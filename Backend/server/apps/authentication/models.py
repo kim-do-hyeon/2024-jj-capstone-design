@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from apps import db, login_manager
 from sqlalchemy import PickleType
 from apps.authentication.util import hash_pass
+from datetime import datetime, timezone
 
 class Users(db.Model, UserMixin):
     __tablename__ = 'Users'
@@ -50,3 +51,12 @@ class CustomLocation(db.Model, UserMixin) :
     username = db.Column(db.String(64))
     model_code = db.Column(db.String(64))
     index = db.Column(db.String)
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('Users.id'), name='sender_id')
+    receiver_id = db.Column(db.Integer, db.ForeignKey('Users.id'), name='receiver_id')
+    content = db.Column(db.String(500), name='content')
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    is_read = db.Column(db.Boolean, default=False, name='is_read')
