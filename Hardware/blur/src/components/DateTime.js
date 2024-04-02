@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './DateTime.css'
+import Start from './Start';
 
 function DateTime() {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -12,14 +13,11 @@ function DateTime() {
     return () => clearInterval(interval);
     }, []);
 
-    const year = currentDateTime.getFullYear();
-    const month = (currentDateTime.getMonth() + 1).toString().padStart(2, '0');
-    const day = currentDateTime.getDate().toString().padStart(2, '0');
 
     return (
     <div className="dateTime">
         <div className="date">
-        {year}.{month}.{day}.
+        {currentDateTime.getFullYear()}.{(currentDateTime.getMonth() + 1).toString().padStart(2, '0')}.{currentDateTime.getDate().toString().padStart(2, '0')}.
         </div>
         <div className="time">
         {currentDateTime.toLocaleTimeString()}

@@ -10,12 +10,8 @@
 .date {
     font-size:300%;
     font-weight: 500;
+    margin-bottom: -6%;
 }
-
-.year {
-    font-weight: 600;
-}
-
 .time {
     color: white;
     font-size: 190%;

@@ -16,16 +16,22 @@ function CheerUp() {
     };
 
     useEffect(() => {
-        setCheerUp(cheerUps[getRandomIndex(cheerUps.length)]);
+        const timer = setTimeout ( () => {
+            setCheerUp(cheerUps[getRandomIndex(cheerUps.length)]);    
+        }, 4000); //cheerUp 텍스트 시간 차 두고 렌더링
+
+        return () => clearTimeout(timer);
     }, []);
 
     return (
         <div className="welcomeSign">
-        반가워요,
+        <span className='textAnimation'>반가워요,</span>
         <div className='userName'>
             Guest.
         </div>
+        <div>
         {cheerUp}
+        </div>
         </div>
     );
 }

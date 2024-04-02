@@ -4,6 +4,13 @@
   grid-template-rows: repeat(3, 1fr);
   gap: 0; /* 그리드 간격 제거 */
   height: 100vh;
-  background-color: black;
+}
 
+.container {
+  opacity: 0;
+  transition: opacity 4s ease;
+}
+
+.container.show {
+  opacity: 1;
 }

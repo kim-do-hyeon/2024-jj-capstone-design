@@ -10,6 +10,8 @@ import Login from './components/Login';
 
 function App() {
   const [widgets, setWidgets] = useState([]);
+  const [showText, setShowText] = useState(false);
+
 
   useEffect(() => {
     const fetchWidgets = async () => {
@@ -32,6 +34,15 @@ function App() {
     };
 
     fetchWidgets();
+
+    
+    // setShowText(true)를 1초 후에 호출하여 텍스트를 서서히 렌더링
+    const timer = setTimeout( () => {
+      setShowText(true);
+    }, 1000);
+
+    // 컴포넌트가 unmount되면 타이머 해제
+    return () => clearTimeout(timer);
   }, []);
 
   const renderWidget = (row, col) => {
@@ -57,7 +68,7 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div className={`container ${showText ? 'show' : ''}`}> {/*서버 시작 시 텍스트 서서히 렌더링*/}
       {[1, 2, 3].map(row => ( // 행 반복
         <div className="row" key={`row-${row}`} style={{ height: "330px" }}>
           {[1, 2, 3, 4].map(col => ( // 열 반복

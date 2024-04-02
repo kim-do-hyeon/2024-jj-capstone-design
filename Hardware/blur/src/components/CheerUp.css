@@ -3,11 +3,29 @@
     flex-direction: column;
     margin-top: 50%;
     margin-left: 25%;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 150%;
 }
 
 .userName {
     font-size: 190%;
     font-weight: 800;
+    margin-top: -4%;
+    margin-bottom: -7%;
+}
+
+.textAnimation {
+    animation: textAnimation 1s ease-in-out 2.5s forwards;
+}
+
+@keyframes textAnimation {
+    0% {
+        font-size: 100%
+    }
+    50% {
+        font-size: 120%;
+    }
+    100% {
+        font-size: 100%;
+    }
 }

@@ -25,11 +25,14 @@ function Weather() {
     const getWeatherIcon = (iconCode) => {
         switch (iconCode) {
             case '01n': return <WiDaySunny className="weatherIcon" />;
+            case '01d': return <WiDaySunny className="weatherIcon" />;
             case '02n': return <WiDayCloudyHigh className="weatherIcon" />;
             case '03n': return <WiCloudy className="weatherIcon" />;
             case '04n': return <WiCloud className="weatherIcon" />;
+            case '04d': return <WiCloud className="weatherIcon" />;
             case '09n': return <WiShowers className="weatherIcon" />;
             case '10n': return <WiRain className="weatherIcon" />;
+            case '10d': return <WiRain className="weatherIcon" />;
             case '11n': return <WiThunderstorm className="weatherIcon" />;
             case '13n': return <WiSnowflakeCold className="weatherIcon" />;
             case '50n': return <WiFog className="weatherIcon" />;
@@ -72,7 +75,7 @@ function Weather() {
     return (
         <div className="weather">
             {loading ? (
-                "날씨 정보 가져오는 중..."
+                "날씨 로드 중..."
             ) : (
                 <div>
                 <div>
