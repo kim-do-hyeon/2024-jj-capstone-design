@@ -1,0 +1,25 @@
+.startContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .centeredText {
+    color: white;
+    font-size: 800%;
+  }
+
+  .startContainer.fadeOut {
+    animation: fadeOutAnimation 1s ease-out forwards;
+  }
+
+  @keyframes fadeOutAnimation {
+    0%{
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+  }
