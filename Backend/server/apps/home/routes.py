@@ -255,3 +255,10 @@ def get_messages(receiver_username):
         return jsonify(result="success", type="messages_retrieved", messages=messages_data), 200
     else:
         return jsonify(result="fail", type="receiver_not_found", message="Receiver not found"), 404
+
+@blueprint.route('/session_test', methods=['POST'])
+def session_test() :
+    if session['username'] :
+        return jsonify(result = "Success", type = "session test", message = "Loggined")
+    else :
+        return jsonify(result = "Fail", type = "session test", message = "Not Loggined")
