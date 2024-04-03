@@ -87,7 +87,7 @@ def login_module() :
     if isUser and verify_pass(password, isUser.password) :
         session['isLogin'] = True
         session['username'] = username
-        return jsonify(result = "success", type = "login")
+        return jsonify(result = "success", type = "login", message = request.headers['Cookie'])
     else :
         return jsonify(result = "fail", type = "login", message = "Please check your username or password")
 
