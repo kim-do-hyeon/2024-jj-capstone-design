@@ -1,5 +1,9 @@
 __pycache__
 Backend/Face_Detect/train_image/*
 Backend/Face_Detect/test_image/*
+*.pickle
 db.sqlite3
 .DS_Store
+test.py
+*.jpg
+*.png
