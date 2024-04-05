@@ -11,8 +11,6 @@ import Login from './components/Login';
 function App() {
   const [widgets, setWidgets] = useState([]);
   const [showText, setShowText] = useState(false);
-  const [face, setFace] = useState(""); // face 상태 추가
-
 
   useEffect(() => {
     const fetchWidgets = async () => {
@@ -36,7 +34,6 @@ function App() {
 
     fetchWidgets();
 
-    
     // setShowText(true)를 1초 후에 호출하여 텍스트를 서서히 렌더링
     const timer = setTimeout( () => {
       setShowText(true);
@@ -56,7 +53,7 @@ function App() {
         case 'Weather':
           return <Weather key={`${row}-${col}`} />;
         case 'CheerUp':
-          return <CheerUp key={`${row}-${col}`} face={face} />;
+          return <CheerUp key={`${row}-${col}`} />;
         case 'Login':
           return <Login key={`${row}-${col}`} />;
         default:
@@ -67,53 +64,6 @@ function App() {
       return null;
     }
   };
-
-  const takePhoto = async () => {
-    const video = document.createElement('video');
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        video.srcObject = stream;
-        video.play();
-      });
-
-    video.addEventListener('canplay', () => {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      
-      // 일정한 시간 간격으로 사진을 찍고 서버로 전송하는 작업을 반복
-      const interval = setInterval(() => {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(async blob => {
-          const formData = new FormData();
-          formData.append('face_image', blob, 'photo.jpg');
-  
-          try {
-            const response = await axios.post('https://jj.system32.kr/face', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            });
-            if (response.data.face !== "Unknown") {
-              setFace(response.data.face);
-              console.log("1분 기다림.")
-              setTimeout(takePhoto, 60000); // 1분(60초) 후에 takePhoto 함수 호출
-            }
-          } catch (error) {
-            console.error('Error sending photo to server:', error);
-          }
-        });
-      }, 10000); // 10초 간격으로 사진을 찍음
-    });
-  };
-
-  useEffect(() => {
-    takePhoto(); // 페이지가 로드될 때 사진을 찍도록 호출
-  }, []); // 빈 배열을 전달하여 페이지가 로드될 때 한 번만 실행되도록 함
-
-
 
   return (
     <div className={`container ${showText ? 'show' : ''}`}> {/*서버 시작 시 텍스트 서서히 렌더링*/}
