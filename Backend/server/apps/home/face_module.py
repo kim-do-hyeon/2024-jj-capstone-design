@@ -1,7 +1,3 @@
-from flask import request, jsonify
-
-''' Import Apps Module '''
-from apps.home import blueprint
 
 ''' Import DB '''
 from apps import db
@@ -20,5 +16,8 @@ def predict_face(image) :
     predict_image = cv2.imread(image)
     known_face_names = [n.username for n in Faces.query.all()]
     known_face_encodings = [n.face for n in Faces.query.all()]
-    return (name_labeling(predict_image, known_face_encodings, known_face_names))
+    try :
+        return (name_labeling(predict_image, known_face_encodings, known_face_names))
+    except :
+        pass
 
