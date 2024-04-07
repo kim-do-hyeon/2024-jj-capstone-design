@@ -14,7 +14,7 @@ def train_face(username, image) :
 
 def predict_face(image) :
     predict_image = cv2.imread(image)
-    known_face_names = [n.username for n in Faces.query.all()]
+    known_face_names = [n.displayname for n in Faces.query.all()]
     known_face_encodings = [n.face for n in Faces.query.all()]
     try :
         return (name_labeling(predict_image, known_face_encodings, known_face_names))
