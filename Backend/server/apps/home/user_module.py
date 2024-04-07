@@ -39,7 +39,8 @@ def register_module(path_type) :
             username <- required
             face_model <- required
         '''
-        username = request.form['username']
+        displayname = request.form['displayname']
+        username = session['username']
         face_model = request.files['face_image']
         upload_dir = "upload/user/" + username + "/"
     
@@ -55,7 +56,7 @@ def register_module(path_type) :
         
         known_face_encodings = train_face(username, file_path)
 
-        new_face_data = Faces(username = username, face = known_face_encodings)
+        new_face_data = Faces(username = username, displayname = displayname, face = known_face_encodings)
         db.session.add(new_face_data)
         db.session.commit()
 

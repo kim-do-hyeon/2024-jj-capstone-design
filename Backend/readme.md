@@ -78,7 +78,7 @@ POST /register/face
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `username` | `string` | **Required**. Your UserName |
+| `displayname` | `string` | **Required**. Your Display Name (Real Name) |
 | `face_image` | `file` | **Required**. Your Face Image |
 
 ## Responses
