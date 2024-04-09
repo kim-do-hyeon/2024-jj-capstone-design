@@ -188,3 +188,51 @@ GET /get_widgets_custom
   "message" : string
 }
 ```
+
+## Send Message
+```http
+POST /send_message
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `sender_username` | `string` | **Required**. Username of the sender |
+| `receiver_username` | `string` | **Required**. Username of the receiver |
+| `content` | `string` | **Required**. Content of the message |
+
+## Responses
+```javascript
+{
+  "result": "success",
+  "type": "message_sent",
+  "message": "Message sent"
+}
+```
+
+## Get Messages
+```http
+GET /get_messages/<receiver_username>
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `receiver_username` | `string` | **Required**. Username of the receiver |
+
+##### Responses
+```javascript
+{
+  "result": "success",
+  "type": "messages_retrieved",
+  "messages": [
+    {
+      "sender": "sender_username",
+      "content": "message_content",
+      "timestamp": "YYYY-MM-DD HH:MM:SS"
+    },
+    {
+      "sender": "sender_username",
+      "content": "message_content",
+      "timestamp": "YYYY-MM-DD HH:MM:SS"
+    },
+    ...
+  ]
+}
+```
