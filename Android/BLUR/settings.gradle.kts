@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "BLUR"
 include(":app")
- 
+//include(":practice")
+include(":domain")
+include(":presentation")
+include(":data")
