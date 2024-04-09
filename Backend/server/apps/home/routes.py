@@ -59,6 +59,7 @@ def face() :
         return jsonify(result = "fail", type = "save_image", message = str(e))
     
     result = (predict_face(file_path))
+    print(result)
     return jsonify(result = "success", type = "face", face = str(result))
 
 @blueprint.route("/distance", methods = ['GET', 'POST'])
