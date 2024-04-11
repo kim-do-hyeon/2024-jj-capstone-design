@@ -43,6 +43,10 @@ def change_password() :
 def change_profile():
     return chagne_profile_module()
 
+@blueprint.route('/get_user_info', methods = ['GET', 'POST'])
+def get_user_info() :
+    return get_user_info_module()
+
 ''' End User Section '''
  
 ''' Start Face Section '''

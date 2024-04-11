@@ -172,3 +172,12 @@ def chagne_profile_module() :
         except Exception as e :
             return jsonify(result = "fail", type = "change_originalname", message = str(e))
 
+def get_user_info_module() :
+    if session['isLogin'] :
+        data = Users.query.filter_by(username = session['username']).first()
+        username = data.username
+        email = data.email
+        originalname = data.originalname
+        profile_image = data.profile_image
+        data_dict = {'username' : username, 'email' : email, 'orignalname' : originalname, 'profile_image' : profile_image}
+        return jsonify(result = "success", type = "user_info", message = data_dict)
