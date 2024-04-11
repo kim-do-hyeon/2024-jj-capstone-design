@@ -39,6 +39,10 @@ def reset_password() :
 def change_password() :
     return change_password_module()
 
+@blueprint.route('/change_profile', methods = ['GET', 'POST'])
+def change_profile():
+    return chagne_profile_module()
+
 ''' End User Section '''
  
 ''' Start Face Section '''
@@ -206,7 +210,7 @@ def view_image() :
 
 @blueprint.route('/download_image/<path:subpath>')
 def download_image(subpath) :
-    upload_dir = "../upload/development_image/"
+    upload_dir = "../upload/profile_image/"
     PATH = upload_dir + subpath
     return send_file(PATH, as_attachment=True)
 

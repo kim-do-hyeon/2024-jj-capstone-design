@@ -2,7 +2,7 @@
 import os
 from flask import request, jsonify, session
 from werkzeug.utils import secure_filename
-
+from datetime import datetime
 from apps.authentication.util import verify_pass, hash_pass, get_random_string
 from apps.home.face_module import train_face
 
@@ -17,10 +17,12 @@ def register_module(path_type) :
             username <- required
             password <- required
             email <- required
+            originalname <- required
         '''
         data = request.args.to_dict()
         username = data['username']
         password = data['password']
+        originalname = data['originalname']
         email = data['email']
 
         ''' Exist User Check '''
@@ -30,7 +32,8 @@ def register_module(path_type) :
         else :
             new_user = Users(username = username,
                               password = password,
-                              email = email)
+                              email = email,
+                              originalname = originalname)
             db.session.add(new_user)
             db.session.commit()
             return jsonify(result = "success", type = "register_user")
@@ -79,6 +82,36 @@ def register_module(path_type) :
             return jsonify(result = "success", type = "register_productiion")
         else :
             return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
+    elif path_type[0] == "profile" :
+        if session['isLogin'] :
+            profile_image = request.files['profile_image']
+            upload_dir = "upload/profile_image/"
+            try : 
+                username = session['username']
+            except :
+                return jsonify(result = "fail", type = "profile image", message = "Not Loggined")
+            
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
+
+            filename = secure_filename(profile_image.filename)
+            current_time = (datetime.now().strftime("%Y%m%d%H%M%S"))
+            filename = str(username) + "_" + current_time + "." + filename.split(".")[-1]
+            
+            file_path = os.path.join(upload_dir, filename)
+            try:
+                profile_image.save(file_path)
+                upload_dir = "upload/development_image/"
+                profile_image_url = "https://jj.system32.kr/download_image/" + filename
+                Users.query.filter_by(username = session['username']).update((dict(profile_image = profile_image_url)))
+                db.session.commit()
+            except Exception as e:
+                return jsonify(result = "fail", type = "profile_image", message = str(e))
+            return jsonify(result = "success", type = "profile_image", message = "")
+
+        else :
+            return jsonify(result = "fail", type = "profile", message = "Not logined")
+        
         
 def login_module() :
     data = request.args.to_dict()
@@ -118,4 +151,24 @@ def change_password_module() :
     else :
         return jsonify(result = "fail", type = "reset_password", message = "Check Your Password")
 
+def chagne_profile_module() :
+    data = request.args.to_dict()
+    print(data)
+    type = data['type']
+    if type == 'email' :
+        try :
+            new_email = data['email']
+            Users.query.filter_by(username = session['username']).update((dict(email = new_email)))
+            db.session.commit()
+            return jsonify(result = "success", type = "chage_email")
+        except Exception as e:
+            return jsonify(result = "fail", type = "chage_email", message = str(e))
+    elif type == 'name' :
+        try :
+            new_name = data['name']
+            Users.query.filter_by(username = session['username']).update((dict(originalname = new_name)))
+            db.session.commit()
+            return jsonify(result = "success", type = "chage_originalname")
+        except Exception as e :
+            return jsonify(result = "fail", type = "change_originalname", message = str(e))
 
