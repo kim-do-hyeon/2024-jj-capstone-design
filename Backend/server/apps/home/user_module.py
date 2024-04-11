@@ -179,5 +179,5 @@ def get_user_info_module() :
         email = data.email
         originalname = data.originalname
         profile_image = data.profile_image
-        data_dict = {'username' : username, 'email' : email, 'orignalname' : originalname, 'profile_image' : profile_image}
+        data_dict = {'username' : username, 'email' : email, 'originalname' : originalname, 'profile_image' : profile_image}
         return jsonify(result = "success", type = "user_info", message = data_dict)
