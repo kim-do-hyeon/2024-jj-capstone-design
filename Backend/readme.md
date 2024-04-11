@@ -40,6 +40,7 @@ POST /register/user
 | `username` | `string` | **Required**. Your UserName |
 | `password` | `string` | **Required**. Your Password |
 | `email` | `string` | **Required**. Your Email |
+| `originalname` | `string` | **Required**. Your Real Name |
 
 ## Responses
 
@@ -47,6 +48,48 @@ POST /register/user
 {
   "result" : "success",
   "type" : "register_user"
+}
+```
+
+## Add User Profile Image 
+
+```http
+POST /register/profile
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `profile_image` | `file` | **Required**. Your Profile Image |
+
+## Responses
+
+```javascript
+{
+  "result" : "success",
+  "type" : "profile image"
+}
+```
+
+## Change User Information
+
+```http
+POST /change_profile
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `type` | `string` | **Required**. Change Type (email or name) |
+| `if type = email ` |
+| `email` | `string` | **Required**. New Email |
+| `if type = name ` |
+| `name` | `string` | **Required**. New Name |
+
+## Responses
+
+```javascript
+{
+  "result" : "success",
+  "type" : "chage_{type}"
 }
 ```
 
@@ -88,6 +131,30 @@ POST /register/face
   "type" : "register_face"
 }
 ```
+## Get User Information
+
+```http
+POST /get_user_info
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `none` |
+
+## Responses
+```javascript
+{
+  "result" : "success",
+  "type" : "user_info",
+  "message" : {
+        "username" : string,
+        "email" : string,
+        "originalname" : string,
+        "profile_image" : string
+  }
+}
+```
+
 ## Face Recognize
 
 ```http
