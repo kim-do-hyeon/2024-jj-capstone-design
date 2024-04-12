@@ -130,6 +130,14 @@ class ModalDrawerSheetViewModel @Inject constructor(
     fun onPasswordChange() = intent {
         postSideEffect(ModalDrawerSheetSideEffect.NavigateToChangePasswordScreen) // 비밀번호 변경 화면으로 이동 처리를 합니다.
     }
+
+    fun onEmailChange() =intent {
+        postSideEffect(ModalDrawerSheetSideEffect.NavigateToEmailScreen)
+    }
+
+    fun onNameChange() =intent {
+        postSideEffect(ModalDrawerSheetSideEffect.NavigateToNameScreen)
+    }
 }
 
 // ViewModel의 상태를 정의하는 클래스입니다.
@@ -143,6 +151,8 @@ data class ModalDrawerSheetState(
 sealed interface ModalDrawerSheetSideEffect {
     object NavigateToLoginActivity : ModalDrawerSheetSideEffect
     object NavigateToChangePasswordScreen : ModalDrawerSheetSideEffect
+    object NavigateToEmailScreen : ModalDrawerSheetSideEffect
+    object NavigateToNameScreen : ModalDrawerSheetSideEffect
     object ImageSelectionCancelled : ModalDrawerSheetSideEffect
     object ImageUploadFailure : ModalDrawerSheetSideEffect
     object ImageUploadSuccess : ModalDrawerSheetSideEffect

@@ -4,7 +4,10 @@
     <application>
         <activity android:name=".Login.LoginActivity"/>
         <activity android:name=".Main.MainActivity"/>
-        <activity android:name=".Main.Setting.ModalDrawerActivity"/>
+        <activity android:name=".Main.Setting.ChangePassword.ChangePasswordActivity"/>
+        <activity android:name=".Main.Setting.ChangeEmail.ChangeEmailActivity" />
+        <activity android:name=".Main.Setting.ChangeName.ChangeNameActivity" />
+
         <activity android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -13,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Main.Home.CameraX.CameraXActivity" />
+
     </application>
 </manifest>

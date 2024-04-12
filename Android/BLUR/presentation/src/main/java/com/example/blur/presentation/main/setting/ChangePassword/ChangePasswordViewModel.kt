@@ -26,15 +26,15 @@ class ChangePasswordViewModel @Inject constructor(
 ) : ViewModel(), ContainerHost<ChangePasswordState, ChangePasswordEffect> {
 
     override val container: Container<ChangePasswordState, ChangePasswordEffect> = container(
-            initialState = ChangePasswordState(),
-            buildSettings = {
-                this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                    intent {
-                        postSideEffect(ChangePasswordEffect.Toast(throwable.message.orEmpty()))
-                    }
+        initialState = ChangePasswordState(),
+        buildSettings = {
+            this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                intent {
+                    postSideEffect(ChangePasswordEffect.Toast(throwable.message.orEmpty()))
                 }
             }
-        )
+        }
+    )
 
     fun onPassword1Change(current_password: String) = blockingIntent {
         reduce { state.copy(current_password = current_password) } // 상태 업데이트

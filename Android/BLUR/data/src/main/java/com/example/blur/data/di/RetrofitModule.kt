@@ -16,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.net.CookieManager
 
+
 val FC_HOST = "https://jj.system32.kr"
 
 @Module
@@ -24,6 +25,7 @@ class RetrofitModule {
 
     @Provides
     fun provideOkHttpClient(context: Context): OkHttpClient {
+
         // 로그를 출력하기 위한 인터셉터 생성
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -47,12 +49,15 @@ class RetrofitModule {
         val converterFactory = Json {
             ignoreUnknownKeys = true
         }.asConverterFactory("application/json; charset=UTF-8".toMediaType())
+
+
         return Retrofit.Builder()
             .baseUrl("${FC_HOST}/api/")
             .addConverterFactory(converterFactory)
             .client(client)
             .build()
     }
+
 
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {

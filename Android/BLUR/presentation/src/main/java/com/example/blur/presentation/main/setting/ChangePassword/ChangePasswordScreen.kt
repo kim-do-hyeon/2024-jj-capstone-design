@@ -49,8 +49,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun ChangePasswordScreen(
     viewModel: ChangePasswordViewModel = hiltViewModel(),
-    onNavigateToLoginScreen: () -> Unit
-) {
+
+    ) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
     viewModel.collectSideEffect { sideEffect ->

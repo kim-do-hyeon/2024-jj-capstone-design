@@ -1,4 +1,4 @@
-package com.example.blur.presentation.Main
+package com.example.blur.presentation.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.blur.presentation.Main.Home.HomeScreen
-import com.example.blur.presentation.Main.Setting.ModalDrawerSheetScreen
 import com.example.blur.presentation.theme.BLURTheme
 import kotlinx.coroutines.launch
 
@@ -36,7 +35,7 @@ fun MainNavHost() {
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
-                ModalDrawerSheetScreen{}
+                ModalDrawerSheetScreen()
             },
         ) {
             Scaffold(

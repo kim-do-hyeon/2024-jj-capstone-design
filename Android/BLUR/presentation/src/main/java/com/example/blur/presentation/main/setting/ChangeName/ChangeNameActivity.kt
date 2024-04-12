@@ -1,20 +1,19 @@
-package com.example.blur.presentation.Main
+package com.example.blur.presentation.Main.Setting.ChangeName
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.example.blur.presentation.main.MainNavHost
 import com.example.blur.presentation.theme.BLURTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class ChangeNameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
             BLURTheme {
-                MainNavHost()
+                ChangeNameActivityNavHost()
             }
         }
     }
