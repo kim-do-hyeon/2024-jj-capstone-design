@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main.Home.CameraX
+package com.example.blur.presentation.Main.Home.CameraX
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image

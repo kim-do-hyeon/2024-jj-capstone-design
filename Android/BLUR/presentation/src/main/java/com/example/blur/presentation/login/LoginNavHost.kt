@@ -1,4 +1,4 @@
-package com.example.blur.presentation.login
+package com.example.blur.presentation.Login
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

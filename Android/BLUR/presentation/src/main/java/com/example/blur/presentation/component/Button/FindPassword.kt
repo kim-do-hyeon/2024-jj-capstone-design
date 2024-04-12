@@ -1,4 +1,4 @@
-package com.example.blur.presentation.component.Button
+package com.example.blur.presentation.Component.Button
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton

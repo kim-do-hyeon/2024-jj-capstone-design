@@ -1,6 +1,6 @@
 @file:OptIn(OrbitExperimental::class)
 
-package com.example.blur.presentation.login
+package com.example.blur.presentation.Login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

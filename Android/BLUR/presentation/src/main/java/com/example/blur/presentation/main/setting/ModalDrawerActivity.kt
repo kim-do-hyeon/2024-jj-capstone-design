@@ -1,21 +1,19 @@
-package com.example.blur.presentation.Login
+package com.example.blur.presentation.Main.Setting
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import dagger.hilt.android.AndroidEntryPoint
 import com.example.blur.presentation.theme.BLURTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * @author soohwan.ok
- */
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class ModalDrawerActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
+        setContent{
             BLURTheme {
-                LoginNavHost()
+                ModalDrawerActivityNavHost()
             }
         }
     }

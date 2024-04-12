@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.blur.data.di.SharedPreferencesManager
-import com.example.blur.presentation.login.LoginActivity
-import com.example.blur.presentation.main.MainActivity
+import com.example.blur.presentation.Login.LoginActivity
+import com.example.blur.presentation.Main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

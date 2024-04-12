@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main.Home.CameraX
+package com.example.blur.presentation.Main.Home.CameraX
 
 import android.content.Context
 import com.example.blur.data.di.SharedPreferencesManager
@@ -12,7 +12,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import java.io.File
-import java.io.IOException
 
 fun uploadImageToServer(imageFile: File, cameraXActivity: Context) {
     // 로그를 출력하기 위한 인터셉터 생성

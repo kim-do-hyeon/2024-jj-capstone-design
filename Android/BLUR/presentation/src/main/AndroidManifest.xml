@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".login.LoginActivity"/>
-        <activity android:name=".main.MainActivity"/>
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Main.MainActivity"/>
+        <activity android:name=".Main.Setting.ModalDrawerActivity"/>
         <activity android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -12,6 +13,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.Home.CameraX.CameraXActivity" />
+        <activity android:name=".Main.Home.CameraX.CameraXActivity" />
     </application>
 </manifest>

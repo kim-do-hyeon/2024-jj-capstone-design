@@ -1,6 +1,6 @@
 @file:OptIn(OrbitExperimental::class) // Orbit 라이브러리의 실험적 기능 사용에 동의
 
-package com.example.blur.presentation.login
+package com.example.blur.presentation.Login
 
 import androidx.lifecycle.ViewModel
 import com.example.blur.domain.usecase.login.SignUpUseCase
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @OptIn(OrbitExperimental::class) // Orbit 실험적 기능 사용에 대한 동의
 @HiltViewModel // Hilt를 사용한 ViewModel 의존성 주입
 class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpUseCase // 회원가입 처리를 위한 UseCase 주입
+    private val signUpUseCase: SignUpUseCase, // 회원가입 처리를 위한 UseCase 주입
 ) : ViewModel(), ContainerHost<SignUpState, SignUpsideEffect> { // Orbit MVI 패턴 적용
 
     // 초기 상태를 설정하고, 예외 처리 핸들러를 포함하는 컨테이너 생성
@@ -34,13 +34,22 @@ class SignUpViewModel @Inject constructor(
         }
     )
 
+    fun onOriginalNameChange(originalname: String) = blockingIntent {
+        reduce {
+            state.copy(
+                originalname = originalname,
+                showUsernameField = originalname.isNotEmpty()
+            )
+        }
+    }
+
     // 이메일 입력 변경 처리
     fun onEmailChange(email: String) = blockingIntent {
         reduce {
             state.copy(
                 email = email,
                 // 이메일이 비어있지 않으면 사용자 이름 필드를 표시하도록 설정
-                showUsernameField = email.isNotEmpty()
+                showOriginalnameField = email.isNotEmpty()
             )
         } // 상태 업데이트
     }
@@ -55,6 +64,7 @@ class SignUpViewModel @Inject constructor(
         } // 상태 업데이트
     }
 
+
     // 비밀번호 입력 변경 처리
     fun onPasswordChange(password: String) = blockingIntent {
         reduce { state.copy(password = password) } // 상태 업데이트
@@ -64,6 +74,7 @@ class SignUpViewModel @Inject constructor(
     fun onRepeatPasswordChange(repeatPassword: String) = blockingIntent {
         reduce { state.copy(repeatPassword = repeatPassword) } // 상태 업데이트
     }
+
 
     // 회원가입 버튼 클릭 처리
     fun onSignUpClick() = intent {
@@ -76,7 +87,8 @@ class SignUpViewModel @Inject constructor(
         val isSuccessful = signUpUseCase(
             email = state.email,
             username = state.username,
-            password = state.password
+            password = state.password,
+            originalname = state.originalname
         ).getOrThrow()
 
         // 회원가입 성공 시 로그인 화면으로 이동 및 성공 메시지 출력
@@ -90,16 +102,19 @@ class SignUpViewModel @Inject constructor(
 // 회원가입 상태를 담는 데이터 클래스
 @Immutable
 data class SignUpState(
+    val originalname: String = "",
     val email: String = "",
     val username: String = "",
     val password: String = "",
     val repeatPassword: String = "",
+    val showOriginalnameField: Boolean = false,
     val showUsernameField: Boolean = false, // 사용자 이름 필드 표시 여부
-    val showPasswordField: Boolean = false
+    val showPasswordField: Boolean = false,
 )
 
 // 사이드 이펙트 정의
 sealed interface SignUpsideEffect {
     class Toast(val message: String) : SignUpsideEffect // 토스트 메시지 출력
+
     object NavigateToLoginScreen : SignUpsideEffect // 로그인 화면으로 이동
 }

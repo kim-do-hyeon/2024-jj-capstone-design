@@ -1,6 +1,6 @@
 
 
-package com.example.blur.presentation.main.Home.CameraX
+package com.example.blur.presentation.Main.Home.CameraX
 
 import android.Manifest
 import android.content.pm.PackageManager

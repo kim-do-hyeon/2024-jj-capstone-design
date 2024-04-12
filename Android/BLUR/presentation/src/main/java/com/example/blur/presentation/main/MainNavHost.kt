@@ -1,90 +1,74 @@
-package com.example.blur.presentation.main
+package com.example.blur.presentation.Main
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.blur.presentation.login.LoginRoute
-import com.example.blur.presentation.login.SettingRoute
-import com.example.blur.presentation.main.Home.HomeScreen
-import com.example.blur.presentation.main.setting.ChangePassword.ChangePasswordScreen
-import com.example.blur.presentation.main.setting.SettingScreen
+import com.example.blur.presentation.Main.Home.HomeScreen
+import com.example.blur.presentation.Main.Setting.ModalDrawerSheetScreen
 import com.example.blur.presentation.theme.BLURTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
     val context = LocalContext.current
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
     Surface {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    modifier = Modifier.background(MaterialTheme.colorScheme.primary),
-                    title = {},
-                    navigationIcon = {
-                        // 뒤로 가기 버튼에 뒤로 가기 기능을 추가합니다.
-                        IconButton(onClick = {
-                            (context as? Activity)?.onBackPressed()
-                        }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "뒤로 가기")
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheetScreen{}
+            },
+        ) {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        modifier = Modifier.background(MaterialTheme.colorScheme.primary),
+                        title = {},
+                        navigationIcon = {
+                            // 뒤로 가기 버튼에 뒤로 가기 기능을 추가합니다.
+                            IconButton(
+                                onClick = {
+                                    scope.launch {
+                                        drawerState.apply {
+                                            if (isClosed) open() else close()
+                                        }
+                                    }
+                                }
+                            ) {
+                                Icon(Icons.Filled.Menu, contentDescription = "메뉴")
+                            }
                         }
-                    }
-                )
-            },
-            content = { padding ->
-                NavHost(
-                    modifier = Modifier.padding(padding),
-                    navController = navController,
-                    startDestination = MainRoute.HOME.route
-                ) {
-                    composable(route = MainRoute.HOME.route) {
-                        HomeScreen()
-                    }
-                    composable(route = MainRoute.SETTING.route) {
-                        SettingScreen(
-                            onPasswordChange = {
-                                navController.navigate(
-                                    route = SettingRoute.ChangePasswordScreen.name
-                                )
-                            }
-                        )
-                    }
-                    composable(route = SettingRoute.ChangePasswordScreen.name) {
-                        ChangePasswordScreen(
-                            onNavigateToLoginScreen = {
-                                navController.navigate(
-                                    route = LoginRoute.LoginScreen.name
-                                )
-                            }
-                        )
-                    }
+                    )
+                },
+                content = { padding ->
+                    // Apply padding to HomeScreen
+                    HomeScreen(modifier = Modifier.padding(padding))
                 }
-            },
-            bottomBar = {
-                MainBottomBar(
-                    navController = navController
-                )
-            }
-        )
+            )
+        }
     }
 }
+
 
 @Preview
 @Composable

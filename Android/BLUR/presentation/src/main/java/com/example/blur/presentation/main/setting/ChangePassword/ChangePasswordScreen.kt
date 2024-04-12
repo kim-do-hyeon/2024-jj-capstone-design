@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main.setting.ChangePassword
+package com.example.blur.presentation.Main.Setting.ChangePassword
 
 import PasswordTextField
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,10 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.blur.presentation.R
-import com.example.blur.presentation.component.Button.FillButton
-import com.example.blur.presentation.login.LoginActivity
-import com.example.blur.presentation.login.SignUpsideEffect
-import com.example.blur.presentation.main.setting.SettingSideEffect
+import com.example.blur.presentation.Component.Button.FillButton
+import com.example.blur.presentation.Login.LoginActivity
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

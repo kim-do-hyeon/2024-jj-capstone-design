@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main.Home.viewmodel
+package com.example.blur.presentation.Main.Home.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

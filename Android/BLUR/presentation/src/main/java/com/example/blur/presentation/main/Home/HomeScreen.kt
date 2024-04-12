@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main.Home
+package com.example.blur.presentation.Main.Home
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -31,12 +31,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.blur.presentation.R
-import com.example.blur.presentation.component.ListItems
-import com.example.blur.presentation.main.Home.CameraX.CameraXActivity
+import com.example.blur.presentation.Component.ListItems
+import com.example.blur.presentation.Main.Home.CameraX.CameraXActivity
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    modifier: Modifier= Modifier
+) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
     // FocusRequester 인스턴스 생성

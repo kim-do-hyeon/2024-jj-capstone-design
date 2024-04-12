@@ -1,4 +1,4 @@
-package com.example.blur.presentation.login
+package com.example.blur.presentation.Login
 
 import PasswordTextField
 import UsernameTextField
@@ -47,11 +47,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.blur.components.Text.BLUE_Title
 import com.example.blur.components.Text.SubTitle
-import com.example.blur.presentation.main.MainActivity
+import com.example.blur.presentation.Main.MainActivity
 import com.example.blur.presentation.R
-import com.example.blur.presentation.component.Button.FillButton
-import com.example.blur.presentation.component.Button.FindPassword
-import com.example.blur.presentation.component.Button.SignUpBtn
+import com.example.blur.presentation.Component.Button.FillButton
+import com.example.blur.presentation.Component.Button.FindPassword
+import com.example.blur.presentation.Component.Button.SignUpBtn
 
 import com.example.blur.presentation.theme.BLURTheme
 import org.orbitmvi.orbit.compose.collectAsState

@@ -1,4 +1,4 @@
-package com.example.blur.presentation.component.Button
+package com.example.blur.presentation.Component.Button
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape

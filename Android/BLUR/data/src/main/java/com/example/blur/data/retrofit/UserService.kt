@@ -4,6 +4,7 @@ import com.example.blur.data.model.CommonResponse
 import com.example.blur.data.model.SessionTestResponse
 import com.example.blur.data.model.SignUpResponse
 import com.example.blur.data.model.main.setting.ChangePasswordResponse
+import com.example.blur.data.model.main.userinfo.UserInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -18,14 +19,15 @@ interface UserService {
     @GET("/login")
     suspend fun login(
         @Query("username") username: String,
-        @Query("password") password: String
+        @Query("password") password: String,
     ): Response<CommonResponse<String>> // Retrofit의 Response 타입으로 변경
 
     @POST("/register/user/")
     suspend fun signup(
+        @Query("originalname") originalname: String,
         @Query("username") username: String,
         @Query("password") password: String,
-        @Query("email") email: String
+        @Query("email") email: String,
     ): SignUpResponse<String>
 
     @POST("/session_test")
@@ -34,24 +36,23 @@ interface UserService {
     @GET("/reset_password")
     fun findPassword(
         @Query("username") username: String,
-        @Query("email") email: String
+        @Query("email") email: String,
     ): Call<ResponseBody>
 
 
     @POST("/change_password")
     suspend fun changePassword(
         @Query("current_password") current_password: String,
-        @Query("new_password") new_password: String
+        @Query("new_password") new_password: String,
     ): Response<ChangePasswordResponse>
 
     @Multipart
     @POST("development_image")
     fun uploadImage(
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part,
     ): Call<ResponseBody>
 
-
-
-
+    @POST("/get_user_info")
+    suspend fun getUserInfo(): Response<UserInfoResponse>
 }
 

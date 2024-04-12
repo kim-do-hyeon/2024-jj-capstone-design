@@ -1,4 +1,4 @@
-package com.example.blur.presentation.component
+package com.example.blur.presentation.Component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

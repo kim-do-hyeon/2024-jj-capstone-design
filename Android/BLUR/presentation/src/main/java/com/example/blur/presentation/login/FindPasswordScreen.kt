@@ -1,11 +1,9 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.blur.presentation.login
+package com.example.blur.presentation.Login
 
 import UsernameTextField
 import android.app.Activity
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -44,8 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.blur.components.Text.MessageText2
 import com.example.blur.components.TextField.EmailTextField
-import com.example.blur.presentation.component.Button.FillButton
-import com.example.blur.presentation.component.Text.MessageText
+import com.example.blur.presentation.Component.Button.FillButton
+import com.example.blur.presentation.Component.Text.MessageText
 import com.example.blur.presentation.theme.BLURTheme
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

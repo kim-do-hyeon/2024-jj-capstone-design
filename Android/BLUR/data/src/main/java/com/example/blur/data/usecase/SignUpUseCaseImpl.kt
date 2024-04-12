@@ -6,16 +6,22 @@ import java.io.IOException
 import javax.inject.Inject
 
 class SignUpUseCaseImpl @Inject constructor(
-    private val userService: UserService
+    private val userService: UserService,
 ) : SignUpUseCase {
     override suspend fun invoke(
-        email:String,
+        email: String,
         username: String,
-        password: String
+        password: String,
+        originalname: String,
     ): Result<Boolean> {
         return try {
             // 서버에 회원가입 요청을 보냅니다.
-            userService.signup(email = email, username = username, password = password)
+            userService.signup(
+                email = email,
+                username = username,
+                password = password,
+                originalname = originalname
+            )
             // 만약 서버가 성공적으로 응답했다면 성공 결과를 반환합니다.
             Result.success(true)
         } catch (e: IOException) {

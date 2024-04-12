@@ -1,4 +1,4 @@
-package com.example.blur.presentation.component.Text
+package com.example.blur.presentation.Component.Text
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

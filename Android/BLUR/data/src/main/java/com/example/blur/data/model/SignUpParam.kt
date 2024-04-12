@@ -11,12 +11,13 @@ import okhttp3.RequestBody.Companion.toRequestBody
  */
 @Serializable
 data class SignUpParam(
-    val email:String,
-    val username:String,
-    val password:String
-){
+    val originalname: String,
+    val email: String,
+    val username: String,
+    val password: String,
+) {
 
-    fun toRequestBody():RequestBody{
+    fun toRequestBody(): RequestBody {
         return Json.encodeToString(this).toRequestBody()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main
+package com.example.blur.presentation.Main
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

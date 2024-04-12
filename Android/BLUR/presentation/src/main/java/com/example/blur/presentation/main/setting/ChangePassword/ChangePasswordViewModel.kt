@@ -1,10 +1,9 @@
-package com.example.blur.presentation.main.setting.ChangePassword
+package com.example.blur.presentation.Main.Setting.ChangePassword
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.domain.usecase.main.setting.ChangePasswordUseCase
-import com.example.blur.presentation.main.setting.SettingSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
