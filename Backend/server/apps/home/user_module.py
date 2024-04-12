@@ -163,9 +163,9 @@ def chagne_profile_module() :
             new_email = data['email']
             Users.query.filter_by(username = session['username']).update((dict(email = new_email)))
             db.session.commit()
-            return jsonify(result = "success", type = "chage_email")
+            return jsonify(result = "success", type = "change_email")
         except Exception as e:
-            return jsonify(result = "fail", type = "chage_email", message = str(e))
+            return jsonify(result = "fail", type = "change_email", message = str(e))
     elif type == 'name' :
         try :
             new_name = data['name']
