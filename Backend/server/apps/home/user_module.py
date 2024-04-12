@@ -42,15 +42,18 @@ def register_module(path_type) :
             username <- required
             face_model <- required
         '''
-        displayname = request.form['displayname']
         username = session['username']
+        displayname = Users.query.filter_by(username = username).first().originalname
         face_model = request.files['face_image']
         upload_dir = "upload/user/" + username + "/"
-    
+
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
     
         filename = secure_filename(face_model.filename)
+        if len(filename.split(".")) == 1 :
+            filename = username + ".png"
+            
         file_path = os.path.join(upload_dir, filename)
         try:
             face_model.save(file_path)
