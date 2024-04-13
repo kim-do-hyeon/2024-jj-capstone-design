@@ -250,16 +250,17 @@ def get_messages(receiver_username):
     receiver = Users.query.filter_by(username=receiver_username).first()
     
     if receiver:
-        messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
+        # messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
+        messages = Message.query.filter_by(receiver_id=receiver.id).all()
         messages_data = [{
             'sender': Users.query.get(m.sender_id).username, 
             'content': m.content, 
             'timestamp': m.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         } for m in messages]
         
-        for message in messages:
-            message.is_read = True
-        db.session.commit()
+        # for message in messages:
+        #     message.is_read = True
+        # db.session.commit()
 
         return jsonify(result="success", type="messages_retrieved", messages=messages_data), 200
     else:
