@@ -1,4 +1,4 @@
-package com.example.blur.data.model
+package com.example.blur.data.model.login
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.blur.presentation.R
 import com.example.blur.presentation.Component.ListItems
 import com.example.blur.presentation.Main.Home.CameraX.CameraXActivity
+import com.example.blur.presentation.Main.Home.SendMessage.SendMessageActivity
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -81,6 +83,18 @@ fun HomeScreen(
                 context.startActivity(Intent(context, CameraXActivity::class.java))
             }
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ListItems(
+            headlineText = "메시지 보내기",
+            supportingText = "스마트 미러에 메시지를 남겨 보세요",
+            icon = Icons.Filled.Message,
+            onClick = {
+                context.startActivity(Intent(context, SendMessageActivity::class.java))
+            }
+        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         ListItems(

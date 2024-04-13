@@ -1,5 +1,4 @@
-package com.example.blur.presentation.Main.Setting.ChangeEmail
-
+package com.example.blur.presentation.Main.Home.SendMessage
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -8,13 +7,12 @@ import com.example.blur.presentation.theme.BLURTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChangeEmailActivity : AppCompatActivity() {
-
+class SendMessageActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
             BLURTheme {
-                ChangeEmailScreen()
+                SendMessageScreen()
             }
         }
     }

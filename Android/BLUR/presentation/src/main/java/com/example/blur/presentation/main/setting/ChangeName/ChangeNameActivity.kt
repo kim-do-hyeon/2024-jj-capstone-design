@@ -13,7 +13,7 @@ class ChangeNameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             BLURTheme {
-                ChangeNameActivityNavHost()
+                ChangeNameScreen()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main
+package com.example.blur.presentation.Main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.blur.presentation.Main.Home.HomeScreen
+import com.example.blur.presentation.Main.Setting.ModalDrawerSheetScreen
 import com.example.blur.presentation.theme.BLURTheme
 import kotlinx.coroutines.launch
 
@@ -44,7 +45,6 @@ fun MainNavHost() {
                         modifier = Modifier.background(MaterialTheme.colorScheme.primary),
                         title = {},
                         navigationIcon = {
-                            // 뒤로 가기 버튼에 뒤로 가기 기능을 추가합니다.
                             IconButton(
                                 onClick = {
                                     scope.launch {

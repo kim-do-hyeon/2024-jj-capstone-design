@@ -1,4 +1,4 @@
-package com.example.blur.data.model
+package com.example.blur.data.model.login
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -10,12 +10,14 @@ import okhttp3.RequestBody.Companion.toRequestBody
  * @author soohwan.ok
  */
 @Serializable
-data class LoginParam(
-    val username:String,
-    val password:String
-){
+data class SignUpParam(
+    val originalname: String,
+    val email: String,
+    val username: String,
+    val password: String,
+) {
 
-    fun toRequestBody():RequestBody{
+    fun toRequestBody(): RequestBody {
         return Json.encodeToString(this).toRequestBody()
     }
 }

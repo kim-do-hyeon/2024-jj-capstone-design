@@ -1,6 +1,6 @@
 package com.example.blur.data.retrofit
 
-import com.example.blur.data.model.CommonResponse
+import com.example.blur.data.model.login.CommonResponse
 import com.example.blur.data.model.main.userinfo.UpLoadProfileImageResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Headers
@@ -15,5 +15,5 @@ interface FileService {
     @Headers("ContentType:multipart/form-data;")
     suspend fun uploadprofileimage(
         @Part profileImage: MultipartBody.Part
-    ):CommonResponse<UpLoadProfileImageResponse>
+    ): CommonResponse<UpLoadProfileImageResponse>
 }

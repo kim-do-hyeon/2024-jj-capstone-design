@@ -1,4 +1,4 @@
-package com.example.blur.presentation.main
+package com.example.blur.presentation.Main.Setting
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.blur.presentation.Main.Setting.ChangePassword.ChangePasswordActivity
-import com.example.blur.presentation.Main.Setting.ModalDrawerSheetSideEffect
-import com.example.blur.presentation.Main.Setting.ModalDrawerSheetViewModel
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
