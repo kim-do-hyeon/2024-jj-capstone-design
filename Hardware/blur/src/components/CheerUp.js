@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CheerUp.css';
 
-function CheerUp() {
+function CheerUp({ userName }) {
     const [cheerUp, setCheerUp] = useState('');
 
     const cheerUps = [
@@ -21,11 +21,9 @@ function CheerUp() {
 
     return (
         <div className="welcomeSign">
-        반가워요,
-        <div className='userName'>
-            Guest.
-        </div>
-        {cheerUp}
+            반가워요,
+            <div className='userName'>{userName}</div>
+            {cheerUp}
         </div>
     );
 }
