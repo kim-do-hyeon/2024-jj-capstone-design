@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 import os
-import cv2
+import cv2, json
 from datetime import datetime, timezone
 from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
@@ -67,8 +67,12 @@ def face() :
         return jsonify(result = "fail", type = "save_image", message = str(e))
     
     result = (predict_face(file_path))
-    print(result)
-    return jsonify(result = "success", type = "face", face = str(result))
+    try :
+        username = Faces.query.filter_by(displayname = result).first()
+        username = (username.username)
+    except :
+        username = ""
+    return jsonify(result = "success", type = "face", face = str(result), username = username)
 
 @blueprint.route("/distance", methods = ['GET', 'POST'])
 def distnace() :
@@ -164,16 +168,18 @@ def widgets_custom() :
     except Exception as e :
         return jsonify(result = "fail", type = "widget_custom", message = "Fail : {}".format(str(e)))
 
-@blueprint.route('/get_widgets_custom', methods = ['GET', 'POST'])
-def get_widgets_custom() :
-    data = request.args.to_dict()
-    username = session['username']
-    model_code = data['model_code']
+@blueprint.route('/get_widgets_custom/<path:subpath>', methods = ['GET', 'POST'])
+def get_widgets_custom(subpath) :
+    data = subpath.split("=")
+    username = data[-1]
+    # model_code = data['model_code']
+    model_code = "1234-5678" # Temporary Code
     user_data = CustomLocation.query.filter_by(username = username, model_code = str(model_code)).first()
     if user_data != None :
-        return jsonify(result = "success", type = "get_widgets_custom", message = user_data.index)
+        user_widgets = json.loads(user_data.index)
+        return jsonify(result = "success", type = "get_widgets_custom", message = user_widgets)
     else :
-        return jsonify(result = "fail", type = "get_widgets_custom", message = "Empyt Database")
+        return jsonify(result = "fail", type = "get_widgets_custom", message = "Empty Database")
 
 
 
