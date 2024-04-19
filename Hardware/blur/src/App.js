@@ -11,6 +11,7 @@ function App() {
     const [widgets, setWidgets] = useState([]);
     const [showText, setShowText] = useState(false);
     const [userName, setUserName] = useState("Guest");
+    const [userid, setUserId] = useState("Guest");
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
@@ -34,9 +35,37 @@ function App() {
         return () => clearTimeout(timer);
     }, []);
 
-    const handleUserDetection = (active, name = "Guest") => {
+    const handleUserDetection = async (active, name = "Guest", id = "Guest") => {
         setIsActive(active);
         setUserName(name);
+        setUserId(id);
+        try {
+            const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
+            if(loginResponse.data.message === "Empty Database"){
+                try {
+                    const response = await axios.get('https://jj.system32.kr/widgets_index');
+                    const messageOnly = response.data.message;
+                    const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                        type,
+                        row: position[0],
+                        col: position[1]
+                    }));
+                    setWidgets(mappedWidgets);
+                } catch (error) {
+                    console.error('Error fetching widgets:', error);
+                }
+            }else{
+                const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
+                    type,
+                    row: position[0],
+                    col: position[1]
+                }));
+                console.log(mappedWidgets);
+                setWidgets(mappedWidgets);
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
     };
 
     return (
