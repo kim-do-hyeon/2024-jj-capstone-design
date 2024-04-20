@@ -52,8 +52,10 @@ const CameraFeed = ({ onUserDetected }) => {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
         .then(response => {
-            if (response.data.face !== null || response.data.face !== "Unknown" || response.data.face !== "") {
-                onUserDetected(true, response.data.face, response.data.username);
+            const detectedFace = response.data.face;
+            const detectedUsername = response.data.username;
+            if (detectedFace && detectedFace !== "Unknown" && detectedUsername) {
+                onUserDetected(true, detectedFace, detectedUsername);
             } else {
                 onUserDetected(false, "Guest", "Guest");
             }
