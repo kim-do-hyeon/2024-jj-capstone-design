@@ -30,13 +30,17 @@ def register_module(path_type) :
         if isUser :
             return jsonify(result = "fail", message = "exist user")
         else :
-            new_user = Users(username = username,
-                              password = password,
-                              email = email,
-                              originalname = originalname)
-            db.session.add(new_user)
-            db.session.commit()
-            return jsonify(result = "success", type = "register_user")
+            isEmail = Users.query.filter_by(email = email).first()
+            if isEmail :
+                return jsonify(reulst = "fail", message = "exist email")
+            else :
+                new_user = Users(username = username,
+                                password = password,
+                                email = email,
+                                originalname = originalname)
+                db.session.add(new_user)
+                db.session.commit()
+                return jsonify(result = "success", type = "register_user")
     elif path_type[0] == "face" :
         '''
             username <- required
