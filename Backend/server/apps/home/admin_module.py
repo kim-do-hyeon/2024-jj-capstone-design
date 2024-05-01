@@ -24,11 +24,11 @@ def admin_module(path_type) :
 
             elif path_type[1] == "widgets" :
                 if path_type[2] == "list" :
-                    widget_names = {}
+                    widget_datas = {}
                     widget_list = Widget.query.all()
                     for i in widget_list :
-                        widget_names[i.id] = i.widget_name
-                    return jsonify(result = "success", type = "widget_list", message = widget_names)
+                        widget_datas[i.id] = {"id" : i.id, "widgets_name" : i.widget_name}
+                    return jsonify(result = "success", type = "widget_list", message = widget_datas)
                 elif path_type[2] == "add" :
                     isAdmin = Users.query.filter_by(username = session['username']).first().admin
                     if isAdmin :
