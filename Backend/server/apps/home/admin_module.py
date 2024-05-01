@@ -13,7 +13,7 @@ def admin_module(path_type) :
                         user_data = {}
                         user_list = Users.query.all()
                         for i in user_list :
-                            user_data[i.id] = {"username" : i.username, "email" : i.email, "originalname" : i.originalname, "profile_image" : i.profile_image}
+                            user_data[i.id] = {"id" : i.id, "username" : i.username, "email" : i.email, "originalname" : i.originalname, "profile_image" : i.profile_image}
                         return jsonify(result = "success", type = "user_list", message = user_data)
                     elif path_type[2] == "delete" :
                         id = path_type[3]
