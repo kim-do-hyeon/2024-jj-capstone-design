@@ -27,6 +27,8 @@
 		24D2686F2BE30F440038BF35 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D2686E2BE30F440038BF35 /* AdminView.swift */; };
 		24D268722BE311670038BF35 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D268712BE311670038BF35 /* LoginView.swift */; };
 		24D268742BE3160B0038BF35 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D268732BE3160B0038BF35 /* LoginService.swift */; };
+		24F4641A2BE3DB6A00BB4858 /* FindPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F464192BE3DB6A00BB4858 /* FindPasswordView.swift */; };
+		24F4641C2BE3E04600BB4858 /* FindPasswordResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F4641B2BE3E04600BB4858 /* FindPasswordResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		24D2686E2BE30F440038BF35 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
 		24D268712BE311670038BF35 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		24D268732BE3160B0038BF35 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		24F464192BE3DB6A00BB4858 /* FindPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordView.swift; sourceTree = "<group>"; };
+		24F4641B2BE3E04600BB4858 /* FindPasswordResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +239,8 @@
 			isa = PBXGroup;
 			children = (
 				24D268712BE311670038BF35 /* LoginView.swift */,
+				24F464192BE3DB6A00BB4858 /* FindPasswordView.swift */,
+				24F4641B2BE3E04600BB4858 /* FindPasswordResultView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -373,7 +379,9 @@
 			files = (
 				247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */,
 				247B6A582BE1FAAD00866D72 /* APIModel.swift in Sources */,
+				24F4641A2BE3DB6A00BB4858 /* FindPasswordView.swift in Sources */,
 				247B6A612BE2116A00866D72 /* WidgetsListView.swift in Sources */,
+				24F4641C2BE3E04600BB4858 /* FindPasswordResultView.swift in Sources */,
 				247B6A552BE1FA9900866D72 /* UserService.swift in Sources */,
 				24D2686F2BE30F440038BF35 /* AdminView.swift in Sources */,
 				247B6A5A2BE20A8300866D72 /* MainView.swift in Sources */,

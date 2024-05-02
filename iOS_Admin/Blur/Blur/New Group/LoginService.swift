@@ -35,4 +35,12 @@ class LoginService {
         
         return adminCheck
     }
+    
+    func findPassword(username : String, email : String) async throws -> APIModel {
+        var urlString = "https://jj.system32.kr/reset_password?username=\(username)&email=\(email)"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(APIModel.self, from: data)
+        return result
+    }
 }

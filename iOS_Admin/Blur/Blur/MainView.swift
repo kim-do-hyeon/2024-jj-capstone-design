@@ -41,13 +41,23 @@ struct MainView: View {
                             .fontWeight(.bold)
                             .cornerRadius(10)
                     }
+                    
+                    NavigationLink(destination: FindPasswordView()) {
+                        Text("비밀번호 찾기 >")
+                            .frame(width: 120)
+                            .foregroundColor(Color.mainText)
+                            .font(.system(size: 14))
+                            .fontWeight(.bold)
+                            .cornerRadius(10)
+                    }
+                    .padding(.top, 20)
                 }
             }
             .navigationBarHidden(true) // NavigationBar 숨김
             .onAppear {
                 // 앱 시작 시 로그인 상태 확인
-                isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-                isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
+//                isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+//                isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
             }
         }
     }
