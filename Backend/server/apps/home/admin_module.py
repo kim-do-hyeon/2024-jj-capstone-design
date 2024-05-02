@@ -68,6 +68,10 @@ def admin_module(path_type) :
                         db.session.delete(delete_api)
                         db.session.commit()
                         return jsonify(result = "success", type = "api_delete")
-
-
-            
+    elif path_type[0] == "check" :
+        isAdmin = Users.query.filter_by(username = session['username']).first().admin
+        if isAdmin :
+            return jsonify(result = "success", type = "admin_check", message = "True")
+        else :
+            return jsonify(result = "fail", type = "admin_check", message = "False")
+        
