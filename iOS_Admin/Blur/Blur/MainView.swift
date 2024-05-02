@@ -3,7 +3,6 @@ import SwiftUI
 struct MainView: View {
     @State private var isLoggedIn = false
     @State private var isAdmin = false
-    
 
     var body: some View {
         NavigationView {
@@ -22,15 +21,7 @@ struct MainView: View {
                     .foregroundColor(Color.mainsubText)
                     .font(.system(size: 14))
                 Spacer()
-                NavigationLink(destination: Group {
-                    if isLoggedIn && isAdmin {
-                        AdminView()
-                    } else if isLoggedIn && isAdmin == false {
-                        EmptyView()
-                    }else {
-                        LoginView()
-                    }
-                }) {
+                NavigationLink(destination: decideDestinationView()) {
                     Text(isLoggedIn ? "시작하기" : "로그인") // 로그인 상태에 따라 버튼 텍스트 변경
                         .padding()
                         .frame(width: 380)
@@ -58,6 +49,18 @@ struct MainView: View {
                 isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
                 isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
             }
+        }
+    }
+
+    func decideDestinationView() -> some View {
+        if isLoggedIn {
+            if isAdmin {
+                return AnyView(AdminView(isLoggedIn : $isLoggedIn))
+            } else {
+                return AnyView(UserView(isLoggedIn: $isLoggedIn))
+            }
+        } else {
+            return AnyView(LoginView())
         }
     }
 }

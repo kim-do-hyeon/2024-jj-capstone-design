@@ -22,6 +22,7 @@
 		247B6A612BE2116A00866D72 /* WidgetsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A602BE2116A00866D72 /* WidgetsListView.swift */; };
 		247B6A632BE2118500866D72 /* WidgetsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A622BE2118500866D72 /* WidgetsService.swift */; };
 		247B6A652BE21BC900866D72 /* UserAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A642BE21BC900866D72 /* UserAddView.swift */; };
+		24C1640B2BE36C5800BBC080 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C1640A2BE36C5800BBC080 /* UserView.swift */; };
 		24D2686A2BE30D690038BF35 /* WidgetsAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D268692BE30D690038BF35 /* WidgetsAddView.swift */; };
 		24D2686F2BE30F440038BF35 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D2686E2BE30F440038BF35 /* AdminView.swift */; };
 		24D268722BE311670038BF35 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D268712BE311670038BF35 /* LoginView.swift */; };
@@ -64,6 +65,7 @@
 		247B6A602BE2116A00866D72 /* WidgetsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsListView.swift; sourceTree = "<group>"; };
 		247B6A622BE2118500866D72 /* WidgetsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsService.swift; sourceTree = "<group>"; };
 		247B6A642BE21BC900866D72 /* UserAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddView.swift; sourceTree = "<group>"; };
+		24C1640A2BE36C5800BBC080 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		24D268692BE30D690038BF35 /* WidgetsAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsAddView.swift; sourceTree = "<group>"; };
 		24D2686E2BE30F440038BF35 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
 		24D268712BE311670038BF35 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -124,7 +126,6 @@
 				247B6A532BE1FA8C00866D72 /* Network */,
 				247B6A292BE1FA8300866D72 /* BlurApp.swift */,
 				247B6A592BE20A8300866D72 /* MainView.swift */,
-				24D2686E2BE30F440038BF35 /* AdminView.swift */,
 				247B6A2D2BE1FA8400866D72 /* Assets.xcassets */,
 				247B6A2F2BE1FA8400866D72 /* Preview Content */,
 			);
@@ -184,12 +185,30 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		24C164082BE36C4400BBC080 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				24D2686E2BE30F440038BF35 /* AdminView.swift */,
+				24D2686D2BE30D7E0038BF35 /* Widgets */,
+				24D2686C2BE30D7A0038BF35 /* User */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		24C164092BE36C4D00BBC080 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				24C1640A2BE36C5800BBC080 /* UserView.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		24D2686B2BE30D740038BF35 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24C164092BE36C4D00BBC080 /* User */,
+				24C164082BE36C4400BBC080 /* Admin */,
 				24D268702BE3115E0038BF35 /* Login */,
-				24D2686D2BE30D7E0038BF35 /* Widgets */,
-				24D2686C2BE30D7A0038BF35 /* User */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -362,6 +381,7 @@
 				24D268742BE3160B0038BF35 /* LoginService.swift in Sources */,
 				247B6A632BE2118500866D72 /* WidgetsService.swift in Sources */,
 				24D268722BE311670038BF35 /* LoginView.swift in Sources */,
+				24C1640B2BE36C5800BBC080 /* UserView.swift in Sources */,
 				247B6A652BE21BC900866D72 /* UserAddView.swift in Sources */,
 				24D2686A2BE30D690038BF35 /* WidgetsAddView.swift in Sources */,
 			);

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct UserView: View {
+struct UserListView: View {
     @State private var users: [User] = []
 
     var body: some View {
@@ -71,7 +71,7 @@ struct UserView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView()
+        UserListView()
     }
 }
 

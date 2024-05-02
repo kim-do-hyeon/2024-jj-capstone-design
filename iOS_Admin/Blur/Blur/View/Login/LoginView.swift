@@ -9,7 +9,7 @@ struct LoginView: View {
     @State private var admin = false
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
                 Spacer()
                 Image("Logo")
@@ -32,15 +32,16 @@ struct LoginView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300, height: 60)
                 
-                Text("\(errormessage)")
-                    .foregroundColor(Color.red)
-                    .font(.system(size: 14))
-                
+                if errormessage != "" {
+                    Text("\(errormessage)")
+                        .foregroundColor(Color.red)
+                        .font(.system(size: 14))
+                }
                 if loginSuccess && admin == false{
-                    NavigationLink(destination: EmptyView(), isActive: $loginSuccess) {
+                    NavigationLink(destination: UserView(isLoggedIn: $loginSuccess), isActive: $loginSuccess) {
                     }
                 }else if loginSuccess && admin {
-                    NavigationLink(destination: AdminView(), isActive: $loginSuccess) {
+                    NavigationLink(destination: AdminView(isLoggedIn: $loginSuccess), isActive: $loginSuccess) {
                     }
                 }
                 else {
@@ -75,7 +76,7 @@ struct LoginView: View {
                         .cornerRadius(10)
                 }
             }
-        }
+//        }
         .navigationBarHidden(true) // NavigationBar 숨김
     }
     
