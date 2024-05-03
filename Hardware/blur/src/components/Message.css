@@ -1,0 +1,11 @@
+.message {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100%;
+    font-weight: 800;
+    color: white;
+    background-color: black;
+    padding-bottom: 100%;
+}
