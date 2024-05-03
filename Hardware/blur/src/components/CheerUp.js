@@ -61,7 +61,7 @@ function CheerUp() {
                             'Content-Type': 'multipart/form-data'
                             }
                         });
-                        if (response.data.face !== "Unknown") {
+                        if (response.data.face !== "None") {
                             setFace(response.data.face);
                             console.log("1분 기다림.")
                             setTimeout(takePhoto, 60000); // 1분(60초) 후에 takePhoto 함수 호출
