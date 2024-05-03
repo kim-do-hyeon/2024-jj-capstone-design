@@ -10,19 +10,39 @@ import SwiftUI
 struct UserView: View {
     @Binding var isLoggedIn: Bool // MainView의 isLoggedIn 상태와 바인딩
 
+    @State private var shouldNavigateToMainView = false
+
     var body: some View {
         VStack {
-            Text("User View Content")
+            Spacer()
+            Image("Logo")
+                .resizable()
+                .frame(width: 120, height: 170)
+            Text("BLUR")
+                .foregroundColor(Color.mainText)
+                .frame(width: 700)
+                .font(.system(size: 62))
+                .fontWeight(.bold)
+            Text("Beyond Limitations, Unleashing Reflection")
+                .foregroundColor(Color.mainsubText)
+                .font(.system(size: 14))
+            Spacer()
             
-            NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
+            NavigationLink(destination: MainView(), isActive: $shouldNavigateToMainView) {
                 EmptyView()
+            }.navigationBarHidden(true)
+            
+            //TODO: - Face Recognize
+            NavigationLink(destination: AddFaceView()) {
+                Text("얼굴 등록")
+                    .modifier(ButtonStyle())
             }
-            .isDetailLink(false) // NavigationLink를 통해 전환 시 뒤로가기 버튼을 숨김
             
             Button(action: {
                 // 로그아웃 버튼을 클릭했을 때 실행되는 액션
                 UserDefaults.standard.set(false, forKey: "isLoggedIn") // isLoggedIn을 false로 설정
                 self.isLoggedIn = false // MainView의 isLoggedIn 상태 업데이트
+                self.shouldNavigateToMainView = true // NavigationLink를 활성화하여 MainView로 이동
             }) {
                 Text("로그아웃")
                     .padding()
@@ -37,7 +57,6 @@ struct UserView: View {
     }
 }
 
-
-//#Preview {
-//    UserView()
-//}
+#Preview {
+    UserView(isLoggedIn: .constant(true))
+}

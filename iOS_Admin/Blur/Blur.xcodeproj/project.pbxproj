@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		246B7E112BE5511900452ECB /* AddFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B7E102BE5511900452ECB /* AddFaceView.swift */; };
 		247B6A2A2BE1FA8300866D72 /* BlurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A292BE1FA8300866D72 /* BlurApp.swift */; };
 		247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A2B2BE1FA8300866D72 /* UserListView.swift */; };
 		247B6A2E2BE1FA8400866D72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247B6A2D2BE1FA8400866D72 /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		246B7E102BE5511900452ECB /* AddFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceView.swift; sourceTree = "<group>"; };
 		247B6A262BE1FA8300866D72 /* Blur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		247B6A292BE1FA8300866D72 /* BlurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurApp.swift; sourceTree = "<group>"; };
 		247B6A2B2BE1FA8300866D72 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				24C1640A2BE36C5800BBC080 /* UserView.swift */,
+				246B7E102BE5511900452ECB /* AddFaceView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				24C1640B2BE36C5800BBC080 /* UserView.swift in Sources */,
 				247B6A652BE21BC900866D72 /* UserAddView.swift in Sources */,
 				24D2686A2BE30D690038BF35 /* WidgetsAddView.swift in Sources */,
+				246B7E112BE5511900452ECB /* AddFaceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +562,7 @@
 				DEVELOPMENT_TEAM = TJTHYSLX5C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -587,6 +592,7 @@
 				DEVELOPMENT_TEAM = TJTHYSLX5C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

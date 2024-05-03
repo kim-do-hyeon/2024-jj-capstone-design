@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var isLoggedIn = false
-    @State private var isAdmin = false
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    @State private var isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
 
     var body: some View {
         NavigationView {
@@ -21,7 +21,16 @@ struct MainView: View {
                     .foregroundColor(Color.mainsubText)
                     .font(.system(size: 14))
                 Spacer()
-                NavigationLink(destination: decideDestinationView()) {
+                NavigationLink(destination: {
+                    print(isLoggedIn)
+                    print(isAdmin)
+                    if isLoggedIn{
+                        return AnyView(UserView(isLoggedIn: $isLoggedIn))
+                    }
+                    else {
+                        return AnyView(LoginView())
+                    }
+                }) {
                     Text(isLoggedIn ? "시작하기" : "로그인") // 로그인 상태에 따라 버튼 텍스트 변경
                         .padding()
                         .frame(width: 380)
@@ -30,7 +39,6 @@ struct MainView: View {
                         .fontWeight(.bold)
                         .cornerRadius(10)
                 }
-                
                 if !isLoggedIn {
                     NavigationLink(destination: AddUserView()) {
                         Text("회원가입")
@@ -54,23 +62,6 @@ struct MainView: View {
                 }
             }
             .navigationBarHidden(true) // NavigationBar 숨김
-            .onAppear {
-                // 앱 시작 시 로그인 상태 확인
-//                isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-//                isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
-            }
-        }
-    }
-
-    func decideDestinationView() -> some View {
-        if isLoggedIn {
-            if isAdmin {
-                return AnyView(AdminView(isLoggedIn : $isLoggedIn))
-            } else {
-                return AnyView(UserView(isLoggedIn: $isLoggedIn))
-            }
-        } else {
-            return AnyView(LoginView())
         }
     }
 }
