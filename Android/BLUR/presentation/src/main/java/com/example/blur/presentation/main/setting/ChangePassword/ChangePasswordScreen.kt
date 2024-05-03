@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -92,7 +93,7 @@ fun ChangePasswordScreen(
     onPassword2Change: (String) -> Unit,
     onPassword3Change: (String) -> Unit,
 
-    onChangeClick: () -> Unit
+    onChangeClick: () -> Unit,
 ) {
     val text = AnnotatedString("고객님의 개인정보 보호를 위해 \n 비밀번호를 다시 확인합니다.\n비밀번호가 타인에게 노출되지 않도록 주의해 주세요.")
     val password1FocusRequester = remember { FocusRequester() }
@@ -109,11 +110,13 @@ fun ChangePasswordScreen(
     Surface {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
         ) {
+            Spacer(modifier = Modifier.weight(1f))
+
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = spanStyle) {
@@ -127,15 +130,20 @@ fun ChangePasswordScreen(
 
             Divider()
 
+            Spacer(modifier = Modifier.weight(1f))
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                Spacer(modifier = Modifier.weight(1f))
+
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
-                ){
+                ) {
+
 
                     Text(
                         text = "비밀번호 확인",
@@ -148,6 +156,8 @@ fun ChangePasswordScreen(
                         )
                     )
                 }
+
+                Spacer(modifier = Modifier.weight(1f))
 
                 Text(
                     modifier = Modifier
@@ -222,6 +232,8 @@ fun ChangePasswordScreen(
                     imeAction = ImeAction.Done
                 )
 
+                Spacer(modifier = Modifier.weight(1f))
+
                 FillButton(
                     modifier = Modifier
                         .padding(vertical = 24.dp)
@@ -229,12 +241,8 @@ fun ChangePasswordScreen(
                     text = "비밀번호변경",
                     onClick = onChangeClick
                 )
-
-
-
+                Spacer(modifier = Modifier.weight(1f))
             }
-
-
         }
     }
 }
@@ -250,6 +258,6 @@ fun ChangePasswordScreenPreview() {
         oncurrent_passwordChange = {},
         onPassword2Change = {},
         onPassword3Change = {},
-        onChangeClick={}
+        onChangeClick = {}
     )
 }

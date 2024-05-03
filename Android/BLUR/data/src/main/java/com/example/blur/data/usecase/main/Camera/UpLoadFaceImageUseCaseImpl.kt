@@ -28,10 +28,10 @@ class UpLoadFaceImageUseCaseImpl @Inject constructor(
                 // 응답 처리
                 if (response.result == "success") {
                     // 성공 결과와 메시지 반환
-                    Result.success(response.type ?: "Unknown")
+                    Result.success("[이미지 업로드 성공]")
                 } else {
                     // 실패 결과 반환
-                    Result.failure(Exception("프로필 이미지 업로드 실패"))
+                    Result.failure(Exception("[이미지 업로드 실패]: 얼굴 사진만 업로드가 가능합니다."))
                 }
             } catch (e: Exception) {
                 // 예외 메시지와 함께 실패 결과 반환

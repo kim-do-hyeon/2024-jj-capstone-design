@@ -24,5 +24,5 @@ interface FileService {
     @Headers("ContentType:multipart/form-data;")
     suspend fun uploadfcaeimage(
         @Part profileImage: MultipartBody.Part
-    ): CommonResponse<UpLoadFaceImageUseCase>
+    ): CommonResponse<UpLoadProfileImageResponse>
 }

@@ -8,6 +8,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommonResponse<T>(
     val result: String,
-    val message: String?,
+    val message: String?=null,
     val type: String
 )

@@ -1,5 +1,6 @@
 package com.example.blur.presentation.Main.Home.Camera
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
@@ -27,11 +28,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,12 +56,30 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun UpLoadImageScreen(
     viewmodel: GalleryViewModel = hiltViewModel(),
-    onNavigateToImageSelectScreen:()-> Unit
+    onNavigateToImageSelectScreen:()-> Unit,
+    onNavigateSuccessImage:()->Unit
 ){
     val state = viewmodel.collectAsState().value
     val savedSelectedImages = state.savedSelectedImages // 선택된 이미지 목록
     Log.e("UpLoadImageScreen", "savedSelectedImages: $savedSelectedImages")
     val context = LocalContext.current
+
+    viewmodel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is GallerySideEffect.Toast -> {
+                Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                Log.e("UpLoadImage", sideEffect.message)
+            }
+            is GallerySideEffect.NavigateUpLoadImageScreen -> {
+            }
+
+            GallerySideEffect.SuccessImage -> {
+                onNavigateSuccessImage()
+            }
+        }
+    }
+
+
     UpLoadImageScreen(
         AddButton = onNavigateToImageSelectScreen,
         images = savedSelectedImages,
@@ -66,6 +88,7 @@ fun UpLoadImageScreen(
 }
 
 
+@SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun UpLoadImageScreen(
@@ -74,6 +97,7 @@ private fun UpLoadImageScreen(
     UpLoadFaceImage:()->Unit
 ) {
     val context = LocalContext.current
+
 
     Scaffold(
         topBar = {

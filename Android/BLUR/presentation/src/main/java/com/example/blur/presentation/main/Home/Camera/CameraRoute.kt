@@ -5,4 +5,5 @@ sealed class CameraRoute(
 ) {
     object UpLoadImageScreen : CameraRoute("UpLoadImageScreen")
     object ImageSelectScreen : CameraRoute("ImageSelectScreen")
+    object SuccessImage:CameraRoute("SuccessImage")
 }

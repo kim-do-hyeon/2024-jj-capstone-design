@@ -2,8 +2,13 @@ package com.example.blur.presentation.Main.Home.Camera
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.retrofit.FileService
@@ -13,11 +18,13 @@ import com.example.blur.domain.usecase.main.Camera.GetImageListUseCase
 import com.example.blur.domain.usecase.main.Camera.UpLoadFaceImageUseCase
 import com.example.blur.presentation.Login.SignUpsideEffect
 import com.example.blur.presentation.Main.Home.Camera.CameraX.CameraXActivity
+import com.example.blur.presentation.Main.Setting.ModalDrawerSheetSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -25,6 +32,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.io.File
+import java.io.FileOutputStream
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
@@ -32,13 +40,9 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     @ApplicationContext private val context: Context, // 컨텍스트를 주입받아 앱 전반에서 사용합니다.
     private val getImageListUseCase: GetImageListUseCase,
-    private val fileService: FileService, // FileService를 통해 파일 업로드 관련 처리를 합니다.
+
     private val upLoadFaceImageUseCase: UpLoadFaceImageUseCaseImpl
 ) : ViewModel(), ContainerHost<GalleryState, GallerySideEffect> {
-
-
-    private val _image = MutableStateFlow<String?>(null)
-    val cookie = _image.asStateFlow()
 
     override val container: Container<GalleryState, GallerySideEffect> = container(
         initialState = GalleryState(),
@@ -65,36 +69,44 @@ class GalleryViewModel @Inject constructor(
     }
 
     fun upLoadFaceImage() = intent {
-        try {
-            // `savedSelectedImages`에 대한 파일 생성
-            val selectedImagesFile = createSelectedImagesFile(state.savedSelectedImages)
-            // 파일 업로드를 위해 UseCase 호출
-            val result = upLoadFaceImageUseCase(selectedImagesFile)
-            if (result.isSuccess) {
-                // 성공적으로 업로드된 경우
-                postSideEffect(GallerySideEffect.Toast("이미지 업로드 성공"))
-                // 필요에 따라 추가적인 처리 수행
-            } else {
-                // 업로드 실패한 경우
-                postSideEffect(GallerySideEffect.Toast("이미지 업로드 실패"))
-                // 실패 이유에 대한 추가적인 처리 수행
+        // 각 선택된 이미지를 반복하면서
+        for (image in state.savedSelectedImages) {
+            try {
+                val imageFile = uriToFile(Uri.parse(image.uri), context) // String으로 된 Uri를 Uri 객체로 변환한 후 파일로 변환합니다.
+                // 각 이미지 파일에 대해 업로드 함수를 호출합니다.
+                val result = upLoadFaceImageUseCase.invoke(imageFile)
+
+                // 업로드가 성공했는지 확인합니다.
+                if (result.isSuccess) {
+                    // 성공 시 처리, 예를 들어 UI 업데이트 또는 메시지 표시
+                    postSideEffect(GallerySideEffect.Toast("이미지 업로드 성공"))
+                    postSideEffect(GallerySideEffect.SuccessImage)
+                } else if (result.isFailure) {
+                    // 실패 시 처리, 예를 들어 에러 메시지 표시
+                    result.exceptionOrNull()?.let { exception ->
+                        val errorMessage = exception.localizedMessage ?: "이미지 업로드 실패"
+                        postSideEffect(GallerySideEffect.Toast(errorMessage))
+                    }
+                }
+            } catch (e: Exception) {
+                // 업로드 과정 중 발생한 예외 처리
+                postSideEffect(GallerySideEffect.Toast("이미지 업로드 중 오류 발생"))
             }
-        } catch (e: Exception) {
-            // 예외 발생 시 처리
-            postSideEffect(GallerySideEffect.Toast("이미지 업로드 중 오류 발생: ${e.message}"))
         }
     }
 
-    private fun createSelectedImagesFile(images: List<Image>): File {
-        val fileName = "selected_images.txt"
-        val file = File(context.cacheDir, fileName)
-        val stringBuilder = StringBuilder()
-        for (image in images) {
-            stringBuilder.append(image.uri).append("\n")
+
+    // Uri를 File 객체로 변환하는 함수입니다.
+    private fun uriToFile(uri: Uri, context: Context): File {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val file = File(context.cacheDir, "temp_image_${System.currentTimeMillis()}") // 임시 파일 생성
+        FileOutputStream(file).use { outputStream ->
+            inputStream?.copyTo(outputStream)
         }
-        file.writeText(stringBuilder.toString())
+        inputStream?.close()
         return file
     }
+
 
     fun onAddButton() = intent {
         reduce {
@@ -136,4 +148,5 @@ data class GalleryState(
 sealed interface GallerySideEffect {
     class Toast(val message: String) : GallerySideEffect
     object NavigateUpLoadImageScreen : GallerySideEffect
+    object SuccessImage:GallerySideEffect
 }

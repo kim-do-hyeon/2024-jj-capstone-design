@@ -56,6 +56,7 @@ fun ImageSelectScreen(
     viewmodel: GalleryViewModel = hiltViewModel(),
     maxSelectedImages: Int = 6,
     onNavigateUpLoadImageScreen: () -> Unit,
+    onNavigateSuccessImage:()->Unit
 ) {
     val state = viewmodel.collectAsState().value
     val context = LocalContext.current
@@ -67,6 +68,10 @@ fun ImageSelectScreen(
             }
             is GallerySideEffect.NavigateUpLoadImageScreen -> {
                 onNavigateUpLoadImageScreen()
+            }
+
+            GallerySideEffect.SuccessImage -> {
+                onNavigateSuccessImage()
             }
         }
     }
