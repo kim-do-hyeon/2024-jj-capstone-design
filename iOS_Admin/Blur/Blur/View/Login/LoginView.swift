@@ -89,6 +89,14 @@ struct LoginView: View {
                 if(apiModel.result == "success") {
                     // 로그인 성공 시 UserDefaults에 로그인 상태 저장
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    UserDefaults.standard.set(username, forKey : "Username")
+                    UserDefaults.standard.set(password, forKey: "Password")
+                    // 토큰을 UserDefaults에 저장
+                    
+                    if let token = apiModel.message {
+                        UserDefaults.standard.set(token, forKey: "token")
+                    }
+                    
                     loginSuccess = true
                 } else {
                     errormessage = apiModel.message ?? "Error"
@@ -100,6 +108,7 @@ struct LoginView: View {
             }
         }
     }
+
     
     func checkLoggedIn() {
         let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")

@@ -41,6 +41,7 @@ struct UserView: View {
             Button(action: {
                 // 로그아웃 버튼을 클릭했을 때 실행되는 액션
                 UserDefaults.standard.set(false, forKey: "isLoggedIn") // isLoggedIn을 false로 설정
+                UserDefaults.standard.removeObject(forKey: "token")
                 self.isLoggedIn = false // MainView의 isLoggedIn 상태 업데이트
                 self.shouldNavigateToMainView = true // NavigationLink를 활성화하여 MainView로 이동
             }) {
