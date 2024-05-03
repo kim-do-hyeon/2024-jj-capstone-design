@@ -67,7 +67,8 @@ def register_module(path_type) :
         try :
             known_face_encodings = train_face(username, file_path)
         except Exception as e:
-            return jsonify(result = "fail", type = "train_image", message = "Train Face Error")
+            print(e)
+            return jsonify(result = "fail", type = "train_image", message = "Train Face Error : " + str(e))
 
         new_face_data = Faces(username = username, displayname = displayname, face = known_face_encodings)
         db.session.add(new_face_data)
