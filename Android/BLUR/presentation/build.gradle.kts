@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -36,6 +36,7 @@ android {
 
     buildFeatures{
         compose = true
+        viewBinding = true
     }
 
     composeOptions{
@@ -58,6 +59,7 @@ dependencies {
     implementation(project(":data"))
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

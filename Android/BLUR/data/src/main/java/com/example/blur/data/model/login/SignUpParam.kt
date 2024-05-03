@@ -16,8 +16,4 @@ data class SignUpParam(
     val username: String,
     val password: String,
 ) {
-
-    fun toRequestBody(): RequestBody {
-        return Json.encodeToString(this).toRequestBody()
-    }
 }

@@ -10,7 +10,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context, // Context 주입
-    private val userService: UserService, // Retrofit service
 ) : ViewModel() {
 
 

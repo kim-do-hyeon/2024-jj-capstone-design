@@ -7,5 +7,5 @@ data class UserMessage(
     val username: String,
     val email: String,
     val originalname: String,
-    val profile_image: String
+    val profile_image: String?
 )

@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.example.blur.data.usecase.LoginUseCaseImpl
 import com.example.blur.data.usecase.SignUpUseCaseImpl
+import com.example.blur.data.usecase.main.Camera.UpLoadFaceImageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.GetMessageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.SendMessageUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.ChangeEmailUseCaseImpl
@@ -19,6 +20,7 @@ import com.example.blur.data.usecase.main.userinfo.UpLoadProfileImageUseCaseImpl
 import com.example.blur.domain.usecase.login.FindPasswordUseCase
 import com.example.blur.domain.usecase.login.LoginUseCase
 import com.example.blur.domain.usecase.login.SignUpUseCase
+import com.example.blur.domain.usecase.main.Camera.UpLoadFaceImageUseCase
 import com.example.blur.domain.usecase.main.home.send.GetMessageUseCase
 import com.example.blur.domain.usecase.main.home.send.SendMessageUseCase
 import com.example.blur.domain.usecase.main.setting.ChangePasswordUseCase
@@ -64,4 +66,8 @@ abstract class UserModule {
 
     @Binds
     abstract fun bindGetMessageUseCase(uc:GetMessageUseCaseImpl): GetMessageUseCase
+
+    @Binds
+    abstract fun bindUpLoadFaceImageUseCase(uc: UpLoadFaceImageUseCaseImpl): UpLoadFaceImageUseCase
+
 }

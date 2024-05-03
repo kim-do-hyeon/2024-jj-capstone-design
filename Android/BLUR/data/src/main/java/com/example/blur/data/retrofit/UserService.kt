@@ -31,10 +31,10 @@ interface UserService {
 
     @POST("/register/user/")
     suspend fun signup(
-        @Query("originalname") originalname: String,
-        @Query("username") username: String,
         @Query("password") password: String,
         @Query("email") email: String,
+        @Query("username") username: String,
+        @Query("originalname") originalname: String,
     ): SignUpResponse<String>
 
     @POST("/session_test")

@@ -83,19 +83,15 @@ class SignUpViewModel @Inject constructor(
             postSideEffect(SignUpsideEffect.Toast("두 패스워드가 일치하지 않습니다."))
             return@intent
         }
-        // 회원가입 UseCase 실행 및 결과에 따른 처리
-        val isSuccessful = signUpUseCase(
-            email = state.email,
-            username = state.username,
-            password = state.password,
-            originalname = state.originalname
-        ).getOrThrow()
+        val email = state.email
+        val username = state.username
+        val password = state.password
+        val originalname = state.originalname
 
-        // 회원가입 성공 시 로그인 화면으로 이동 및 성공 메시지 출력
-        if (isSuccessful) {
-            postSideEffect(SignUpsideEffect.NavigateToLoginScreen)
-            postSideEffect(SignUpsideEffect.Toast("회원가입에 성공했습니다."))
-        }
+        val result = signUpUseCase(email,username,password,originalname)
+
+        postSideEffect(SignUpsideEffect.NavigateToLoginScreen)
+        postSideEffect(SignUpsideEffect.Toast("회원가입에 성공했습니다."))
     }
 }
 

@@ -1,6 +1,13 @@
 package com.example.blur.presentation.Main.Home
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.READ_MEDIA_VIDEO
+import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.content.Intent
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -33,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.blur.presentation.R
 import com.example.blur.presentation.Component.ListItems
-import com.example.blur.presentation.Main.Home.CameraX.CameraXActivity
+import com.example.blur.presentation.Main.Home.Camera.CameraActivity
 import com.example.blur.presentation.Main.Home.SendMessage.SendMessageActivity
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -45,6 +52,17 @@ fun HomeScreen(
     val context = LocalContext.current
     // FocusRequester 인스턴스 생성
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+    ) {
+        context.startActivities(
+            arrayOf(Intent(context,CameraActivity::class.java))
+        )
+
+    }
+
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -80,7 +98,13 @@ fun HomeScreen(
             supportingText = "나의 사진을 찍어서 기기에 얼굴을 등록해보세요",
             icon = Icons.Filled.Person,
             onClick = {
-                context.startActivity(Intent(context, CameraXActivity::class.java))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    permissionLauncher.launch(arrayOf(READ_MEDIA_IMAGES, READ_MEDIA_VIDEO, READ_MEDIA_VISUAL_USER_SELECTED))
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    permissionLauncher.launch(arrayOf(READ_MEDIA_IMAGES, READ_MEDIA_VIDEO))
+                } else {
+                    permissionLauncher.launch(arrayOf(READ_EXTERNAL_STORAGE))
+                }
             }
         )
 

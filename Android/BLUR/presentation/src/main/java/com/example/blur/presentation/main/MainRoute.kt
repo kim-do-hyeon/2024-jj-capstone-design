@@ -4,5 +4,4 @@ sealed class MainRoute(
     val name:String
 ) {
     object HomeScreen : MainRoute("HomeScreen")
-
 }

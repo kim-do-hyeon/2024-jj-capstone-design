@@ -1,10 +1,19 @@
 package com.example.blur.data.di
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import java.io.ByteArrayOutputStream
+import android.util.Base64
+
 
 object SharedPreferencesManager {
     private const val COOKIE_PREFS_NAME = "CookiePrefs"
     private const val USERNAME_KEY = "username"
+
+    private const val IMAGE_PREFS_NAME = "ImagePrefs"
+    private const val IMAGE_KEY = "image"
+
 
     fun saveCookie(context: Context, cookie: String) {
         val sharedPreferences = context.getSharedPreferences(COOKIE_PREFS_NAME, Context.MODE_PRIVATE)
@@ -47,4 +56,6 @@ object SharedPreferencesManager {
             apply()
         }
     }
+
+
 }
