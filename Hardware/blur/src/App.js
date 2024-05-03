@@ -6,6 +6,7 @@ import DateTime from './components/DateTime';
 import Weather from './components/Weather';
 import CheerUp from './components/CheerUp';
 import Login from './components/Login';
+import Message from './components/Message';
 
 
 function App() {
@@ -71,11 +72,12 @@ function App() {
         <div className="row" key={`row-${row}`} style={{ height: "330px" }}>
           {[1, 2, 3, 4].map(col => ( // 열 반복
             <div className="col" key={`col-${col}`}>
-              {renderWidget(row, col)} {/* 해당 위치에 위젯 렌더링 */}
+              {renderWidget(row, col)} {/* 해당 위치에 위젯 렌더링 */}  
             </div>
           ))}
         </div>
       ))}
+      <Message/>
     </div>
   );
 }
