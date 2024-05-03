@@ -18,7 +18,7 @@ function Message() {
                     console.error('No messages found.');
                   }
                   } else {
-                    console.error('Failed to retrieve messages.');
+                    console.error('Failed to retrieve messages.') ;
                   }
                 } catch(error) {
                   console.error('Error fetching messages:', error);
