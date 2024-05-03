@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './CheerUp.css';
-import axios from 'axios';
 
-function CheerUp() {
+function CheerUp({ userName }) {
     const [cheerUp, setCheerUp] = useState('');
-    const [face, setFace] = useState(""); // face 상태 추가
-
-    useEffect(() => {
-        takePhoto(); // 페이지가 로드될 때 사진을 찍도록 호출
-    }, []); // 빈 배열을 전달하여 페이지가 로드될 때 한 번만 실행되도록 함
 
     const cheerUps = [
         '멋진 날이 될 거예요!', 
@@ -76,13 +70,9 @@ function CheerUp() {
 
     return (
         <div className="welcomeSign">
-            <span className='textAnimation'>반가워요,</span>
-            <div className='userName'>
-                {face === "Unknown" ? "Guest" : face}.
-            </div>
-            <div>
-                {cheerUp}
-            </div>
+            반가워요,
+            <div className='userName'>{userName}</div>
+            {cheerUp}
         </div>
     );
 }

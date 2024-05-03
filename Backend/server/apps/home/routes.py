@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 import os
-import cv2
+import cv2, json
 from datetime import datetime, timezone
 from flask import request, jsonify, session, send_file
 from werkzeug.utils import secure_filename
@@ -39,6 +39,14 @@ def reset_password() :
 def change_password() :
     return change_password_module()
 
+@blueprint.route('/change_profile', methods = ['GET', 'POST'])
+def change_profile():
+    return chagne_profile_module()
+
+@blueprint.route('/get_user_info', methods = ['GET', 'POST'])
+def get_user_info() :
+    return get_user_info_module()
+
 ''' End User Section '''
  
 ''' Start Face Section '''
@@ -59,7 +67,12 @@ def face() :
         return jsonify(result = "fail", type = "save_image", message = str(e))
     
     result = (predict_face(file_path))
-    return jsonify(result = "success", type = "face", face = str(result))
+    try :
+        username = Faces.query.filter_by(displayname = result).first()
+        username = (username.username)
+    except :
+        username = ""
+    return jsonify(result = "success", type = "face", face = str(result), username = username)
 
 @blueprint.route("/distance", methods = ['GET', 'POST'])
 def distnace() :
@@ -155,16 +168,18 @@ def widgets_custom() :
     except Exception as e :
         return jsonify(result = "fail", type = "widget_custom", message = "Fail : {}".format(str(e)))
 
-@blueprint.route('/get_widgets_custom', methods = ['GET', 'POST'])
-def get_widgets_custom() :
-    data = request.args.to_dict()
-    username = session['username']
-    model_code = data['model_code']
+@blueprint.route('/get_widgets_custom/<path:subpath>', methods = ['GET', 'POST'])
+def get_widgets_custom(subpath) :
+    data = subpath.split("=")
+    username = data[-1]
+    # model_code = data['model_code']
+    model_code = "1234-5678" # Temporary Code
     user_data = CustomLocation.query.filter_by(username = username, model_code = str(model_code)).first()
     if user_data != None :
-        return jsonify(result = "success", type = "get_widgets_custom", message = user_data.index)
+        user_widgets = json.loads(user_data.index)
+        return jsonify(result = "success", type = "get_widgets_custom", message = user_widgets)
     else :
-        return jsonify(result = "fail", type = "get_widgets_custom", message = "Empyt Database")
+        return jsonify(result = "fail", type = "get_widgets_custom", message = "Empty Database")
 
 
 
@@ -205,7 +220,7 @@ def view_image() :
 
 @blueprint.route('/download_image/<path:subpath>')
 def download_image(subpath) :
-    upload_dir = "../upload/development_image/"
+    upload_dir = "../upload/profile_image/"
     PATH = upload_dir + subpath
     return send_file(PATH, as_attachment=True)
 
@@ -241,16 +256,17 @@ def get_messages(receiver_username):
     receiver = Users.query.filter_by(username=receiver_username).first()
     
     if receiver:
-        messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
+        # messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
+        messages = Message.query.filter_by(receiver_id=receiver.id).all()
         messages_data = [{
             'sender': Users.query.get(m.sender_id).username, 
             'content': m.content, 
             'timestamp': m.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         } for m in messages]
         
-        for message in messages:
-            message.is_read = True
-        db.session.commit()
+        # for message in messages:
+        #     message.is_read = True
+        # db.session.commit()
 
         return jsonify(result="success", type="messages_retrieved", messages=messages_data), 200
     else:

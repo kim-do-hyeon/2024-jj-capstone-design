@@ -16,6 +16,7 @@ function Message() {
                     setLastestMessage(messages[0].content);
                   } else {
                     console.error('No messages found.');
+                    
                   }
                   } else {
                     console.error('Failed to retrieve messages.');

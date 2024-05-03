@@ -9,9 +9,12 @@ class Users(db.Model, UserMixin):
     __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
+    originalname = db.Column(db.String(64))
+    profile_image = db.Column(db.String)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.LargeBinary)
     admin = db.Column(db.Integer, default = 0)
+    
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             if hasattr(value, '__iter__') and not isinstance(value, str):

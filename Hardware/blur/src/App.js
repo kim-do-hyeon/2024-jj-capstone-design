@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
-
+import CameraFeed from './components/CameraFeed';
 import DateTime from './components/DateTime';
 import Weather from './components/Weather';
 import CheerUp from './components/CheerUp';
@@ -10,27 +9,64 @@ import Message from './components/Message';
 
 
 function App() {
-  const [widgets, setWidgets] = useState([]);
-  const [showText, setShowText] = useState(false);
+    const [widgets, setWidgets] = useState([]);
+    const [showText, setShowText] = useState(false);
+    const [userName, setUserName] = useState("Guest");
+    const [userid, setUserId] = useState("Guest");
+    const [isActive, setIsActive] = useState(false);
 
-  useEffect(() => {
-    const fetchWidgets = async () => {
-      try {
-        const response = await axios.get('https://jj.system32.kr/widgets_index');
-        const messageOnly = response.data.message; 
-        console.log(messageOnly);
+    useEffect(() => {
+        const fetchWidgets = async () => {
+            try {
+                const response = await axios.get('https://jj.system32.kr/widgets_index');
+                const messageOnly = response.data.message;
+                const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                    type,
+                    row: position[0],
+                    col: position[1]
+                }));
+                setWidgets(mappedWidgets);
+            } catch (error) {
+                console.error('Error fetching widgets:', error);
+            }
+        };
 
-        const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
-          type,
-          row: position[0],
-          col: position[1]
-        }));
+        fetchWidgets();
+        const timer = setTimeout(() => setShowText(true), 1000);
+        return () => clearTimeout(timer);
+    }, []);
 
-        console.log(mappedWidgets)
-        setWidgets(mappedWidgets);
-      } catch (error) {
-        console.error('Error fetching widgets:', error);
-      }
+    const handleUserDetection = async (active, name = "Guest", id = "Guest") => {
+        setIsActive(active);
+        setUserName(name);
+        setUserId(id);
+        try {
+            const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
+            if(loginResponse.data.message === "Empty Database"){
+                try {
+                    const response = await axios.get('https://jj.system32.kr/widgets_index');
+                    const messageOnly = response.data.message;
+                    const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                        type,
+                        row: position[0],
+                        col: position[1]
+                    }));
+                    setWidgets(mappedWidgets);
+                } catch (error) {
+                    console.error('Error fetching widgets:', error);
+                }
+            }else{
+                const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
+                    type,
+                    row: position[0],
+                    col: position[1]
+                }));
+                console.log(mappedWidgets);
+                setWidgets(mappedWidgets);
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
     };
 
     fetchWidgets();
@@ -42,7 +78,7 @@ function App() {
 
     // 컴포넌트가 unmount되면 타이머 해제
     return () => clearTimeout(timer);
-  }, []);
+  };
 
   const renderWidget = (row, col) => {
     const widget = widgets.find(widget => widget.row === row && widget.col === col); // 해당 위치에 해당하는 위젯 찾기
@@ -80,6 +116,5 @@ function App() {
       <Message/>
     </div>
   );
-}
 
 export default App;

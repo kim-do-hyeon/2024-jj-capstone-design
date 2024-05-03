@@ -13,15 +13,22 @@ def admin_module(path_type) :
                         user_data = {}
                         user_list = Users.query.all()
                         for i in user_list :
-                            user_data[i.id] = {"username" : i.username, "email" : i.email}
+                            user_data[i.id] = {"id" : i.id, "username" : i.username, "email" : i.email, "originalname" : i.originalname, "profile_image" : i.profile_image}
                         return jsonify(result = "success", type = "user_list", message = user_data)
+                    elif path_type[2] == "delete" :
+                        id = path_type[3]
+                        delete_user = Users.query.filter_by(id = id).first()
+                        db.session.delete(delete_user)
+                        db.session.commit()
+                        return jsonify(result = "success", type = "user_delete", message = "Deleted Success")
+
             elif path_type[1] == "widgets" :
                 if path_type[2] == "list" :
-                    widget_names = {}
+                    widget_datas = {}
                     widget_list = Widget.query.all()
                     for i in widget_list :
-                        widget_names[i.id] = i.widget_name
-                    return jsonify(result = "success", type = "widget_list", message = widget_names)
+                        widget_datas[i.id] = {"id" : i.id, "widgets_name" : i.widget_name}
+                    return jsonify(result = "success", type = "widget_list", message = widget_datas)
                 elif path_type[2] == "add" :
                     isAdmin = Users.query.filter_by(username = session['username']).first().admin
                     if isAdmin :
@@ -61,6 +68,10 @@ def admin_module(path_type) :
                         db.session.delete(delete_api)
                         db.session.commit()
                         return jsonify(result = "success", type = "api_delete")
-
-
-            
+    elif path_type[0] == "check" :
+        isAdmin = Users.query.filter_by(username = session['username']).first().admin
+        if isAdmin :
+            return jsonify(result = "success", type = "admin_check", message = "True")
+        else :
+            return jsonify(result = "fail", type = "admin_check", message = "False")
+        
