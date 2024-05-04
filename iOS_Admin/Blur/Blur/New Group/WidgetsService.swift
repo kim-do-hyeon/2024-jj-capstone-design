@@ -18,4 +18,13 @@ class WidgetsService {
         return widgetsModelList
     }
     
+    func getUserWidgetsLocation(username : String) async throws -> WidgetsLocationModel {
+        var urlString = "https://jj.system32.kr/get_widgets_custom/username=\(username)"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let widgetsLocationModelList = try JSONDecoder().decode(WidgetsLocationModel.self, from: data)
+        return widgetsLocationModelList
+        
+    }
+    
 }

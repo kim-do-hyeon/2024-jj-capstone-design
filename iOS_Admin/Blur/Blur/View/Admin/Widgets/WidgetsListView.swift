@@ -1,14 +1,8 @@
-//
-//  WidgetsView.swift
-//  Blur
-//
-//  Created by pental on 5/1/24.
-//
-
 import SwiftUI
 
 struct WidgetsListView: View {
     @State private var widgets: [Widgets] = []
+    @Binding var selectedWidget: SelectedWidget? // 선택한 위젯을 전달하기 위한 바인딩
     var body: some View {
         VStack{
             Text("Widgets List")
@@ -16,8 +10,12 @@ struct WidgetsListView: View {
             List {
                 ForEach(widgets, id: \.self) { widget in
                     VStack(alignment: .leading) {
-                        Text(widget.widgets_name ?? "A")
-                            .font(.headline)
+                        Button(action: {
+                            selectedWidget = SelectedWidget(name: widget.widgets_name ?? "")
+                        }) {
+                            Text(widget.widgets_name ?? "A")
+                                .font(.headline)
+                        }
                     }
                 }
             }
@@ -44,6 +42,8 @@ struct WidgetsListView: View {
     }
 }
 
-#Preview {
-    WidgetsListView()
+struct WidgetsListView_Previews: PreviewProvider {
+    static var previews: some View {
+        WidgetsListView(selectedWidget: .constant(nil)) // 선택한 위젯 바인딩 초기화
+    }
 }

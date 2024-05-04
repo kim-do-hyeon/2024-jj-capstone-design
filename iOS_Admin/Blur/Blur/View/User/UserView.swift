@@ -32,10 +32,16 @@ struct UserView: View {
                 EmptyView()
             }.navigationBarHidden(true)
             
-            //TODO: - Face Recognize
-            NavigationLink(destination: AddFaceView()) {
-                Text("얼굴 등록")
-                    .modifier(ButtonStyle())
+            HStack{
+                //TODO: - Face Recognize
+                NavigationLink(destination: AddFaceView()) {
+                    Text("얼굴 등록")
+                        .modifier(ButtonStyle())
+                }
+                NavigationLink(destination: UserWidgetView()) {
+                    Text("위젯 등록")
+                        .modifier(ButtonStyle())
+                }
             }
             
             Button(action: {

@@ -35,10 +35,10 @@ struct AdminView: View {
                 .padding(.horizontal)
 
                 HStack {
-                    NavigationLink(destination: WidgetsListView()) {
-                        Text("위젯관리")
-                            .modifier(ButtonStyle())
-                    }
+//                    NavigationLink(destination: WidgetsListView()) {
+//                        Text("위젯관리")
+//                            .modifier(ButtonStyle())
+//                    }
 
                     NavigationLink(destination: WidgetsAddView()) {
                         Text("위젯추가")
@@ -83,6 +83,6 @@ struct ButtonStyle: ViewModifier {
     }
 }
 
-//#Preview {
-//    AdminView(isLoggedIn:)
-//}
+#Preview {
+    AdminView(isLoggedIn:.constant(true))
+}
