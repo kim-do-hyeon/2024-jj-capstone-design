@@ -39,6 +39,7 @@ class LoginViewModel @Inject constructor(
         val password = state.password
 
         val result = loginUseCase(username, password).getOrThrow()
+
         // 로그인 성공 처리, 메인 액티비티로 이동
         postSideEffect(LoginSideEffect.NavigateToMainActivity)
 

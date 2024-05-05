@@ -1,8 +1,7 @@
 package com.example.blur.data.usecase.main.home.sendmessage
 
 import com.example.blur.data.retrofit.UserService
-import com.example.blur.domain.usecase.main.home.send.GetMessageUseCase
-import retrofit2.await
+import com.example.blur.domain.usecase.main.home.SendMessage.GetMessageUseCase
 import javax.inject.Inject
 
 

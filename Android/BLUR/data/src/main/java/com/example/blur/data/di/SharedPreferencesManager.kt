@@ -11,8 +11,6 @@ object SharedPreferencesManager {
     private const val COOKIE_PREFS_NAME = "CookiePrefs"
     private const val USERNAME_KEY = "username"
 
-    private const val IMAGE_PREFS_NAME = "ImagePrefs"
-    private const val IMAGE_KEY = "image"
 
 
     fun saveCookie(context: Context, cookie: String) {

@@ -2,27 +2,29 @@ package com.example.blur.data.di
 
 import android.content.Context
 import com.example.blur.data.usecase.main.setting.ChangePasswordUseCaseImpl
-import com.example.blur.data.usecase.FindPasswordUseCaseImpl
+import com.example.blur.data.usecase.login.FindPasswordUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.example.blur.data.usecase.LoginUseCaseImpl
-import com.example.blur.data.usecase.SignUpUseCaseImpl
-import com.example.blur.data.usecase.main.Camera.UpLoadFaceImageUseCaseImpl
+import com.example.blur.data.usecase.login.LoginUseCaseImpl
+import com.example.blur.data.usecase.login.SignUpUseCaseImpl
+import com.example.blur.data.usecase.main.home.Camera.UpLoadFaceImageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.GetMessageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.SendMessageUseCaseImpl
+import com.example.blur.data.usecase.main.home.widget.GetWidgetsListUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.ChangeEmailUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.ChangeNameUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.UpLoadProfileImageUseCaseImpl
 import com.example.blur.domain.usecase.login.FindPasswordUseCase
 import com.example.blur.domain.usecase.login.LoginUseCase
 import com.example.blur.domain.usecase.login.SignUpUseCase
-import com.example.blur.domain.usecase.main.Camera.UpLoadFaceImageUseCase
-import com.example.blur.domain.usecase.main.home.send.GetMessageUseCase
-import com.example.blur.domain.usecase.main.home.send.SendMessageUseCase
+import com.example.blur.domain.usecase.main.home.Camera.UpLoadFaceImageUseCase
+import com.example.blur.domain.usecase.main.home.SendMessage.GetMessageUseCase
+import com.example.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
+import com.example.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
 import com.example.blur.domain.usecase.main.setting.ChangePasswordUseCase
 import com.example.blur.domain.usecase.main.userinfo.ChangeEmailUseCase
 import com.example.blur.domain.usecase.main.userinfo.ChangeNameUseCase
@@ -69,5 +71,8 @@ abstract class UserModule {
 
     @Binds
     abstract fun bindUpLoadFaceImageUseCase(uc: UpLoadFaceImageUseCaseImpl): UpLoadFaceImageUseCase
+
+    @Binds
+    abstract fun bindGetWidgetsListUseCase(uc:GetWidgetsListUseCaseImpl): GetWidgetsListUseCase
 
 }

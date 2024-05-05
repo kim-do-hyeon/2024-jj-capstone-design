@@ -10,6 +10,7 @@
         <activity android:name=".Main.Home.SendMessage.SendMessageActivity"/>
         <activity android:name=".Main.Home.Camera.CameraActivity"/>
         <activity android:name=".Main.Home.Camera.CameraX.CameraXActivity"/>
+        <activity android:name=".Main.Home.Widgets.WidgetsActivity"/>
 
         <activity android:name=".SplashActivity"
             android:exported="true">

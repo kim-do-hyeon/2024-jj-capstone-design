@@ -7,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.model.main.home.sendmessage.GetMessage
 import com.example.blur.data.retrofit.UserService
-import com.example.blur.domain.usecase.main.home.send.GetMessageUseCase
-import com.example.blur.domain.usecase.main.home.send.SendMessageUseCase
-import com.example.blur.presentation.Main.Setting.ChangeEmail.ChangeEmailEffect
+import com.example.blur.domain.usecase.main.home.SendMessage.GetMessageUseCase
+import com.example.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -34,7 +33,7 @@ class SendMessageViewModel @Inject constructor(
     private val getMessageUseCase: GetMessageUseCase,
 ) : ViewModel(), ContainerHost<SendMessageState, SendMessageSideEffect> {
 
-    val sharedPreferencesManager = SharedPreferencesManager // 이부분을 추가
+    val sharedPreferencesManager = SharedPreferencesManager
 
     override val container: Container<SendMessageState, SendMessageSideEffect> = container(
         initialState = SendMessageState(),

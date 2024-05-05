@@ -12,10 +12,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.retrofit.FileService
-import com.example.blur.data.usecase.main.Camera.UpLoadFaceImageUseCaseImpl
+import com.example.blur.data.usecase.main.home.Camera.UpLoadFaceImageUseCaseImpl
 import com.example.blur.domain.model.Image
-import com.example.blur.domain.usecase.main.Camera.GetImageListUseCase
-import com.example.blur.domain.usecase.main.Camera.UpLoadFaceImageUseCase
+import com.example.blur.domain.usecase.main.home.Camera.GetImageListUseCase
+import com.example.blur.domain.usecase.main.home.Camera.UpLoadFaceImageUseCase
 import com.example.blur.presentation.Login.SignUpsideEffect
 import com.example.blur.presentation.Main.Home.Camera.CameraX.CameraXActivity
 import com.example.blur.presentation.Main.Setting.ModalDrawerSheetSideEffect

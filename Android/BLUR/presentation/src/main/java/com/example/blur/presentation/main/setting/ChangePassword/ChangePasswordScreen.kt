@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -85,7 +86,7 @@ fun ChangePasswordScreen(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ChangePasswordScreen(
+private fun ChangePasswordScreen(
     current_password: String,
     password2: String,
     password3: String,
@@ -113,135 +114,136 @@ fun ChangePasswordScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
+                .padding(16.dp)
         ) {
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(style = spanStyle) {
-                        append(text.substring(0, 12)) // "고객님의 개인정보 보호" 부분
-                    }
-                    append(text.substring(12)) // 나머지 텍스트
-                },
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
-            )
-
-            Divider()
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Column(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                    .weight(0.2f),
+                contentAlignment = Alignment.Center
             ) {
-                Spacer(modifier = Modifier.weight(1f))
-
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(style = spanStyle) {
+                            append(text.substring(0, 12)) // "고객님의 개인정보 보호" 부분
+                        }
+                        append(text.substring(12)) // 나머지 텍스트
+                    },
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            Divider()
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ){
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "비밀번호 확인",
+                            style = TextStyle(
+                                fontSize = 30.sp,
+                                lineHeight = 28.sp,
+                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
+                                fontWeight = FontWeight(400),
+                                color = Color(0xFF1D1B20),
+                            )
+                        )
+                    }
 
 
                     Text(
-                        text = "비밀번호 확인",
-                        style = TextStyle(
-                            fontSize = 30.sp,
-                            lineHeight = 28.sp,
-                            fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF1D1B20),
-                        )
+                        modifier = Modifier
+                            .padding(top = 30.dp),
+                        text = "현재 비밀번호",
+                        style = MaterialTheme.typography.bodySmall
                     )
+
+                    PasswordTextField(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
+                            .focusRequester(password1FocusRequester),
+                        value = current_password,
+                        visualTransformation = PasswordVisualTransformation(),
+                        onValueChange = oncurrent_passwordChange,
+                        label = "Password",
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                keyboardController?.hide() // 키보드를 숨깁니다.
+                            }
+                        ),
+                        imeAction = ImeAction.Next
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 10.dp),
+                        text = "새 비밀번호",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    PasswordTextField(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
+                            .focusRequester(password2FocusRequester),
+                        value = password2,
+                        visualTransformation = PasswordVisualTransformation(),
+                        onValueChange = onPassword2Change,
+                        label = "Password",
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                password1FocusRequester.requestFocus() // 키보드를 숨깁니다.
+                            }
+                        ),
+                        imeAction = ImeAction.Next
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 10.dp),
+                        text = "새 비밀번호 확인",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    PasswordTextField(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
+                            .focusRequester(password3FocusRequester),
+                        value = password3,
+                        visualTransformation = PasswordVisualTransformation(),
+                        onValueChange = onPassword3Change,
+                        label = "Password",
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                keyboardController?.hide()
+                                onChangeClick()
+                            }
+                        ),
+                        imeAction = ImeAction.Done
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    FillButton(
+                        modifier = Modifier
+                            .padding(vertical = 24.dp)
+                            .fillMaxWidth(),
+                        text = "비밀번호변경",
+                        onClick = onChangeClick
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
                 }
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = 30.dp),
-                    text = "현재 비밀번호",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                PasswordTextField(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
-                        .focusRequester(password1FocusRequester),
-                    value = current_password,
-                    visualTransformation = PasswordVisualTransformation(),
-                    onValueChange = oncurrent_passwordChange,
-                    label = "Password",
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide() // 키보드를 숨깁니다.
-                        }
-                    ),
-                    imeAction = ImeAction.Next
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = 10.dp),
-                    text = "새 비밀번호",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                PasswordTextField(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
-                        .focusRequester(password2FocusRequester),
-                    value = password2,
-                    visualTransformation = PasswordVisualTransformation(),
-                    onValueChange = onPassword2Change,
-                    label = "Password",
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            password1FocusRequester.requestFocus() // 키보드를 숨깁니다.
-                        }
-                    ),
-                    imeAction = ImeAction.Next
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = 10.dp),
-                    text = "새 비밀번호 확인",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                PasswordTextField(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
-                        .focusRequester(password3FocusRequester),
-                    value = password3,
-                    visualTransformation = PasswordVisualTransformation(),
-                    onValueChange = onPassword3Change,
-                    label = "Password",
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            onChangeClick()
-                        }
-                    ),
-                    imeAction = ImeAction.Done
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                FillButton(
-                    modifier = Modifier
-                        .padding(vertical = 24.dp)
-                        .fillMaxWidth(),
-                    text = "비밀번호변경",
-                    onClick = onChangeClick
-                )
-                Spacer(modifier = Modifier.weight(1f))
             }
         }
     }

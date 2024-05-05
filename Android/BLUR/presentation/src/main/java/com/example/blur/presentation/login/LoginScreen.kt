@@ -79,7 +79,6 @@ fun LoginScreen(
                     Intent(
                         context, MainActivity::class.java
                     ).apply {
-                        //로그인화면 못가게 하는거
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                 )

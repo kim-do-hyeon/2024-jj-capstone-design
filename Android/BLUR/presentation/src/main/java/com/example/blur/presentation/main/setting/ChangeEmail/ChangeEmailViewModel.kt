@@ -62,6 +62,10 @@ class ChangeEmailViewModel @Inject constructor(
             }
         )
     }
+
+    fun onMainScreen() =intent {
+        postSideEffect(ChangeEmailEffect.NavigateToMainActivity)
+    }
 }
 
 

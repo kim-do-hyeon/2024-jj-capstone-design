@@ -1,14 +1,9 @@
 package com.example.blur.data.usecase.main.home.sendmessage
 
 import android.content.Context
-import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.model.main.home.sendmessage.SendMessageRequest
-import com.example.blur.data.model.main.home.sendmessage.SendMessageResponse
 import com.example.blur.data.retrofit.UserService
-import com.example.blur.domain.usecase.main.home.send.SendMessageUseCase
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
 import javax.inject.Inject
 
 class SendMessageUseCaseImpl @Inject constructor(

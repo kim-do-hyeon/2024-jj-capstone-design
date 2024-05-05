@@ -42,8 +42,10 @@ import com.example.blur.presentation.R
 import com.example.blur.presentation.Component.ListItems
 import com.example.blur.presentation.Main.Home.Camera.CameraActivity
 import com.example.blur.presentation.Main.Home.SendMessage.SendMessageActivity
+import com.example.blur.presentation.Main.Home.Widgets.WidgetsActivity
+import android.app.Activity
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+
 @Composable
 fun HomeScreen(
     modifier: Modifier= Modifier
@@ -126,6 +128,7 @@ fun HomeScreen(
             supportingText = "스마트 미러의 위젯을 설정해보세요.",
             icon = Icons.Filled.Widgets,
             onClick = {
+                context.startActivity(Intent(context, WidgetsActivity::class.java))
             }
         )
 

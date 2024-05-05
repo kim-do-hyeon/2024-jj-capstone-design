@@ -6,6 +6,7 @@ import com.example.blur.data.model.login.SignUpResponse
 import com.example.blur.data.model.main.home.sendmessage.GetMessageResponse
 import com.example.blur.data.model.main.home.sendmessage.SendMessageRequest
 import com.example.blur.data.model.main.home.sendmessage.SendMessageResponse
+import com.example.blur.data.model.main.home.widgets.WidgetResponse
 import com.example.blur.data.model.main.setting.ChangePasswordResponse
 import com.example.blur.data.model.main.userinfo.ProfileResponse
 import com.example.blur.data.model.main.userinfo.UserInfoResponse
@@ -53,12 +54,6 @@ interface UserService {
         @Query("new_password") new_password: String,
     ): Response<ChangePasswordResponse>
 
-    @Multipart
-    @POST("development_image")
-    fun uploadImage(
-        @Part image: MultipartBody.Part,
-    ): Call<ResponseBody>
-
     @POST("/get_user_info")
     suspend fun getUserInfo(): Response<UserInfoResponse>
 
@@ -82,8 +77,19 @@ interface UserService {
 
     @Headers("Content-Type: application/json")
     @POST("/send_message")
-    fun sendMessage(
+    suspend fun sendMessage(
         @Body request: SendMessageRequest
     ): Call<SendMessageResponse>
+
+    @POST("/widgets_custom")
+    suspend fun SettingWidgetList(
+        @Query("model_code")model_code:String,
+        @Query("index")index:String,
+    ): WidgetResponse
+
+    @GET("/get_widgets_custom/{username}")
+    suspend fun getWidgetList(
+        @Path("username") username: String
+    ): Response<WidgetResponse>
 }
 

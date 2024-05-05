@@ -161,6 +161,7 @@ fun SignUpScreen(
                         .padding(contentPadding)
                         .verticalScroll(scrollState)
                 ) {
+                    Spacer(modifier = Modifier.weight(1f))
                     BLUE_Title()
                     Text(
                         text = "새로운 계정을 만들어 볼까요?",
@@ -280,6 +281,7 @@ fun SignUpScreen(
                         "로그인 >",
                         onClick = onNavigateToLoginScreen
                     )
+                    Spacer(modifier = Modifier.weight(1f))
 
                 }
 

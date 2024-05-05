@@ -40,11 +40,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.blur.domain.model.Image
-import com.example.blur.presentation.Component.Card.ImageWithCoil
 
 @Composable
 fun AddImage(

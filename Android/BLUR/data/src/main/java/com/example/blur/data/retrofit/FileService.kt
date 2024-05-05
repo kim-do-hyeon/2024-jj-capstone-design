@@ -2,7 +2,7 @@ package com.example.blur.data.retrofit
 
 import com.example.blur.data.model.login.CommonResponse
 import com.example.blur.data.model.main.userinfo.UpLoadProfileImageResponse
-import com.example.blur.domain.usecase.main.Camera.UpLoadFaceImageUseCase
+import com.example.blur.domain.usecase.main.home.Camera.UpLoadFaceImageUseCase
 import okhttp3.MultipartBody
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
