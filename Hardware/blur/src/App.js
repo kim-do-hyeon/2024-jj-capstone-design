@@ -5,8 +5,7 @@ import DateTime from './components/DateTime';
 import Weather from './components/Weather';
 import CheerUp from './components/CheerUp';
 import Login from './components/Login';
-import Message from './components/Message';
-
+import axios from 'axios';
 
 function App() {
     const [widgets, setWidgets] = useState([]);
@@ -69,52 +68,32 @@ function App() {
         }
     };
 
-    fetchWidgets();
-
-    // setShowText(true)를 1초 후에 호출하여 텍스트를 서서히 렌더링
-    const timer = setTimeout( () => {
-      setShowText(true);
-    }, 1000);
-
-    // 컴포넌트가 unmount되면 타이머 해제
-    return () => clearTimeout(timer);
-  };
-
-  const renderWidget = (row, col) => {
-    const widget = widgets.find(widget => widget.row === row && widget.col === col); // 해당 위치에 해당하는 위젯 찾기
-    if (widget) {
-      // 해당 위치에 위젯이 있는 경우
-      switch (widget.type) {
-        case 'DateTime':
-          return <DateTime key={`${row}-${col}`} />;
-        case 'Weather':
-          return <Weather key={`${row}-${col}`} />;
-        case 'CheerUp':
-          return <CheerUp key={`${row}-${col}`} />;
-        case 'Login':
-          return <Login key={`${row}-${col}`} />;
-        default:
-          return null;
-      }
-    } else {
-      // 해당 위치에 위젯이 없는 경우
-      return null;
-    }
-  };
-
-  return (
-    <div className={`container ${showText ? 'show' : ''}`}> {/*서버 시작 시 텍스트 서서히 렌더링*/}
-      {[1, 2, 3].map(row => ( // 행 반복
-        <div className="row" key={`row-${row}`} style={{ height: "330px" }}>
-          {[1, 2, 3, 4].map(col => ( // 열 반복
-            <div className="col" key={`col-${col}`}>
-              {renderWidget(row, col)} {/* 해당 위치에 위젯 렌더링 */}  
-            </div>
-          ))}
+    return (
+        <div className={`container ${showText ? 'show' : ''}`}>
+            <CameraFeed onUserDetected={handleUserDetection} />
+            {[1, 2, 3].map(row => (
+                <div className="row" key={row} style={{ height: "330px" }}>
+                    {[1, 2, 3, 4].map(col => (
+                        <div className="col" key={col}>
+                            {widgets.find(widget => widget.row === row && widget.col === col) ? (
+                                (() => {
+                                    const widget = widgets.find(widget => widget.row === row && widget.col === col);
+                                    switch (widget.type) {
+                                        case 'DateTime': return <DateTime key={`${row}-${col}`} />;
+                                        case 'Weather': return <Weather key={`${row}-${col}`} />;
+                                        case 'CheerUp': return <CheerUp key={`${row}-${col}`} userName={userName} />;
+                                        case 'Login': return <Login key={`${row}-${col}`} />;
+                                        default: return null;
+                                    }
+                                })()
+                            ) : null}
+                        </div>
+                    ))}
+                </div>
+            ))}
+            {!isActive && <Login />}
         </div>
-      ))}
-      <Message/>
-    </div>
-  );
+    );
+}
 
 export default App;
