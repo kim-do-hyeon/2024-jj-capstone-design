@@ -11,7 +11,8 @@ struct WidgetsListView: View {
                 ForEach(widgets, id: \.self) { widget in
                     VStack(alignment: .leading) {
                         Button(action: {
-                            selectedWidget = SelectedWidget(name: widget.widgets_name ?? "")
+                            selectedWidget = SelectedWidget(name: widget.widgets_name ?? "A", location: selectedWidget?.location ?? [0, 0])
+                                            
                         }) {
                             Text(widget.widgets_name ?? "A")
                                 .font(.headline)
@@ -44,6 +45,6 @@ struct WidgetsListView: View {
 
 struct WidgetsListView_Previews: PreviewProvider {
     static var previews: some View {
-        WidgetsListView(selectedWidget: .constant(nil)) // 선택한 위젯 바인딩 초기화
+        WidgetsListView(selectedWidget: .constant(SelectedWidget(name: "Example", location: [1, 1])))
     }
 }

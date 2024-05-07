@@ -1,94 +1,148 @@
 import SwiftUI
 
 struct SelectedWidget: Identifiable {
-    let id = UUID() // Identifiable 프로토콜을 준수하기 위해 id 속성 추가
-    let name: String // 선택한 위젯의 이름
+    let id = UUID()
+    let name: String
+    let location : [Int]
 }
 
 struct UserWidgetView: View {
-    // 기본 사용자명을 설정
-    @State private var username = UserDefaults.standard.string(forKey: "Username")
-    // 선택한 위젯 (옵셔널 타입으로 변경)
-    @State private var selectedWidget: SelectedWidget? = nil
-    // API로부터 받은 위젯 위치 데이터
-    @State private var widgetLocations: [String: [Int]] = [:] // 초기에 빈 딕셔너리로 설정
+    @State private var Username = UserDefaults.standard.string(forKey: "Username")
+    @State private var Password = UserDefaults.standard.string(forKey: "Password")
+    
+    @State private var selectedWidget: SelectedWidget?
+    @State private var widgetLocations: [String: [Int]] = [:]
+    @State private var isUploading = false
 
     var body: some View {
         NavigationView {
-            VStack {
-                // 그리드 형식으로 위젯 위치를 렌더링
-                LazyVGrid(columns: Array(repeating: GridItem(), count: 4), spacing: 10) {
-                    ForEach(1...12, id: \.self) { index in
-                        let row = (index - 1) / 4 + 1
-                        let column = (index - 1) % 4 + 1
-                        let location = [row, column] // 위치를 [행, 열]로 표현
-                        if let widget = findWidgetName(at: location) {
-                            Button(action: {
-                                selectedWidget = SelectedWidget(name: widget)
-                            }, label: {
-                                Text(widget)
-                                    .font(.system(size: 20))
-                                    .foregroundStyle(.mainText)
-                            })
-                        } else {
-                            Button(action: {
-                                selectedWidget = nil
-                            }, label: {
-                                Image(systemName: "plus.circle.dashed")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.mainText)
-                            })
+            VStack{
+                VStack{
+                    VStack {
+                        LazyVGrid(columns: Array(repeating: GridItem(), count: 4), spacing: 10) {
+                            ForEach(1...12, id: \.self) { index in
+                                let row = (index - 1) / 4 + 1
+                                let column = (index - 1) % 4 + 1
+                                let location = [row, column]
+                                if let widget = findWidgetName(at: location) {
+                                    Button(action: {
+                                        selectedWidget = SelectedWidget(name: widget, location: location)
+                                    }, label: {
+                                        Text(widget)
+                                            .font(.system(size: 20))
+                                            .foregroundStyle(.mainText)
+                                    })
+                                } else {
+                                    Button(action: {
+                                        selectedWidget = SelectedWidget(name: "Empty", location: location)
+                                    }, label: {
+                                        Image(systemName: "plus.circle.dashed")
+                                            .font(.system(size: 20))
+                                            .foregroundColor(.mainText)
+                                    })
+                                }
+                            }
                         }
+                        .padding()
+                    }
+                    .onAppear{
+                        getWidgetsLocation()
+                    }
+                    .navigationTitle("User Widgets - \(Username!)")
+                    .sheet(item: $selectedWidget) { widget in
+                        WidgetsListView(selectedWidget: $selectedWidget)
+                            .onDisappear {
+                                if let newWidget = selectedWidget {
+                                    // 업데이트 위치와 이름을 새로운 선택으로 설정
+                                    updateWidgetLocation(widget: newWidget.name, to: newWidget.location)
+                                    selectedWidget = nil
+                                }
+                            }
                     }
                 }
-                .padding()
-            }
-            .onAppear {
-                // 뷰가 로드될 때 API를 호출하여 위젯 위치 데이터를 가져옴
-                getWidgetsLocation()
-            }
-            .navigationTitle("User Widgets")
-            .sheet(item: $selectedWidget) { _ in // 선택된 위젯은 아래로 전달됩니다.
-                WidgetsListView(selectedWidget: $selectedWidget)
-                    .onDisappear {
-                        // 위젯 목록이 사라질 때 선택한 위젯을 처리합니다.
-                        if let selectedWidget = selectedWidget {
-                            // 선택한 위젯을 처리하는 로직을 여기에 추가하세요.
-                            
-                            print("Selected widget:", selectedWidget.name)
-                            
+                
+                VStack{
+                    Button(action: {
+                        isUploading = true
+                        save_location()
+                    }, label: {
+                        
+                        if isUploading {
+                            ProgressView()
+                        }else {
+                            Text("저장하기")
+                                .padding()
+                                .frame(maxWidth: 200)
+                                .background(Color.mainText)
+                                .foregroundColor(Color.white)
+                                .fontWeight(.bold)
+                                .cornerRadius(10)
                         }
-                    }
-            }
-        }
-    }
-
-    func getWidgetsLocation() {
-        Task {
-            do {
-                // API로부터 위젯 위치 데이터 가져오기
-                let apiModel = try await WidgetsService.shared.getUserWidgetsLocation(username: username ?? "test")
-                // 데이터 업데이트
-                widgetLocations = apiModel.message ?? [:]
-                print(widgetLocations)
-            } catch {
-                // 오류 처리
-                showAlert(message: "위젯이 등록되지 않았습니다. 위젯 등록페이지로 이동합니다.")
+                    })
+                }
             }
         }
     }
     
-    // 위치에 해당하는 위젯 이름을 찾는 함수
-    func findWidgetName(at location: [Int]) -> String? {
-            if let widgetName = widgetLocations.first(where: { $0.value == location })?.key {
-                return widgetName
+    func getWidgetsLocation() {
+        Task {
+            do {
+                let apiModel = try await WidgetsService.shared.getUserWidgetsLocation(username: Username ?? "test")
+                widgetLocations = apiModel.message ?? [:]
+                print(widgetLocations)
+            } catch {
+                print("Failed to load widget locations")
             }
-            return nil
         }
+    }
+    
+    func updateWidgetLocation(widget: String, to location: [Int]) {
+        // 기존 위치 제거
+        if let oldLocation = widgetLocations[widget] {
+            widgetLocations.removeValue(forKey: widget)
+        }
+        // 새 위치 추가
+        widgetLocations[widget] = location
+    }
 
-    // 오류 발생 시 경고 표시
-    func showAlert(message: String) {
-        // 여기에 경고창 표시 로직을 추가
+    func findWidgetName(at location: [Int]) -> String? {
+        return widgetLocations.first(where: { $0.value == location })?.key
+    }
+    
+    func save_location(){
+        isUploading = true // 버튼을 누를 때 로딩 상태를 true로 설정
+        Task {
+            do {
+                let apiModel = try await NetworkService.shared.widget_custom(username: Username ?? "Guest", password : Password ?? "Guest", locations: widgetLocations)
+                // API 모델을 사용하여 필요한 작업 수행
+                isUploading = false // 작업이 완료되면 로딩 상태를 false로 설정
+                if (isUploading == false) {
+                    print(apiModel.result)
+                    if apiModel.result == "success" {
+                        showAlertWidget(message: "성공적으로 저장되었습니다.")
+                    }else {
+                        showAlertWidget(message: "저장에 실패했습니다.\n관리자에게 연락부탁드립니다.")
+                    }
+                    
+                }
+            } catch {
+                // 오류 처리
+                print("Error: \(error)")
+                isUploading = false // 오류가 발생해도 로딩 상태를 false로 설정
+            }
+        }
+    }
+    
+    func showAlertWidget(message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Message", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            // Safely unwrapping the key window's rootViewController
+            if let rootVC = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+                rootVC.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -97,4 +151,3 @@ struct UserWidgetView_Previews: PreviewProvider {
         UserWidgetView()
     }
 }
-

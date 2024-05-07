@@ -95,4 +95,30 @@ class NetworkService {
         let apiModel = try JSONDecoder().decode(APIModel.self, from: data)
         return apiModel
     }
+    
+    func widget_custom(username: String, password: String, locations: [String: [Int]]) async throws -> APIModel {
+        // 로그인 URL 설정 및 데이터 요청
+        let loginURLString = "https://jj.system32.kr/login?username=\(username)&password=\(password)"
+        guard let loginURL = URL(string: loginURLString) else { throw URLError(.badURL) }
+        let (_, _) = try await URLSession.shared.data(from: loginURL)
+        
+        // JSON 인코딩
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .withoutEscapingSlashes
+        let jsonData = try encoder.encode(locations)
+        guard let jsonString = String(data: jsonData, encoding: .utf8) else { throw URLError(.badURL) }
+        
+        // URL 인코딩
+        let encodedJson = jsonString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        // 위젯 커스텀 설정 URL
+        let widgetURLString = "https://jj.system32.kr/widgets_custom?model_code=1234-5678&index=\(encodedJson)"
+        guard let widgetURL = URL(string: widgetURLString) else { throw URLError(.badURL) }
+        let (data, response) = try await URLSession.shared.data(from: widgetURL)
+        
+        // 응답 데이터 디코딩
+        let apiModel = try JSONDecoder().decode(APIModel.self, from: data)
+        return apiModel
+    }
+
 }
