@@ -6,20 +6,18 @@ import com.example.blur.data.model.login.SignUpResponse
 import com.example.blur.data.model.main.home.sendmessage.GetMessageResponse
 import com.example.blur.data.model.main.home.sendmessage.SendMessageRequest
 import com.example.blur.data.model.main.home.sendmessage.SendMessageResponse
+import com.example.blur.data.model.main.home.widgets.WidgetListResponse
 import com.example.blur.data.model.main.home.widgets.WidgetResponse
 import com.example.blur.data.model.main.setting.ChangePasswordResponse
 import com.example.blur.data.model.main.userinfo.ProfileResponse
 import com.example.blur.data.model.main.userinfo.UserInfoResponse
-import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -81,11 +79,8 @@ interface UserService {
         @Body request: SendMessageRequest
     ): Call<SendMessageResponse>
 
-    @POST("/widgets_custom")
-    suspend fun SettingWidgetList(
-        @Query("model_code")model_code:String,
-        @Query("index")index:String,
-    ): WidgetResponse
+    @GET("/widgets")
+    suspend fun getWidget():Response<WidgetListResponse>
 
     @GET("/get_widgets_custom/{username}")
     suspend fun getWidgetList(

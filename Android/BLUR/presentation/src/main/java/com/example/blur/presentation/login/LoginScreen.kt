@@ -83,6 +83,8 @@ fun LoginScreen(
                     }
                 )
             }
+
+            else -> {}
         }
     }
 

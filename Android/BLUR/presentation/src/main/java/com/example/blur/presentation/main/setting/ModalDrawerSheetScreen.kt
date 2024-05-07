@@ -106,6 +106,8 @@ fun ModalDrawerSheetScreen(
                 // 이미지 업로드 성공에 대한 토스트 메시지
                 Toast.makeText(context, "이미지 업로드 성공.", Toast.LENGTH_SHORT).show()
             }
+
+            else -> {}
         }
     }
 

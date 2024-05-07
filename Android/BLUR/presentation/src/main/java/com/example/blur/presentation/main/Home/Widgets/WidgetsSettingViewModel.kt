@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.retrofit.UserService
-import com.example.blur.domain.model.WidgetInfo
 import com.example.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,17 +25,16 @@ class WidgetsSettingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val userService: UserService,
     private val GetWidgetsListUseCase: GetWidgetsListUseCase,
-) : ViewModel(), ContainerHost<WidgetsSetteingState, WidgetsStteingSideEffect> {
+) : ViewModel(), ContainerHost<WidgetsSetteingState, WidgetsSettingSideEffect> {
 
     val sharedPreferencesManager = SharedPreferencesManager
-    private val widgetInfoList = mutableListOf<WidgetInfo>()
 
-    override val container: Container<WidgetsSetteingState, WidgetsStteingSideEffect> = container(
+    override val container: Container<WidgetsSetteingState, WidgetsSettingSideEffect> = container(
         initialState = WidgetsSetteingState(),
         buildSettings = {
             this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
                 intent {
-                    postSideEffect(WidgetsStteingSideEffect.Toast(throwable.message.orEmpty()))
+                    postSideEffect(WidgetsSettingSideEffect.Toast(throwable.message.orEmpty()))
                 }
             }
         }
@@ -45,6 +43,31 @@ class WidgetsSettingViewModel @Inject constructor(
 
     init {
         loadWidget()
+        loadWidgetList()
+    }
+
+
+    fun loadWidgetList() = intent {
+        viewModelScope.launch {
+            try {
+                val response = userService.getWidget()
+                if (response.isSuccessful) {
+                    val widgetsListResponse = response.body()
+
+                    if (widgetsListResponse != null) {
+                        val widgetListResponse = widgetsListResponse.message.values
+                        reduce {
+                            state.copy(
+                                WidgetList = widgetListResponse.toList() // Assuming WidgetList is a List<String>
+                            )
+                        }
+                        Log.e("메시시ㅣ22ㅣ", state.WidgetList.toString())
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("WidgetsSettingViewModel", "Exception occurred: ${e.message}")
+            }
+        }
     }
 
     fun loadWidget() = intent {
@@ -56,18 +79,14 @@ class WidgetsSettingViewModel @Inject constructor(
                     val widgetResponse = response.body()
 
                     if (widgetResponse != null) {
-                        // WidgetResponse가 null이 아닌 경우 처리할 내용 추가
+                        val widgetList = widgetResponse.message?.keys?.toList() ?: emptyList()
                         reduce {
                             state.copy(
-                                messages = widgetResponse.message ?: emptyMap(),
+                                messages = widgetResponse.message ?: emptyMap()
                             )
                         }
                         Log.e("메시지", state.messages.toString())
-                    } else {
-                        Log.e("WidgetsSettingViewModel", "WidgetResponse is null")
                     }
-                } else {
-                    Log.e("WidgetsSettingViewModel", "Response body is null")
                 }
             } catch (e: Exception) {
                 Log.e("WidgetsSettingViewModel", "Exception occurred: ${e.message}")
@@ -75,14 +94,48 @@ class WidgetsSettingViewModel @Inject constructor(
         }
     }
 
+    fun sendMessage(message: Map<String, List<Int>>?) {
+        intent {
+            reduce {
+                state.copy(
+                    sendMessage = message
+                )
+            }
+            Log.e("샌드메시지", state.sendMessage.toString())
+        }
+        ChangeMessage()
+    }
+
+    fun ChangeMessage() = intent {
+        // 1. messages를 새로운 맵에 복사하여 원본 상태를 수정하지 않도록 합니다.
+        val updatedMessages = state.messages?.toMutableMap() ?: mutableMapOf()
+
+        // 2. sendMessage가 null이 아닌지 확인하고 updatedMessages에 추가합니다.
+        if (state.sendMessage != null) {
+            updatedMessages.putAll(state.sendMessage!!)
+        }
+
+        // 3. 업데이트된 messages로 상태를 줄입니다.
+        reduce {
+            state.copy(
+                messages = updatedMessages.toMap(), // 불변 맵으로 다시 변환
+                sendMessage = null // 사용 후 sendMessage 지우기
+            )
+        }
+        Log.e("newMessage", state.messages.toString())
+    }
+
+
 }
 
 @Immutable
 data class WidgetsSetteingState(
     val messages: Map<String, List<Int>>? = emptyMap(), // emptyMap() 사용
-
+    val WidgetList: List<String> = emptyList(),
+    val sendMessage: Map<String, List<Int>>? = null,
+    var newMessages: Map<String, List<Int>>? = null,
 )
 
-sealed interface WidgetsStteingSideEffect {
-    class Toast(val message: String) : WidgetsStteingSideEffect // 토스트 메시지 출력
+sealed interface WidgetsSettingSideEffect {
+    class Toast(val message: String) : WidgetsSettingSideEffect // 토스트 메시지 출력
 }

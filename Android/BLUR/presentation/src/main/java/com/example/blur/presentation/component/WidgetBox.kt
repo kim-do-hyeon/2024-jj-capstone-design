@@ -35,13 +35,15 @@ import com.example.blur.presentation.theme.primaryLight
 @Composable
 fun WidgetBox(
     widgetName: String?, // widgetName의 타입을 지정해주어야 합니다.
+    onClick:() -> Unit // 다이얼로그를 열기 위한 클릭 핸들러
 ) {
 
     Box(
-        modifier = Modifier
-            .size(80.dp)
-            .clickable { }
-            .padding(8.dp), // 외부 패딩을 일정하게 설정
+        modifier = Modifier.run {
+            size(80.dp) // 클릭 핸들러를 전달합니다.
+                .clickable{onClick()}
+                .padding(8.dp)
+        }, // 외부 패딩을 일정하게 설정
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -58,11 +60,8 @@ fun WidgetBox(
                         fontWeight = FontWeight(700),
                         color = primaryLight,
                         textAlign = TextAlign.End
-                    ),
-
                     )
-
-
+                )
             } else {
                 Icon(
                     Icons.Rounded.Add,

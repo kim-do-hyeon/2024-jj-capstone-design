@@ -76,6 +76,8 @@ fun UpLoadImageScreen(
             GallerySideEffect.SuccessImage -> {
                 onNavigateSuccessImage()
             }
+
+            else -> {}
         }
     }
 

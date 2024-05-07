@@ -7,24 +7,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.blur.presentation.Main.Home.Camera.CameraRoute
-import com.example.blur.presentation.Main.Home.Camera.GalleryViewModel
-import com.example.blur.presentation.Main.Home.Camera.ImageSelectScreen
-import com.example.blur.presentation.Main.Home.Camera.SuccessImage
-import com.example.blur.presentation.Main.Home.Camera.UpLoadImageScreen
-import com.example.blur.presentation.Main.MainActivity
 
 @Composable
 fun WidgetsNavHost() {
     val navController = rememberNavController()
+    val sharedViewModel: WidgetsSettingViewModel = viewModel()
     val context = LocalContext.current
+
     NavHost(
-        navController = navController ,
-        startDestination =WidgetsRoute.WidgetsSettingsScreen.name
+        navController = navController,
+        startDestination = WidgetsRoute.WidgetsSettingsScreen.name
     ) {
-        composable(route=WidgetsRoute.WidgetsSettingsScreen.name){
-            WidgetsSettingsScreen()
+        composable(route = WidgetsRoute.WidgetsSettingsScreen.name) {
+            WidgetsSettingsScreen(
+                viewModel = sharedViewModel,
+                onDialog = {
+                    navController.navigate(route = WidgetsRoute.WidgetsListDialog.name)
+                },
+            )
         }
+
 
     }
 }

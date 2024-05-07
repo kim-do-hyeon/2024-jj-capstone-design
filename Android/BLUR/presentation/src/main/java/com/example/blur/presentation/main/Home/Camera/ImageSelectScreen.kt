@@ -73,6 +73,8 @@ fun ImageSelectScreen(
             GallerySideEffect.SuccessImage -> {
                 onNavigateSuccessImage()
             }
+
+            else -> {}
         }
     }
 

@@ -4,4 +4,5 @@ sealed class WidgetsRoute (
     val name: String
 ){
     object WidgetsSettingsScreen: WidgetsRoute("WidgetsSettingsScreen")
+    object WidgetsListDialog:WidgetsRoute("WidgetsListDialog")
 }
