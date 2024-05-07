@@ -15,7 +15,7 @@ from apps.home.admin_module import *
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Users, CustomLocation, Message
+from apps.authentication.models import Users, CustomLocation, Message, Production
 
 @blueprint.route('/index')
 def index():
@@ -181,7 +181,20 @@ def get_widgets_custom(subpath) :
     else :
         return jsonify(result = "fail", type = "get_widgets_custom", message = "Empty Database")
 
+@blueprint.route('/model_user_list', methods = ['GET', 'POST'])
+def model_user_list() :
+    data = request.args.to_dict()
+    model_code = data['code']
+    user_list = Production.query.filter_by(code = model_code).all()
+    user_names = []
+    for i in user_list :
+        user_names.append(i.username)
+    if len(user_list) != 0 :
+        return jsonify(result = "success", type = "model_user_list", message = str(user_names))
+    else :
+        return jsonify(result = "success", type = "model_user_list", message = "Empty Model User List")
 
+    
 
 
 ''' For development image upload function with android '''
