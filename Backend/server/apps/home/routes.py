@@ -105,5 +105,5 @@ def send_message():
     
 @blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
 def get_messages(receiver_username):
-    get_message_module(receiver_username)
+    return get_message_module(receiver_username)
 ''' End Message Section '''
