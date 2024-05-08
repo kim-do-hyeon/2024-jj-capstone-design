@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-import os
+import os, string, secrets
 from flask import request, jsonify, session
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -10,6 +10,12 @@ from apps.home.face_module import train_face
 from apps import db
 from apps.authentication.models import Users, Faces, Production
 
+def generate_random_string(length=16):
+    # 알파벳 대소문자와 숫자를 포함
+    characters = string.ascii_letters + string.digits
+    # 주어진 길이의 랜덤 문자열 생성
+    random_string = ''.join(secrets.choice(characters) for i in range(length))
+    return random_string
 
 def register_module(path_type) :
     if path_type[0] == "user" :
@@ -54,7 +60,7 @@ def register_module(path_type) :
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
     
-        filename = secure_filename(face_model.filename)
+        filename = generate_random_string() + "." + (face_model.filename).split(".")[-1]
         if len(filename.split(".")) == 1 :
             filename = username + ".png"
             
