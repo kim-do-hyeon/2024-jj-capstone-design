@@ -59,4 +59,6 @@ def get_guset_widgets_index_module() :
                    message = {'Weather' : [1, 1],
                               'DateTime' : [1, 2],
                               'Login' : [1, 3],
-                              'CheerUp' : [1, 4]})
+                              'CheerUp' : [1, 4],
+                              'Finance' : [2, 1],
+                              })
