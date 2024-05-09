@@ -7,6 +7,7 @@ import CheerUp from './components/CheerUp';
 import Login from './components/Login';
 import Finance from './components/Finance';
 import News from './components/News'
+import Message from './components/Message';
 import axios from 'axios';
 
 function App() {
@@ -87,6 +88,7 @@ function App() {
                                         case 'Login': return <Login key={`${row}-${col}`} />;
                                         case 'Finance' : return <Finance key={`${row}-${col}`} />;
                                         case 'News' : return <News key={`${row}-${col}`} />;
+                                        case 'Message' : return <Message key={`${row}-${col}`} userName={userName}/>;
                                         default: return null;
                                     }
                                 })()
