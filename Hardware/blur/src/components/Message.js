@@ -1,39 +1,35 @@
-import React, {useState, useEffect} from "react";
-import './Message.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Message.css';
 
-function Message() {
-    const [lastestmessage, setLastestMessage] = useState('');
+function Message({ userName }) {
+  const [latestMessage, setLatestMessage] = useState('');
 
-    useEffect ( () => {
-        const fetchMessage = async () => {
-            try {
-              const response = await axios.get('https://jj.system32.kr/get_messages/test');
-                if(response.data.result === 'success' && response.data.type === 'messages_retrieved') {
-                  const messages = response.data.messages;
-                  if(messages.length > 0) {
-                    // 최신 메시지의 content를 가져와 상태에 설정합니다.
-                    setLastestMessage(messages[0].content);
-                  } else {
-                    console.error('No messages found.');
-                    
-                  }
-                  } else {
-                    console.error('Failed to retrieve messages.');
-                  }
-                } catch(error) {
-                  console.error('Error fetching messages:', error);
-                }
-        };
+  useEffect(() => {
+    const fetchMessage = async () => {
+      const url = `https://jj.system32.kr/get_messages/${userName}`;
+      try {
+        const response = await axios.get(url);
+        if (response.data.result === 'success' && response.data.messages.length > 0) {
+          const lastMessageIndex = response.data.messages.length - 1;
+          setLatestMessage(response.data.messages[lastMessageIndex].content);
+        } else {
+          console.error('No messages found or failed to retrieve messages.');
+          setLatestMessage("No messages available.");
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+        setLatestMessage("Error in fetching messages.");
+      }
+    };
 
-        fetchMessage();
-    }, []);
-
+    fetchMessage();
+  }, [userName]);
 
   return (
     <div className="message">
       <h2>Latest Message:</h2>
-      <p>{lastestmessage}</p>
+      <p>{latestMessage || "No messages available."}</p>
     </div>
   );
 }
