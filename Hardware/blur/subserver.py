@@ -41,8 +41,24 @@ def get_kospi():
     kospi_message = "{} {}  {}({})".format(kospi_type, kospi_value, kospi_change_value, kospi_change_rate)
     kosdaq_message = "{} {}  {}({})".format(kosdaq_type, kosdaq_value, kosdaq_change_value, kosdaq_change_rate)
     rate_message = "{} {}  ({})".format(rate_type, rate, rate_change_value)
-    
+    print(kosdaq_message)
     return jsonify(kospi = kospi_message, kosdaq = kosdaq_message, rate = rate_message)
+
+@app.route('/api/news')
+def get_news() :
+    url = "https://news.sbs.co.kr/news/newsflash.do"
+    response = requests.get(url)
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+    news_datas = []
+    for i in range(1, 11) :
+        news_text = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > strong').text
+        news_detail = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > span.read').text
+        news_datas.append({news_text.replace("'", '"').strip() : news_detail})
+    return jsonify(news_datas = news_datas)
+    
+    
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
