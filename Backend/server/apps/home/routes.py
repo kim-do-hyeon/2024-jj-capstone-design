@@ -101,7 +101,7 @@ def widgets_index() :
 ''' Start Message Section '''
 @blueprint.route('/send_message', methods=['POST'])
 def send_message():
-    return send_message
+    return send_message_module()
     
 @blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
 def get_messages(receiver_username):
