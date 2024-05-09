@@ -6,6 +6,7 @@ import Weather from './components/Weather';
 import CheerUp from './components/CheerUp';
 import Login from './components/Login';
 import Finance from './components/Finance';
+import News from './components/News'
 import axios from 'axios';
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
                                         case 'CheerUp': return <CheerUp key={`${row}-${col}`} userName={userName} />;
                                         case 'Login': return <Login key={`${row}-${col}`} />;
                                         case 'Finance' : return <Finance key={`${row}-${col}`} />;
+                                        case 'News' : return <News key={`${row}-${col}`} />;
                                         default: return null;
                                     }
                                 })()
