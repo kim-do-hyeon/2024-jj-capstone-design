@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
 const CameraFeed = ({ onUserDetected }) => {
     const videoRef = useRef(null);
+    const [faceDetected, setFaceDetected] = useState(false); //얼굴 감지 상태를 저장하기 위한 상태 추가
+    const [distance, setDistance] = useState(0); //얼굴과 카메라 사이의 거리를 저장하기 위한 상태 추가
 
     useEffect(() => {
         const constraints = { video: { width: 1280, height: 720, facingMode: "user" } };
@@ -33,7 +35,7 @@ const CameraFeed = ({ onUserDetected }) => {
         const interval = setInterval(() => {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             canvas.toBlob(blob => {
-                if (blob) {
+                if (blob && faceDetected && distance <= 100) { //얼굴이 감지되고 거리가 1m 이내인 경우에만 프레임을 전송하도록 수정
                     sendFrame(blob);
                 } else {
                     console.error("Failed to create Blob from canvas.");
