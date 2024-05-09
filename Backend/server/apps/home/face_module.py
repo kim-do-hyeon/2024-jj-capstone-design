@@ -7,8 +7,17 @@ from apps.home.personal_color_moudle import analysis
 from apps import db
 from apps.authentication.models import Users, Faces
 
-import os
+import os, string, secrets
 from apps.home.face_detect_util import *
+
+
+def generate_random_string(length=16):
+    # 알파벳 대소문자와 숫자를 포함
+    characters = string.ascii_letters + string.digits
+    # 주어진 길이의 랜덤 문자열 생성
+    random_string = ''.join(secrets.choice(characters) for i in range(length))
+    return random_string
+
 
 def train_face(username, image) :
     known_face_encodings = []
@@ -31,7 +40,7 @@ def redirect_face_module() :
     
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
-    filename = secure_filename(face_image.filename)
+    filename = generate_random_string() + "." + (face_image.filename).split(".")[-1]
     if len(filename.split(".")) == 1 :
         filename = "noname." + filename.split(".")[-1]
     file_path = os.path.join(upload_dir, filename)
