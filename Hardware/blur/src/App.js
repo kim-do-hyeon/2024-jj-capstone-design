@@ -22,6 +22,7 @@ function App() {
         const fetchWidgets = async () => {
             try {
                 const response = await axios.get('https://jj.system32.kr/widgets_index');
+                // const response = await axios.get('https://jj.system32.kr/get_widgets_custom/username=qqq');
                 const messageOnly = response.data.message;
                 const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
                     type,
@@ -99,6 +100,7 @@ function App() {
                     ))}
                 </div>
             ))}
+            {/* <CameraFeed /> */}
         </div>
     );
 }
