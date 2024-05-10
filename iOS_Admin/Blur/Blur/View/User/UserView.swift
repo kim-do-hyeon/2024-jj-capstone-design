@@ -28,19 +28,27 @@ struct UserView: View {
                 .font(.system(size: 14))
             Spacer()
             
-            NavigationLink(destination: MainView(), isActive: $shouldNavigateToMainView) {
-                EmptyView()
-            }.navigationBarHidden(true)
+//            NavigationLink(destination: MainView(), isActive: $shouldNavigateToMainView) {
+//                EmptyView()
+//            }.navigationBarHidden(true)
             
-            HStack{
-                //TODO: - Face Recognize
-                NavigationLink(destination: AddFaceView()) {
-                    Text("얼굴 등록")
-                        .modifier(ButtonStyle())
+            VStack{
+                HStack{
+                    //TODO: - Face Recognize
+                    NavigationLink(destination: AddFaceView()) {
+                        Text("얼굴 등록")
+                            .modifier(ButtonStyle())
+                    }
+                    NavigationLink(destination: UserWidgetView()) {
+                        Text("위젯 등록")
+                            .modifier(ButtonStyle())
+                    }
                 }
-                NavigationLink(destination: UserWidgetView()) {
-                    Text("위젯 등록")
-                        .modifier(ButtonStyle())
+                HStack{
+                    NavigationLink(destination: RegisterProductView()) {
+                        Text("기기 등록")
+                            .modifier(ButtonStyle())
+                    }
                 }
             }
             
