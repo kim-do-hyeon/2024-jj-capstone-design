@@ -71,8 +71,10 @@ fun ChangeEmailScreen(
 
             is ChangeEmailEffect.Toast -> {
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
-                Log.e("ChangePasswordScreen", sideEffect.message) // Log 태그 수정
+                Log.e("ChangeEmailScreen", sideEffect.message) // Log 태그 수정
             }
+
+            else -> {}
         }
 
 

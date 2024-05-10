@@ -120,5 +120,7 @@ dependencies {
     // If you want to additionally use the CameraX Extensions library
     implementation("androidx.camera:camera-extensions:${camerax_version}")
 
+    implementation ("com.google.code.gson:gson:2.8.8")
+
     implementation(project(":domain"))
 }

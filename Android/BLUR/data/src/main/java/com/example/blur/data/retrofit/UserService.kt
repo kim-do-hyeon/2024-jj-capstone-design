@@ -1,16 +1,19 @@
 package com.example.blur.data.retrofit
 
 import com.example.blur.data.model.login.CommonResponse
+import com.example.blur.data.model.login.ProductResponse
 import com.example.blur.data.model.login.SessionTestResponse
 import com.example.blur.data.model.login.SignUpResponse
 import com.example.blur.data.model.main.home.sendmessage.GetMessageResponse
 import com.example.blur.data.model.main.home.sendmessage.SendMessageRequest
 import com.example.blur.data.model.main.home.sendmessage.SendMessageResponse
+import com.example.blur.data.model.main.home.widgets.SetWidgetResponse
 import com.example.blur.data.model.main.home.widgets.WidgetListResponse
 import com.example.blur.data.model.main.home.widgets.WidgetResponse
 import com.example.blur.data.model.main.setting.ChangePasswordResponse
 import com.example.blur.data.model.main.userinfo.ProfileResponse
 import com.example.blur.data.model.main.userinfo.UserInfoResponse
+import com.example.blur.data.model.widget.WidgetRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -79,12 +82,25 @@ interface UserService {
         @Body request: SendMessageRequest
     ): Call<SendMessageResponse>
 
+    @POST("/register/product")
+    suspend fun registerProduct(
+        @Query("code") code:String
+    ): Response<ProductResponse>
+
     @GET("/widgets")
     suspend fun getWidget():Response<WidgetListResponse>
+
+
+    @POST("/widgets_custom")
+    suspend fun setWidget(
+        @Query("model_code") model_code:String,
+        @Query("index")  index: String
+    ): Response<SetWidgetResponse>
 
     @GET("/get_widgets_custom/{username}")
     suspend fun getWidgetList(
         @Path("username") username: String
     ): Response<WidgetResponse>
+
 }
 

@@ -14,4 +14,5 @@ java {
 dependencies {
 
     implementation(libs.retrofit.converter.serialization)
+    implementation(libs.play.services.basement)
 }

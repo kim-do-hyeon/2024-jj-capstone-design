@@ -50,14 +50,12 @@ class RetrofitModule {
             ignoreUnknownKeys = true
         }.asConverterFactory("application/json; charset=UTF-8".toMediaType())
 
-
         return Retrofit.Builder()
             .baseUrl("${FC_HOST}/api/")
             .addConverterFactory(converterFactory)
             .client(client)
             .build()
     }
-
 
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {

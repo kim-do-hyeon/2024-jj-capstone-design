@@ -87,7 +87,8 @@ fun WidgetsSettingsScreen(
             if (message != null) {
                 viewModel.sendMessage(message)
             }
-        }
+        },
+        onSetWidget = viewModel::onSetWidget
     )
 
 }
@@ -96,6 +97,7 @@ fun WidgetsSettingsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WidgetsSettingsScreen(
+    onSetWidget:()->Unit,
     message: Map<String, List<Int>>,
     widgetList: List<String>,
     onApplyClicked: (Map<String, List<Int>>?) -> Unit  // sendMessage를 전달하기 위한 함수
@@ -284,7 +286,7 @@ fun WidgetsSettingsScreen(
                     Spacer(modifier = Modifier.weight(1f))
 
                     Button(
-                        onClick = {},
+                        onClick = onSetWidget,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("적용")
@@ -305,5 +307,6 @@ fun WWidgetsSettingsScreenPreview() {
         message = mapOf(),
         widgetList = listOf(),
         onApplyClicked = {},
+        onSetWidget = {},
     )
 }

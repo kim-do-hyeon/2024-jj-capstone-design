@@ -3,10 +3,8 @@
 package com.example.blur.presentation.Main.Home.SendMessage
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,12 +44,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blur.data.model.main.home.sendmessage.GetMessage
 import com.example.blur.presentation.Component.ChatBubble
-import com.example.blur.presentation.Main.Setting.ChangeEmail.ChangeEmailEffect
 import com.example.blur.presentation.R
-import com.example.blur.presentation.SplashActivity
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -72,6 +66,8 @@ fun SendMessageScreen(
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 Log.e("SendMessageScreen", sideEffect.message) // Log 태그 수정
             }
+
+            else -> {}
         }
     }
 

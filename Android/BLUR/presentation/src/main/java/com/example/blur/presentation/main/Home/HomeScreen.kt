@@ -23,14 +23,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DeviceHub
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Widgets
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -41,10 +40,9 @@ import androidx.compose.ui.unit.dp
 import com.example.blur.presentation.R
 import com.example.blur.presentation.Component.ListItems
 import com.example.blur.presentation.Main.Home.Camera.CameraActivity
+import com.example.blur.presentation.Main.Home.RegisterProduct.RegisterProductActivity
 import com.example.blur.presentation.Main.Home.SendMessage.SendMessageActivity
 import com.example.blur.presentation.Main.Home.Widgets.WidgetsActivity
-import android.app.Activity
-
 
 @Composable
 fun HomeScreen(
@@ -129,6 +127,17 @@ fun HomeScreen(
             icon = Icons.Filled.Widgets,
             onClick = {
                 context.startActivity(Intent(context, WidgetsActivity::class.java))
+            }
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ListItems(
+            headlineText = "기기 등록",
+            supportingText = "제품을 등록해보세요",
+            icon = Icons.Filled.DeviceHub,
+            onClick = {
+                context.startActivity(Intent(context, RegisterProductActivity::class.java))
             }
         )
 

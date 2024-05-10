@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -24,57 +25,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.blur.presentation.R
 
 
 @Composable
-fun AddDeviceTextField(onValueChange: (String) -> Unit) {
+fun AddDeviceTextField(
+    value: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
+) {
+    var deviceId by rememberSaveable { mutableStateOf(value) }
 
-    val idRegex = Regex("^[A-Z0-9\\-]{1,}\$")
-    // ID 검사 함수
-    fun isValidDevice(id: String): Boolean {
-        return idRegex.matches(id)
+    // 올바른 형식의 제품 코드 여부 확인
+    val isValidDeviceId = remember(deviceId) {
+        deviceId.matches(Regex("^[A-Z0-9]{1,8}$"))
     }
 
-    var DeviceId by remember { mutableStateOf("") }
-    val isErrorInDeviceId by remember {
-        derivedStateOf {
-            if (DeviceId.isEmpty()) {
-                false
-            } else {
-                !isValidDevice(DeviceId)
-            }
-        }
-    }
-    Column {
+    Column(modifier = modifier) {
         OutlinedTextField(
-            value = DeviceId,
+            value = deviceId,
             onValueChange = {
-                DeviceId = it
-                onValueChange(it) // 새로운 값이 입력될 때마다 외부로 알림
+                if (it.length <= 8) {
+                    deviceId = it.uppercase() // 입력된 값 대문자로 변환
+                    onValueChange(deviceId)
+                }
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
-            label = { Text(text = "제품코드") },
-            placeholder = { Text("제품코드를 입력하세요.") },
-            supportingText = {
-                if (isErrorInDeviceId) {
-                    Text(text = "제품코드는 영대문자, 숫자, - 만  가능합니다.")
-                }
-            },
-            isError = isErrorInDeviceId,
+            label = { Text(text = "제품 코드") },
+            placeholder = { Text("제품 코드를 입력하세요") },
+            isError = deviceId.isNotBlank() && !isValidDeviceId, // 제품 코드가 비어 있지 않고 유효하지 않은 경우에만 에러 표시
             trailingIcon = {
-                if (isErrorInDeviceId) {
-                    Spacer(modifier = Modifier.width(8.dp)) // 아이콘과 텍스트 사이의 간격 조정
+                if (deviceId.isNotBlank() && !isValidDeviceId) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_error_24),
-                        contentDescription = "에러", // 아이콘 설명
+                        contentDescription = "에러",
                         tint = Color.Red
                     )
                 }
-            }
+            },
+            visualTransformation = VisualTransformation.None,
+            keyboardActions = KeyboardActions.Default
         )
-
     }
 }

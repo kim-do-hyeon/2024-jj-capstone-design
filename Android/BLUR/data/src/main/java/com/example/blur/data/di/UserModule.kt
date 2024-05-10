@@ -11,20 +11,24 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.example.blur.data.usecase.login.LoginUseCaseImpl
 import com.example.blur.data.usecase.login.SignUpUseCaseImpl
+import com.example.blur.data.usecase.login.registerProductUseCaseImpl
 import com.example.blur.data.usecase.main.home.Camera.UpLoadFaceImageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.GetMessageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.SendMessageUseCaseImpl
 import com.example.blur.data.usecase.main.home.widget.GetWidgetsListUseCaseImpl
+import com.example.blur.data.usecase.main.home.widget.SetWidgetUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.ChangeEmailUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.ChangeNameUseCaseImpl
 import com.example.blur.data.usecase.main.userinfo.UpLoadProfileImageUseCaseImpl
 import com.example.blur.domain.usecase.login.FindPasswordUseCase
 import com.example.blur.domain.usecase.login.LoginUseCase
 import com.example.blur.domain.usecase.login.SignUpUseCase
+import com.example.blur.domain.usecase.login.registerProductUseCase
 import com.example.blur.domain.usecase.main.home.Camera.UpLoadFaceImageUseCase
 import com.example.blur.domain.usecase.main.home.SendMessage.GetMessageUseCase
 import com.example.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
 import com.example.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
+import com.example.blur.domain.usecase.main.home.Widget.SetWidgetUseCase
 import com.example.blur.domain.usecase.main.setting.ChangePasswordUseCase
 import com.example.blur.domain.usecase.main.userinfo.ChangeEmailUseCase
 import com.example.blur.domain.usecase.main.userinfo.ChangeNameUseCase
@@ -70,9 +74,15 @@ abstract class UserModule {
     abstract fun bindGetMessageUseCase(uc:GetMessageUseCaseImpl): GetMessageUseCase
 
     @Binds
+    abstract fun bindregisterProductUseCase(uc: registerProductUseCaseImpl): registerProductUseCase
+
+    @Binds
     abstract fun bindUpLoadFaceImageUseCase(uc: UpLoadFaceImageUseCaseImpl): UpLoadFaceImageUseCase
 
     @Binds
     abstract fun bindGetWidgetsListUseCase(uc:GetWidgetsListUseCaseImpl): GetWidgetsListUseCase
+
+    @Binds
+    abstract fun bindSetWidgetUseCase(uc: SetWidgetUseCaseImpl): SetWidgetUseCase
 
 }

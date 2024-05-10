@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.blur.data.di.SharedPreferencesManager
 import com.example.blur.data.retrofit.UserService
 import com.example.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
+import com.example.blur.domain.usecase.main.home.Widget.SetWidgetUseCase
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -20,11 +23,13 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
+
 @HiltViewModel
 class WidgetsSettingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val userService: UserService,
     private val GetWidgetsListUseCase: GetWidgetsListUseCase,
+    private val SetWidgetUseCase: SetWidgetUseCase,
 ) : ViewModel(), ContainerHost<WidgetsSetteingState, WidgetsSettingSideEffect> {
 
     val sharedPreferencesManager = SharedPreferencesManager
@@ -45,7 +50,6 @@ class WidgetsSettingViewModel @Inject constructor(
         loadWidget()
         loadWidgetList()
     }
-
 
     fun loadWidgetList() = intent {
         viewModelScope.launch {
@@ -124,6 +128,39 @@ class WidgetsSettingViewModel @Inject constructor(
         }
         Log.e("newMessage", state.messages.toString())
     }
+
+
+    fun onSetWidget() = intent {
+        val modelCode = sharedPreferencesManager.getProductCode(context) ?: ""
+        val messageMap = state.messages?.toMutableMap() ?: mutableMapOf()
+
+        // message를 JSON 문자열로 변환
+        val messageJsonString = Gson().toJson(messageMap)
+
+        // 로그 출력
+        Log.d("dtd", "Requesting widget with model code: $modelCode and message: $messageJsonString")
+
+        viewModelScope.launch {
+            try {
+                // 위젯 설정에 필요한 데이터를 사용하여 설정을 시도합니다.
+                val result = SetWidgetUseCase(modelCode, messageMap)
+                Log.e("요청", result.toString())
+                result.onSuccess {
+                    Log.d("onSetWidget", "Widget set successfully.")
+                    // 설정이 성공한 경우에 대한 처리
+                }.onFailure { throwable ->
+                    Log.e("onSetWidget", "Failed to set widget: ${throwable.message}")
+                    // 설정이 실패한 경우에 대한 처리
+                }
+            } catch (e: Exception) {
+                Log.e("onSetWidget", "Exception occurred: ${e.message}")
+            }
+        }
+    }
+
+
+
+
 
 
 }
