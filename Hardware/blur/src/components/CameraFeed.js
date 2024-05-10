@@ -46,6 +46,8 @@ const CameraFeed = ({ onUserDetected }) => {
                 canvas.toBlob(blob => {
                     sendFrame(blob);
                 }, 'image/jpeg');
+            }else {
+                onUserDetected(false, "Guest", "Guest");
             }
         }, 10000);
 
