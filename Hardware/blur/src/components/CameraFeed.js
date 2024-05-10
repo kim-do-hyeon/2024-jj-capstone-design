@@ -73,7 +73,7 @@ const CameraFeed = ({ onUserDetected }) => {
         });
     };
 
-    return <video ref={videoRef} style={{ width: "100%" }} autoPlay />;
+    return <video ref={videoRef} style={{ width: "100%", display: 'none'}} autoPlay />;
 };
 
 export default CameraFeed;

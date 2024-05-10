@@ -75,7 +75,6 @@ function App() {
 
     return (
         <div className={`container ${showText ? 'show' : ''}`}>
-            <CameraFeed onUserDetected={handleUserDetection} />
             {[1, 2, 3].map(row => (
                 <div className="row" key={row} style={{ height: "330px" }}>
                     {[1, 2, 3, 4].map(col => (
@@ -100,7 +99,7 @@ function App() {
                     ))}
                 </div>
             ))}
-            {/* <CameraFeed /> */}
+            <CameraFeed onUserDetected={handleUserDetection} />
         </div>
     );
 }
