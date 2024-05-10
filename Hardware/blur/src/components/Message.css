@@ -1,8 +1,9 @@
 .message {
     padding-top: 50px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; 
     font-size: 100%;
     font-weight: 800;
     color: white;
