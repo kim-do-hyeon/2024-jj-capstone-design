@@ -38,6 +38,7 @@ struct RegisterProductView: View {
                     isLoading = false // 작업이 완료되면 로딩 상태를 false로 설정
                     if (isLoading == false) {
                         showAlert(message: apiModel.result ?? "Error")
+                        UserDefaults.standard.set(model_code, forKey : "model_code")
                     }
                 } catch {
                     // 오류 처리

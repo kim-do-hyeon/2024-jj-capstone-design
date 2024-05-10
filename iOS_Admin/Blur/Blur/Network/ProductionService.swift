@@ -21,4 +21,12 @@ class ProductionService {
         
         return apiModelResult
     }
+    
+    func getProductionUsers(model_code : String) async throws -> APIModel {
+        var urlString = "https://jj.system32.kr/get_model_user_list?code=\(model_code)"
+        guard let url = URL(string : urlString) else {throw URLError(.badURL)}
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let ProductionModelResult = try JSONDecoder().decode(APIModel.self, from : data)
+        return ProductionModelResult
+    }
 }

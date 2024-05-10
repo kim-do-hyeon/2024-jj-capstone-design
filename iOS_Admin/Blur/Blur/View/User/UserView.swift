@@ -49,6 +49,10 @@ struct UserView: View {
                         Text("기기 등록")
                             .modifier(ButtonStyle())
                     }
+                    NavigationLink(destination: UserProductView()) {
+                        Text("기기 회원")
+                            .modifier(ButtonStyle())
+                    }
                 }
             }
             

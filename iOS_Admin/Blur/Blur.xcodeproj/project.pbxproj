@@ -12,6 +12,7 @@
 		246847F82BEE670E008E0E85 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847F32BEE670E008E0E85 /* UserService.swift */; };
 		246847F92BEE670E008E0E85 /* WidgetsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847F42BEE670E008E0E85 /* WidgetsService.swift */; };
 		246847FB2BEE67DC008E0E85 /* RegisterProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */; };
+		246847FD2BEE6B88008E0E85 /* UserProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847FC2BEE6B88008E0E85 /* UserProductView.swift */; };
 		246B7E112BE5511900452ECB /* AddFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B7E102BE5511900452ECB /* AddFaceView.swift */; };
 		247B6A2A2BE1FA8300866D72 /* BlurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A292BE1FA8300866D72 /* BlurApp.swift */; };
 		247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A2B2BE1FA8300866D72 /* UserListView.swift */; };
@@ -62,6 +63,7 @@
 		246847F32BEE670E008E0E85 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		246847F42BEE670E008E0E85 /* WidgetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetsService.swift; sourceTree = "<group>"; };
 		246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductView.swift; sourceTree = "<group>"; };
+		246847FC2BEE6B88008E0E85 /* UserProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProductView.swift; sourceTree = "<group>"; };
 		246B7E102BE5511900452ECB /* AddFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceView.swift; sourceTree = "<group>"; };
 		247B6A262BE1FA8300866D72 /* Blur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		247B6A292BE1FA8300866D72 /* BlurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurApp.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				246B7E102BE5511900452ECB /* AddFaceView.swift */,
 				24CFB0402BE5F1DF001F90C1 /* UserWidgetView.swift */,
 				246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */,
+				246847FC2BEE6B88008E0E85 /* UserProductView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */,
 				247B6A582BE1FAAD00866D72 /* APIModel.swift in Sources */,
 				24CFB0472BE5F29D001F90C1 /* WidgetsLocationModel.swift in Sources */,
+				246847FD2BEE6B88008E0E85 /* UserProductView.swift in Sources */,
 				246847F92BEE670E008E0E85 /* WidgetsService.swift in Sources */,
 				24F4641A2BE3DB6A00BB4858 /* FindPasswordView.swift in Sources */,
 				247B6A612BE2116A00866D72 /* WidgetsListView.swift in Sources */,
