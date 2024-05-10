@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Weather.css'
+import { useWeather } from './WeatherContext';
 
 import { 
     WiDaySunny, 
@@ -15,6 +16,7 @@ import {
 } from "react-icons/wi"; 
 
 function Weather() {
+    const { location, setLocation } = useWeather();
     const [weather, setWeather] = useState("");
     const [temperature, setTemperature] = useState("");
     const [city, setCity] = useState("");
@@ -45,6 +47,7 @@ function Weather() {
             try {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude } = position.coords;
+                    setLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
                     const API_KEY = 'e4699688bda8af6d121b61b33727cbe4';
                     //const API_KEY = process.env.BLUR_APP_OPEN_WEATHER_API_KEY; API KEY 로딩 오류로 인한 주석처리
                     const response = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
@@ -70,7 +73,7 @@ function Weather() {
         };
     
         fetchWeather();
-    }, []);
+    }, [setLocation]);
 
     return (
         <div className="weather">
