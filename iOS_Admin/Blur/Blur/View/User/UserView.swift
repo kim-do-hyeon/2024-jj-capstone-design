@@ -54,6 +54,12 @@ struct UserView: View {
                             .modifier(ButtonStyle())
                     }
                 }
+                HStack{
+                    NavigationLink(destination: MessageSendView()) {
+                        Text("메시지 전송")
+                            .modifier(ButtonStyle())
+                    }
+                }
             }
             
             Button(action: {

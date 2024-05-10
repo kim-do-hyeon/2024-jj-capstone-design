@@ -13,6 +13,8 @@
 		246847F92BEE670E008E0E85 /* WidgetsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847F42BEE670E008E0E85 /* WidgetsService.swift */; };
 		246847FB2BEE67DC008E0E85 /* RegisterProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */; };
 		246847FD2BEE6B88008E0E85 /* UserProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246847FC2BEE6B88008E0E85 /* UserProductView.swift */; };
+		246848012BEE7086008E0E85 /* MessageSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246848002BEE7086008E0E85 /* MessageSendView.swift */; };
+		246848032BEE73E6008E0E85 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246848022BEE73E6008E0E85 /* MessageService.swift */; };
 		246B7E112BE5511900452ECB /* AddFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B7E102BE5511900452ECB /* AddFaceView.swift */; };
 		247B6A2A2BE1FA8300866D72 /* BlurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A292BE1FA8300866D72 /* BlurApp.swift */; };
 		247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B6A2B2BE1FA8300866D72 /* UserListView.swift */; };
@@ -64,6 +66,8 @@
 		246847F42BEE670E008E0E85 /* WidgetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetsService.swift; sourceTree = "<group>"; };
 		246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProductView.swift; sourceTree = "<group>"; };
 		246847FC2BEE6B88008E0E85 /* UserProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProductView.swift; sourceTree = "<group>"; };
+		246848002BEE7086008E0E85 /* MessageSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSendView.swift; sourceTree = "<group>"; };
+		246848022BEE73E6008E0E85 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		246B7E102BE5511900452ECB /* AddFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceView.swift; sourceTree = "<group>"; };
 		247B6A262BE1FA8300866D72 /* Blur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		247B6A292BE1FA8300866D72 /* BlurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurApp.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 				246847F22BEE670E008E0E85 /* ProductionService.swift */,
 				246847F32BEE670E008E0E85 /* UserService.swift */,
 				246847F42BEE670E008E0E85 /* WidgetsService.swift */,
+				246848022BEE73E6008E0E85 /* MessageService.swift */,
 			);
 			name = NetWork;
 			path = Blur/NetWork;
@@ -230,6 +235,7 @@
 				24CFB0402BE5F1DF001F90C1 /* UserWidgetView.swift */,
 				246847FA2BEE67DC008E0E85 /* RegisterProductView.swift */,
 				246847FC2BEE6B88008E0E85 /* UserProductView.swift */,
+				246848002BEE7086008E0E85 /* MessageSendView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -405,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				247B6A2C2BE1FA8300866D72 /* UserListView.swift in Sources */,
+				246848032BEE73E6008E0E85 /* MessageService.swift in Sources */,
 				247B6A582BE1FAAD00866D72 /* APIModel.swift in Sources */,
 				24CFB0472BE5F29D001F90C1 /* WidgetsLocationModel.swift in Sources */,
 				246847FD2BEE6B88008E0E85 /* UserProductView.swift in Sources */,
@@ -428,6 +435,7 @@
 				24D2686A2BE30D690038BF35 /* WidgetsAddView.swift in Sources */,
 				24CFB0432BE5F267001F90C1 /* UserModel.swift in Sources */,
 				246B7E112BE5511900452ECB /* AddFaceView.swift in Sources */,
+				246848012BEE7086008E0E85 /* MessageSendView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
