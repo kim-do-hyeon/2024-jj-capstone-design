@@ -51,9 +51,12 @@ def get_news() :
     soup = BeautifulSoup(html, 'html.parser')
     news_datas = []
     for i in range(1, 11) :
-        news_text = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > strong').text
-        news_detail = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > span.read').text
-        news_datas.append({news_text.replace("'", '"').strip() : news_detail})
+        try :
+            news_text = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > strong').text
+            news_detail = soup.select_one('#container > div > div.w_news_list.type_issue2 > ul > li:nth-child(' + str(i) + ') > a > p > span.read').text
+            news_datas.append({news_text.replace("'", '"').strip() : news_detail})
+        except :
+            break
     return jsonify(news_datas = news_datas)
     
 @app.route("/api/location")
