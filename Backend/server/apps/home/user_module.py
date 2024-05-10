@@ -96,7 +96,7 @@ def register_module(path_type) :
                 db.session.commit()
             except :
                 return jsonify(result = "fail", type = "register_productiion", message = "DB Error")
-            return jsonify(result = "success", type = "register_productiion")
+            return jsonify(result = "success", type = "register_productiion", message = "success")
         else :
             return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
     elif path_type[0] == "profile" :
