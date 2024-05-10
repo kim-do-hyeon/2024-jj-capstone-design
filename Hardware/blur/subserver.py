@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
@@ -41,7 +41,6 @@ def get_kospi():
     kospi_message = "{} {}  {}({})".format(kospi_type, kospi_value, kospi_change_value, kospi_change_rate)
     kosdaq_message = "{} {}  {}({})".format(kosdaq_type, kosdaq_value, kosdaq_change_value, kosdaq_change_rate)
     rate_message = "{} {}  ({})".format(rate_type, rate, rate_change_value)
-    print(kosdaq_message)
     return jsonify(kospi = kospi_message, kosdaq = kosdaq_message, rate = rate_message)
 
 @app.route('/api/news')
@@ -57,7 +56,11 @@ def get_news() :
         news_datas.append({news_text.replace("'", '"').strip() : news_detail})
     return jsonify(news_datas = news_datas)
     
-    
+@app.route("/api/location")
+def location() :
+    latitude = request.args.get('lat', type=float)
+    longitude = request.args.get('log', type=float)
+    return render_template("traffic.html", lat = latitude, lng = longitude)
     
 
 if __name__ == '__main__':

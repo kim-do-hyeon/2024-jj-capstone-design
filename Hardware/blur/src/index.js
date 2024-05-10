@@ -1,31 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { WeatherProvider } from './components/WeatherContext';
 import App from './App';
 import Start from './components/Start';
-
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(
-  <React.StrictMode>
-    <Start/>
-  </React.StrictMode>
-);
-//Start렌더링 후 App 렌더
+const startAndSwitch = () => {
+    root.render(
+        <React.StrictMode>
+            <Start />
+        </React.StrictMode>
+    );
+    setTimeout(() => {
+        root.render(
+            <React.StrictMode>
+                <WeatherProvider>
+                    <App />
+                </WeatherProvider>
+            </React.StrictMode>
+        );
+    }, 2000);
+};
 
-setTimeout( () => {
-  root.render(
-    <React.StrictMode>
-      <App/>
-    </React.StrictMode>
-  );
-}, 2000);
+startAndSwitch();
 
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
