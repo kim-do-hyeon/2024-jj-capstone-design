@@ -70,7 +70,7 @@ fun RegisterProductScreen(
 }
 
 @Composable
-fun RegisterProductScreen(
+private fun RegisterProductScreen(
     deviceCode:String,
     onDeviceCode:(String) ->Unit,
     onClick:()->Unit

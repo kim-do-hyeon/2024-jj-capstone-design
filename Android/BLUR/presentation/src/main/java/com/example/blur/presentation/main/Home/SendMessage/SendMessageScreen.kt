@@ -7,10 +7,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -53,10 +56,12 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SendMessageScreen(
     viewModel: SendMessageViewModel = hiltViewModel(),
+    username : String
 ) {
     val state by viewModel.collectAsState()
     val context = LocalContext.current
     val messageInfo by viewModel.messageInfo.collectAsState()
+    viewModel.onReceiver_username(username) // ViewModel에 username 전달
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
@@ -66,7 +71,6 @@ fun SendMessageScreen(
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 Log.e("SendMessageScreen", sideEffect.message) // Log 태그 수정
             }
-
             else -> {}
         }
     }
@@ -79,8 +83,9 @@ fun SendMessageScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SendMessageScreen(
+private fun SendMessageScreen(
     messageInfo: List<GetMessage>?,
     SendMessage: String?,
     onSendMessageChange: (String) -> Unit,
@@ -122,13 +127,16 @@ fun SendMessageScreen(
                             .fillMaxSize(),
                         state = rememberLazyListState()
                     ) {
-                        item {
-                            messageInfo?.forEach { message ->
-                                val (year, time) = message.timestamp.split(" ")
-                                // 시간에서 초를 제거하고 분까지만 표시
-                                val formattedTime = time.substringBeforeLast(":")
+                        // 메시지를 날짜로 그룹화
+                        val groupedMessages = messageInfo?.groupBy { it.timestamp.split(" ")[0] }
+
+                        // 각 그룹에 대해 아이템을 생성
+                        groupedMessages?.forEach { (date, messages) ->
+                            // 날짜 표시
+                            item {
+                                Spacer(modifier = Modifier.height(20.dp))
                                 Text(
-                                    text = year,
+                                    text = date,
                                     style = TextStyle(
                                         color = MaterialTheme.colorScheme.onBackground,
                                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
@@ -137,6 +145,12 @@ fun SendMessageScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     textAlign = TextAlign.Center,
                                 )
+                            }
+                            // 해당 날짜에 속하는 모든 채팅 버블 표시
+                            items(messages) { message ->
+                                val (year, time) = message.timestamp.split(" ")
+                                // 시간에서 초를 제거하고 분까지만 표시
+                                val formattedTime = time.substringBeforeLast(":")
                                 ChatBubble(
                                     content = message.content,
                                     time = formattedTime

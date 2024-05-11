@@ -14,6 +14,7 @@ class GetMessageUseCaseImpl @Inject constructor(
     ): Result<String> {
         return try {
             val response = userService.getMessages(username)// Retrofit의 suspend 함수인 await을 사용하여 비동기 호출을 기다립니다.
+
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {

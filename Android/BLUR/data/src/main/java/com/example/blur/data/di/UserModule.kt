@@ -14,6 +14,7 @@ import com.example.blur.data.usecase.login.SignUpUseCaseImpl
 import com.example.blur.data.usecase.login.registerProductUseCaseImpl
 import com.example.blur.data.usecase.main.home.Camera.UpLoadFaceImageUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.GetMessageUseCaseImpl
+import com.example.blur.data.usecase.main.home.sendmessage.GetModelUserUseCaseImpl
 import com.example.blur.data.usecase.main.home.sendmessage.SendMessageUseCaseImpl
 import com.example.blur.data.usecase.main.home.widget.GetWidgetsListUseCaseImpl
 import com.example.blur.data.usecase.main.home.widget.SetWidgetUseCaseImpl
@@ -26,6 +27,7 @@ import com.example.blur.domain.usecase.login.SignUpUseCase
 import com.example.blur.domain.usecase.login.registerProductUseCase
 import com.example.blur.domain.usecase.main.home.Camera.UpLoadFaceImageUseCase
 import com.example.blur.domain.usecase.main.home.SendMessage.GetMessageUseCase
+import com.example.blur.domain.usecase.main.home.SendMessage.GetModelUserUseCase
 import com.example.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
 import com.example.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
 import com.example.blur.domain.usecase.main.home.Widget.SetWidgetUseCase
@@ -85,4 +87,6 @@ abstract class UserModule {
     @Binds
     abstract fun bindSetWidgetUseCase(uc: SetWidgetUseCaseImpl): SetWidgetUseCase
 
+    @Binds
+    abstract fun bindGetModelUserUseCase(uc: GetModelUserUseCaseImpl): GetModelUserUseCase
 }

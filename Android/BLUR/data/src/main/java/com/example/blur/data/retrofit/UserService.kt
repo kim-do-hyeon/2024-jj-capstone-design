@@ -5,6 +5,7 @@ import com.example.blur.data.model.login.ProductResponse
 import com.example.blur.data.model.login.SessionTestResponse
 import com.example.blur.data.model.login.SignUpResponse
 import com.example.blur.data.model.main.home.sendmessage.GetMessageResponse
+import com.example.blur.data.model.main.home.sendmessage.GetModelUserResponse
 import com.example.blur.data.model.main.home.sendmessage.SendMessageRequest
 import com.example.blur.data.model.main.home.sendmessage.SendMessageResponse
 import com.example.blur.data.model.main.home.widgets.SetWidgetResponse
@@ -14,6 +15,7 @@ import com.example.blur.data.model.main.setting.ChangePasswordResponse
 import com.example.blur.data.model.main.userinfo.ProfileResponse
 import com.example.blur.data.model.main.userinfo.UserInfoResponse
 import com.example.blur.data.model.widget.WidgetRequest
+import kotlinx.serialization.SerialName
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -76,11 +78,10 @@ interface UserService {
         @Path("username") username: String
     ): Response<GetMessageResponse>
 
-    @Headers("Content-Type: application/json")
     @POST("/send_message")
     suspend fun sendMessage(
         @Body request: SendMessageRequest
-    ): Call<SendMessageResponse>
+    ): Response<SendMessageResponse>
 
     @POST("/register/product")
     suspend fun registerProduct(
@@ -101,6 +102,11 @@ interface UserService {
     suspend fun getWidgetList(
         @Path("username") username: String
     ): Response<WidgetResponse>
+
+    @GET("/get_model_user_list")
+    suspend fun getModelUser(
+        @Query("code") code:String,
+    ):Response<GetModelUserResponse>
 
 }
 

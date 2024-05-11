@@ -12,7 +12,7 @@ class SendMessageActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             BLURTheme {
-                SendMessageScreen()
+                SendMessageNavHost()
             }
         }
     }
