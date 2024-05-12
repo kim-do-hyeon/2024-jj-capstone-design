@@ -87,16 +87,20 @@ def register_module(path_type) :
             try :
                 data = request.args.to_dict()
                 if data == {} :
-                    return jsonify(result = "fail", type = "register_productiion", message = "Key Error")
+                    return jsonify(result = "fail", type = "register_production", message = "Key Error")
                 code = data['code']
                 if code == "" :
-                    return jsonify(result = "fail", type = "register_productiion", message = "Args is Blank")
-                new_production = Production(username = username, code = code)
-                db.session.add(new_production)
-                db.session.commit()
+                    return jsonify(result = "fail", type = "register_production", message = "Args is Blank")
+                isProduct = Production.query.filter_by(username = username, code = code).all()
+                if len(isProduct) == 0 :
+                    new_production = Production(username = username, code = code)
+                    db.session.add(new_production)
+                    db.session.commit()
+                else :
+                    return jsonify(result = "fail", type = "register_production", message = "Exist Username & code")
             except :
-                return jsonify(result = "fail", type = "register_productiion", message = "DB Error")
-            return jsonify(result = "success", type = "register_productiion", message = "success")
+                return jsonify(result = "fail", type = "register_production", message = "DB Error")
+            return jsonify(result = "success", type = "register_production", message = "success")
         else :
             return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
     elif path_type[0] == "profile" :
