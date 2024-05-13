@@ -74,18 +74,15 @@ def location() :
 @app.route("/api/dht")
 def get_dht() :
     try :
-        sensor = adafruit_dht.DHT22(board.D2)
+        sensor = adafruit_dht.DHT11(board.D2)
     except :
         pass
     try :
-        # temp = sensor.temperature
-        # humi = sensor.humidity
-        temp = 21.98
-        humi = 88.76
+        temp = sensor.temperature
+        humi = sensor.humidity
         return jsonify(result = "success", temp = "{}".format(temp), humi = "{}".format(humi))
     except Exception as e:
-        print(e)
-        return jsonify(result = "fail")
+        return jsonify(result = "fail", message = str(e))
     
     
 
