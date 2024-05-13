@@ -9,6 +9,7 @@ import Finance from './components/Finance';
 import News from './components/News'
 import Message from './components/Message';
 import Traffic from './components/Traffic'
+import DHT from './components/DHT';
 import axios from 'axios';
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
                                         case 'News' : return <News key={`${row}-${col}`} />;
                                         case 'Traffic' : return <Traffic key={`${row}-${col}`} />;
                                         case 'Message' : return <Message key={`${row}-${col}`} userName={userName}/>;
+                                        case 'Room' : return <DHT key={`${row}-${col}`} />;
                                         default: return null;
                                     }
                                 })()

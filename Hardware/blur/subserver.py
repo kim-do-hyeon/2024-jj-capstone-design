@@ -2,6 +2,12 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
+try :
+    import time
+    import board
+    import adafruit_dht
+except :
+    pass
 
 app = Flask(__name__)
 CORS(app)  # CORS를 전체 앱에 적용
@@ -64,6 +70,23 @@ def location() :
     latitude = request.args.get('lat', type=float)
     longitude = request.args.get('log', type=float)
     return render_template("traffic.html", lat = latitude, lng = longitude)
+
+@app.route("/api/dht")
+def get_dht() :
+    try :
+        sensor = adafruit_dht.DHT22(board.D2)
+    except :
+        pass
+    try :
+        # temp = sensor.temperature
+        # humi = sensor.humidity
+        temp = 21.98
+        humi = 88.76
+        return jsonify(result = "success", temp = "{}".format(temp), humi = "{}".format(humi))
+    except Exception as e:
+        print(e)
+        return jsonify(result = "fail")
+    
     
 
 if __name__ == '__main__':
