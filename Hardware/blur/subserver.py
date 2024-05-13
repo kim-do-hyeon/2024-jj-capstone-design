@@ -83,7 +83,8 @@ def get_dht() :
         return jsonify(result = "success", temp = "{}".format(temp), humi = "{}".format(humi))
     except Exception as e:
         return jsonify(result = "fail", message = str(e))
-    
+    finally:
+        sensor.exit()
     
 
 if __name__ == '__main__':
