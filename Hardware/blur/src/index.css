@@ -25,3 +25,7 @@ code {
   margin: 0px;
   background-color: black;
 }
+
+.container {
+  max-width: 100vw !important;
+}
