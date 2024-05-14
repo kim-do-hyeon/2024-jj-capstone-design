@@ -22,6 +22,10 @@ function Weather() {
     const [city, setCity] = useState("");
     const [loading, setLoading] = useState(true);
     const [iconCode, setIconCode] = useState(""); // 아이콘 상태 추가
+    const [showUmbrellaMessage, setShowUmbrellaMessage] = useState("");
+    const [showClothesMessage, setShowClothesMessage] = useState(""); 
+    const [showThinClothesMessage, setShowThinClothesMessage] = useState("");
+    const [showHotMessage, setShowHotMessage] = useState(""); // 30도 이상일 때 "오늘 너무 덥습니다" 메시지를 표시하기 위한 상태 추가
 
     // 날씨 아이콘 반환 함수
     const getWeatherIcon = (iconCode) => {
@@ -63,6 +67,32 @@ function Weather() {
                     // 현재 위치의 도시명 가져오기
                     const cityResponse = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
                     setCity(cityResponse.data.address.city);
+
+                    // 최고 기온과 최저 기온을 가져와서 일교차를 계산
+                    const dailyData = response.data.daily;
+                    const maxTemp = dailyData[0].temp.max;
+                    const minTemp = dailyData[0].temp.min;
+                    const tempDifference = maxTemp - minTemp;
+
+                    // 일교차가 10도 이상인 경우에는 옷을 챙기라는 메시지를 표시
+                    if (tempDifference >= 10) {
+                        setShowClothesMessage(true);
+                    }
+                    
+                    // 비가 오는 경우에는 우산을 챙기라는 메시지를 표시
+                    if (response.data.current.weather[0].main.toLowerCase().includes('rain')) {
+                        setShowUmbrellaMessage(true);
+                    }
+
+                    // 온도가 30도 이상일 때 얇게 입으세요 메시지를 표시
+                    if (response.data.current.temp >= 30) {
+                        setShowThinClothesMessage(true);
+                    }
+
+                    // 온도가 30도 이상일 때 "오늘 너무 덥습니다" 메시지를 표시
+                    if (response.data.current.temp >= 30) {
+                        setShowHotMessage(true);
+                    }
             
                     setLoading(false);
                 });
@@ -89,6 +119,18 @@ function Weather() {
                     </div>
                 <div className="weatherInfo">{weather}</div>
                 <div className="cityInfo">{city}</div>
+                {showUmbrellaMessage && (
+                        <div className="messageInfo">비가 오면 우산을 챙기세요!</div>
+                    )}
+                    {showClothesMessage && (
+                        <div className="messageInfo">일교차가 클 때 옷을 챙기세요!</div>
+                    )}
+                    {showThinClothesMessage && (
+                        <div className="messageInfo">30도 이상일 때 얇게 입으세요!</div>
+                    )}
+                    {showHotMessage && (
+                        <div className="messageInfo">너무 덥습니다!</div>
+                    )}
                 </div>
             )}
         </div>
