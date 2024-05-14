@@ -103,6 +103,27 @@ def register_module(path_type) :
             return jsonify(result = "success", type = "register_production", message = "success")
         else :
             return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
+    elif path_type[0] == "product_remove" :
+        if session['isLogin'] :
+            username = session['username']
+            try :
+                data = request.args.to_dict()
+                if data == {} :
+                    return jsonify(result = "fail", type = "remove_production", message = "Key Error")
+                code = data['code']
+                if code == "" :
+                    return jsonify(result = "fail", type = "remove_production", message = "Args is Blank")
+                isProduct = Production.query.filter_by(username = username, code = code).first()
+                if isProduct != None :
+                    db.session.delete(isProduct)
+                    db.session.commit()
+                else :
+                    return jsonify(result = "fail", type = "remove_production", message = "Exist Username & code")
+            except Exception as e :
+                return jsonify(result = "fail", type = "remove_production", message = "DB Error : {}".format(e))
+            return jsonify(result = "success", type = "remove_production", message = "success")
+        else :
+            return jsonify(result = "fail", type = "register_productiion", message = "Not logined")
     elif path_type[0] == "profile" :
         if session['isLogin'] :
             profile_image = request.files['profile_image']
