@@ -5,6 +5,10 @@
     padding-left: 10%;
 }
 
+.messageInfo {
+    font-size: 70%;
+}
+
 .tempInfo {
     font-size: 200%;
     font-weight: 700;
