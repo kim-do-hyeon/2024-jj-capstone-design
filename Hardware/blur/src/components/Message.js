@@ -18,12 +18,12 @@ function Message({ userName }) {
           setSender(lastMessage.sender);
         } else {
           console.error('No messages found or failed to retrieve messages.');
-          setLatestMessage("No messages available.");
+          setLatestMessage("");
           setSender('');
         }
       } catch (error) {
         console.error('Error fetching messages:', error);
-        setLatestMessage("Error in fetching messages.");
+        setLatestMessage("");
         setSender('');
       }
     };
@@ -33,7 +33,8 @@ function Message({ userName }) {
 
   return (
     <div className="message">
-      <p><strong>From :</strong> <span>{sender}</span>&nbsp;-&nbsp;<span>{latestMessage || "No messages available."}</span></p>
+      {latestMessage && <p><strong>From :</strong> <span>{sender}</span> - <span>{latestMessage}</span></p>}
+      {!latestMessage && <p>No messages available.</p>}
     </div>
   );
 }
