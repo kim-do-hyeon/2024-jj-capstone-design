@@ -13,9 +13,16 @@ function DHT() {
                 setLoading(true);  // Ensure loading state is set during fetch
                 const { data } = await axios.get('http://127.0.0.1:5000/api/dht');
                 console.log(data);
-                setTempData(data.temp)
-                setHumiData(data.humi)
-                setLoading(false);
+                if (data.result == "success"){
+                    setTempData(data.temp);
+                    setHumiData(data.humi);
+                    setLoading(false);
+                }else {
+                    setTempData("Sensor Error");
+                    setHumiData("Sensor Error");
+                    setLoading(false);
+                }
+                
             } catch (error) {
                 console.error('Error fetching DHT data:', error);
                 setLoading(false);

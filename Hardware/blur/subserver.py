@@ -2,10 +2,14 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
+
+''' Raspberry pi Sensor Check '''
+sensor_check = 0
 try :
     import time
     import board
     import adafruit_dht
+    sensor_check = 1
 except :
     pass
 
@@ -73,18 +77,14 @@ def location() :
 
 @app.route("/api/dht")
 def get_dht() :
-    try :
+    if sensor_check == 1 :
         sensor = adafruit_dht.DHT11(board.D2)
-    except :
-        pass
-    try :
         temp = sensor.temperature
         humi = sensor.humidity
-        return jsonify(result = "success", temp = "{}".format(temp), humi = "{}".format(humi))
-    except Exception as e:
-        return jsonify(result = "fail", message = str(e))
-    finally:
         sensor.exit()
+        return jsonify(result = "success", temp = "{}".format(temp), humi = "{}".format(humi))
+    else :
+        return jsonify(result = "fail", message = "Please Connect Sensor Module")
     
 
 if __name__ == '__main__':
