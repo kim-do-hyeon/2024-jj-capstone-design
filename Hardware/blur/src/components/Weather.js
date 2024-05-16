@@ -100,20 +100,29 @@ function Weather() {
                     const maxTemp = dailyData[0].temp.max;
                     const minTemp = dailyData[0].temp.min;
                     const tempDifference = maxTemp - minTemp;
+                
 
                     // 일교차가 10도 이상인 경우에는 옷을 챙기라는 메시지를 표시
                     if (tempDifference >= 10) {
                         setShowTempDifferenceMessage(true);
+                    } else {
+                        setShowTempDifferenceMessage(false);
                     }
                     
                     // 비가 오는 경우에는 우산을 챙기라는 메시지를 표시
-                    if (response.data.current.weather[0].main.toLowerCase().includes('rain')) {
+                    const currentWeather = response.data.current.weather[0].main.toLowerCase();
+                    const rainForecast = response.data.hourly.slice(1, 6).some(hourlyData => hourlyData.weather[0].main.toLowerCase().includes('rain'));
+                    if (currentWeather.includes('rain') || rainForecast) {
                         setShowUmbrellaMessage(true);
+                    } else {
+                        setShowUmbrellaMessage(false);
                     }
 
                     // 온도가 30도 이상일 때 "오늘 너무 덥습니다" 메시지를 표시
                     if (response.data.current.temp >= 30) {
                         setShowHotMessage(true);
+                    } else {
+                        setShowHotMessage(false);
                     }
             
                     setLoading(false);
@@ -133,7 +142,7 @@ function Weather() {
     };
     const getRandomTempDifferenceMessage = () => {
         const randomIndex = Math.floor(Math.random() * tempDifferenceMessages.length);
-        return umbrellaMessages[randomIndex];
+        return tempDifferenceMessages[randomIndex];
     };
     const getRandomHotMessage = () => {
         const randomIndex = Math.floor(Math.random() * hotMessages.length);
