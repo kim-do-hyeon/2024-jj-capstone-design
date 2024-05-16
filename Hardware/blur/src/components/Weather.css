@@ -1,8 +1,8 @@
 .weather {
     font-size: 180%;
-    color: white;
-    padding-top: 0%;
-    padding-left: 0%;
+    color: #ffffff;
+    padding-top: 10%;
+    padding-left: 20%;
 }
 
 .messageInfo {
@@ -10,9 +10,9 @@
 }
 
 .tempInfo {
-    font-size: 150%;
+    font-size: 100%;
     font-weight: 500;
-    margin-bottom: -5%;
+    margin-bottom: -1%;
 }
 
 .weatherInfo {
@@ -30,6 +30,6 @@
     color: white;
     font-size: 120px;
     padding-left: 9%;
-    margin-bottom: -8%;
+    margin-bottom: -5%;
     margin-left: -6%;
 }
