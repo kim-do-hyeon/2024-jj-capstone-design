@@ -4,13 +4,13 @@
     flex-direction: column;
     text-align: left;
     padding-top: 25%;
-    padding-left: 10%;
+    padding-left: 20%;
 }
 
 .date {
-    font-size:300%;
-    font-weight: 500;
-    margin-bottom: -6%;
+    font-size:200%;
+    font-weight: 600;
+    margin-bottom: 0%;
 }
 .time {
     color: white;
