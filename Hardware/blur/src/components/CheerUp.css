@@ -1,8 +1,7 @@
 .welcomeSign {
     color: white;
-    flex-direction: column;
     margin-top: 20%;
-    margin-left: 50%;
+    margin-left: 20%;
     font-weight: 400;
     font-size: 150%;
 }
@@ -10,8 +9,8 @@
 .userName {
     font-size: 190%;
     font-weight: 800;
-    margin-top: -4%;
-    margin-bottom: -7%;
+    margin-top: -1%;
+    margin-bottom: -1%;
 }
 
 .textAnimation {
