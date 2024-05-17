@@ -1,0 +1,11 @@
+FROM node:latest
+
+WORKDIR /app
+
+COPY blur/package.json blur/package-lock.json ./
+
+RUN npm install
+
+COPY blur/ .
+
+CMD ["npm", "start"]

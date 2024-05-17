@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  subserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.subserver
+    ports:
+      - "5000:5000"
+  
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - "3000:3000"
+    depends_on:
+      - subserver
+    environment:
+      - REACT_APP_BACKEND_URL=http://subserver:5000
