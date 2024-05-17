@@ -59,6 +59,10 @@ struct UserView: View {
                         Text("메시지 전송")
                             .modifier(ButtonStyle())
                     }
+                    NavigationLink(destination: WifiSettingView()) {
+                        Text("와이파이 세팅 ")
+                            .modifier(ButtonStyle())
+                    }
                 }
             }
             
