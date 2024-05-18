@@ -95,6 +95,11 @@ function App() {
                                         case 'Room' : return <DHT key={`${row}-${col}`} />;
                                         default: return null;
                                     }
+                                    <div className="fullscreen-container">
+                                    <div className="content">
+                                      Fullscreen Content
+                                    </div>
+                                  </div>
                                 })()
                             ) : null}
                         </div>
