@@ -11,7 +11,7 @@ function DHT() {
         const fetchDHTData = async () => {
             try {
                 setLoading(true);  // Ensure loading state is set during fetch
-                const { data } = await axios.get('http://127.0.0.1:5000/api/dht');
+                const { data } = await axios.get('http://127.0.0.1:5555/api/dht');
                 console.log(data);
                 if (data.result == "success"){
                     setTempData(data.temp);

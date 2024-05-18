@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.subserver
     ports:
-      - "5000:5000"
+      - "5555:5555"
   
   react-app:
     build:
@@ -16,4 +16,4 @@ services:
     depends_on:
       - subserver
     environment:
-      - REACT_APP_BACKEND_URL=http://subserver:5000
+      - REACT_APP_BACKEND_URL=http://subserver:5555

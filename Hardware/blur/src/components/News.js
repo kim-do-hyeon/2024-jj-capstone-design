@@ -11,7 +11,7 @@ function News() {
         const fetchNewsData = async () => {
             try {
                 setLoading(true);  // Ensure loading state is set during fetch
-                const { data } = await axios.get('http://127.0.0.1:5000/api/news');
+                const { data } = await axios.get('http://127.0.0.1:5555/api/news');
                 console.log(data);
                 setNewsData(data.news_datas); // Assuming data.news_datas is an array of objects
                 setLoading(false);

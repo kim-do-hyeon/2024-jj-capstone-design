@@ -11,7 +11,7 @@ function Finance() {
     useEffect(() => {
         const fetchFinanceData = async () => {
             try {
-                const { data } = await axios.get('http://127.0.0.1:5000/api/finance');
+                const { data } = await axios.get('http://127.0.0.1:5555/api/finance');
                 setKospiValue(data.kospi);
                 setKosdaqValue(data.kosdaq);
                 setRateValue(data.rate);
