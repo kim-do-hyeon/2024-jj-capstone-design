@@ -46,7 +46,7 @@ docker-compose down
 ### 애플리케이션 접근
 
 - 리액트 애플리케이션 : `http://localhost:3000`
-- 서브서버 API : `http://localhost:5000`
+- 서브서버 API : `http://localhost:5555`
 
 ### `up`과 `up --build`의 차이점
 
