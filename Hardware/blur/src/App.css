@@ -1,7 +1,7 @@
 .App {
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr; /* 미러 1, 2, 3의 크기를 3:9:3 비율로 설정 */
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4개의 열 */
+  grid-template-rows: repeat(3, 1fr); /* 3개의 행 */
   gap: 0; /* 그리드 간격 제거 */
   height: 100vh;
 }
@@ -15,10 +15,68 @@
   opacity: 1;
 }
 
+.row {
+  display: flex;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   overflow: hidden; /* 스크롤바 숨기기 */
+}
+
+/* 1.1, 1.2는 왼쪽 위로 정렬 */
+.row:nth-child(1) .col:nth-child(1),
+.row:nth-child(1) .col:nth-child(2) {
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  align-items: flex-start; /* 위쪽 정렬 */
+  padding: 50px 0 0 50px; /* 상단과 왼쪽에 패딩 추가 */
+}
+
+/* 1.3, 1.4는 오른쪽 위로 정렬 */
+.row:nth-child(1) .col:nth-child(3),
+.row:nth-child(1) .col:nth-child(4) {
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: flex-start; /* 위쪽 정렬 */
+  padding: 50px 50px 0 0; /* 상단과 오른쪽에 패딩 추가 */
+}
+
+/* 2.1, 2.2는 왼쪽 가운데로 정렬 */
+.row:nth-child(2) .col:nth-child(1),
+.row:nth-child(2) .col:nth-child(2) {
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  padding: 0 0 0 50px; /* 왼쪽에 패딩 추가 */
+}
+
+/* 2.3, 2.4는 오른쪽 가운데로 정렬 */
+.row:nth-child(2) .col:nth-child(3),
+.row:nth-child(2) .col:nth-child(4) {
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  padding: 0 50px 0 0; /* 오른쪽에 패딩 추가 */
+}
+
+/* 3.1, 3.2는 왼쪽 아래로 정렬 */
+.row:nth-child(3) .col:nth-child(1),
+.row:nth-child(3) .col:nth-child(2) {
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  align-items: flex-end; /* 아래쪽 정렬 */
+  padding: 0 0 50px 50px; /* 하단과 왼쪽에 패딩 추가 */
+}
+
+/* 3.3, 3.4는 오른쪽 아래로 정렬 */
+.row:nth-child(3) .col:nth-child(3),
+.row:nth-child(3) .col:nth-child(4) {
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: flex-end; /* 아래쪽 정렬 */
+  padding: 0 50px 50px 0; /* 하단과 오른쪽에 패딩 추가 */
 }
