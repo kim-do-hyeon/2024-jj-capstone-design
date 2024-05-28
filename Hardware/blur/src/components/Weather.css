@@ -1,25 +1,27 @@
 .weather {
     font-size: 180%;
+    font-weight: 1000%;
     color: #ffffff;
 }
 
 .messageInfo {
-    font-size: 70%;
+    font-size: 100%;
+    font-weight: 1000;  
 }
 
 .tempInfo {
-    font-size: 100%;
-    font-weight: 500;
+    font-size: 130%;
+    font-weight: 1000;
 }
 
 .weatherInfo {
-    font-size: 90%;
-    font-weight: 500;
+    font-size: 130%;
+    font-weight: 1000;
 }
 
 .cityInfo {
-    font-size: 75%;
-    font-weight: 800;
+    font-size: 130%;
+    font-weight: 1000;
     
 }
 
