@@ -4,3 +4,8 @@
     font-weight: 800;
     color: white;
 }
+
+.news-item h3 {
+    font-size: 160%; /* 글자 크기 */
+    font-weight: 1000; /* 글자 굵기 */
+}
