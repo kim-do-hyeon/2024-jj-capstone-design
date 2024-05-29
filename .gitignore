@@ -5,5 +5,3 @@ Backend/Face_Detect/test_image/*
 db.sqlite3
 .DS_Store
 test.py
-*.jpg
-*.png
