@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.blur.sns"
+    namespace = "com.blur.blur.sns"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.blur.sns"
+        applicationId = "com.blur.blur.sns"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

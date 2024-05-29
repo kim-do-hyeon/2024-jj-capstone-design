@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.blur.presentation"
+    namespace = "com.blur.blur.presentation"
     compileSdk = 34
 
     defaultConfig {

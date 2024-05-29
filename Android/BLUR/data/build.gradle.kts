@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.blur.data"
+    namespace = "com.blur.blur.data"
     compileSdk = 34
 
     defaultConfig {
