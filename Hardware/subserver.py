@@ -72,7 +72,7 @@ def get_news() :
 @app.route("/api/location")
 def location() :
     latitude = request.args.get('lat', type=float)
-    longitude = request.args.get('log', type=float)
+    longitude = request.args.get('lng', type=float)
     return render_template("traffic.html", lat = latitude, lng = longitude)
 
 @app.route("/api/dht")
