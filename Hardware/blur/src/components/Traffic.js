@@ -6,7 +6,8 @@ function Traffic() {
     console.log("Traffic component: ", location.latitude, location.longitude);
 
     // 올바른 변수 값 사용을 위해 템플릿 리터럴과 ${} 문법 사용
-    const iframeSrc = `http://127.0.0.1:5555/api/location?lat=${location.latitude}&log=${location.longitude}`;
+    const iframeSrc = `http://127.0.0.1:5555/api/location?lat=${location.latitude}&lng=${location.longitude}`;
+    console.log("iframe src: ", iframeSrc);
 
     return (
         <div className="traffic">
