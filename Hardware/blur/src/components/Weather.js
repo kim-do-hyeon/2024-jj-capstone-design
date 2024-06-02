@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Weather.css'
+import './Weather.css';
 import { useWeather } from './WeatherContext';
 
 import { 
@@ -26,14 +26,11 @@ function Weather() {
     const [showTempDifferenceMessage, setShowTempDifferenceMessage] = useState("");
     const [showHotMessage, setShowHotMessage] = useState("");
     const umbrellaMessages = [
-        '오늘 비가 올 예정입니다. 우산을 챙기세요!',
-        '비가 오니까 오늘 외출하실 때 우비나 우산을 잊지 마세요.',
-        '오늘 날씨가 흐리고 비가 올 예정이니 대비하세요.',
-        '오늘 비가 많이 내릴 수 있으니 야외 활동 시 주의하세요.',
-        '오늘 비 소식이 있습니다. 외출 시 신발도 신경 써주세요.',
-        '비가 오니까 교통 상황도 염두에 두고 출발하세요.',
-        '오늘 비가 내릴 예정이니 차를 운전하실 때 주의하세요.',
-        '비가 와서 길이 미끄러울 수 있으니 조심하세요.'
+        '비가 올 것 같으니 우산을 챙기세요!',
+        '비가 오니 우산을 꼭 챙기세요!',
+        '오늘은 우산이 필요할 것 같아요.',
+        '우산을 챙기지 않으면 비에 맞을 수 있으니 주의하세요.',
+        '옷을 젖게 하지 않기 위해 우산을 꼭 챙기세요.',
     ];
 
     const tempDifferenceMessages = [
@@ -42,7 +39,7 @@ function Weather() {
         '낮과 밤의 기온 차가 크니까 옷을 적절히 입으세요!',
         '일교차가 크니까 간절기 옷차림을 해주세요.',
         '기온 변화에 주의하세요. 체감 온도가 달라질 수 있습니다.',
-        '일교차가 심하니 몸에 부담이 될 수 있으니 조심하세요!',
+        '일교차가 심하면 몸에 부담이 될 수 있으니 조심하세요!',
         '낮과 밤의 온도 차이가 크니까 간절기 옷을 준비하세요.'
     ];
 
@@ -51,7 +48,10 @@ function Weather() {
         '더위에 약한 사람들은 실내에 있거나 그늘에서 쉬세요.',
         '오늘은 더위가 특히 무더워요. 외출 시에는 모자와 선크림을 꼭 착용하세요!',
         '더워도 웃음으로 이겨봐요! ^^',
-        '햇빛이 강하니까 모자나 선글라스를 착용해주세요.'
+        '오늘은 물이 필요한 날입니다. 자주 마시세요!',
+        '햇빛이 강하니까 모자나 선글라스를 착용해주세요.',
+        '더운 날씨에는 가벼운 음료수를 즐겨보세요.',
+        '날씨가 더워도 에너지는 열정적으로 유지하세요!'
     ];
 
     // 날씨 아이콘 반환 함수
@@ -76,57 +76,51 @@ function Weather() {
     useEffect(() => {
         const fetchWeather = async () => {
             try {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-                    const API_KEY = 'e4699688bda8af6d121b61b33727cbe4';
-                    //const API_KEY = process.env.BLUR_APP_OPEN_WEATHER_API_KEY; API KEY 로딩 오류로 인한 주석처리
-                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
-                    //const response1 = await axios.get("https://jj.system32.kr/widgets");
-                    //console.log(response1);
-                    console.log(response.data); // 전체 응답 로깅
-                    console.log("Icon code from API:", response.data.current.weather[0].icon); // 아이콘 코드 로깅
-        
-                    setWeather(response.data.current.weather[0].description);
-                    setTemperature(response.data.current.temp);
-                    setIconCode(response.data.current.weather[0].icon); // 아이콘 코드 상태 설정
+                // IP 주소를 통해 위치 정보 가져오기
+                const locationResponse = await axios.get('https://ipapi.co/json/');
+                const { latitude, longitude, city } = locationResponse.data;
+                setLocation({ latitude, longitude });
+                setCity(city);
 
-                    // 현재 위치의 도시명 가져오기
-                    const cityResponse = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-                    setCity(cityResponse.data.address.city);
+                const API_KEY = 'e4699688bda8af6d121b61b33727cbe4';
+                const response = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
+                console.log(response.data); // 전체 응답 로깅
+                console.log("Icon code from API:", response.data.current.weather[0].icon); // 아이콘 코드 로깅
 
-                    // 최고 기온과 최저 기온을 가져와서 일교차를 계산
-                    const dailyData = response.data.daily;
-                    const maxTemp = dailyData[0].temp.max;
-                    const minTemp = dailyData[0].temp.min;
-                    const tempDifference = maxTemp - minTemp;
-                
+                setWeather(response.data.current.weather[0].description);
+                setTemperature(response.data.current.temp);
+                setIconCode(response.data.current.weather[0].icon); // 아이콘 코드 상태 설정
 
-                    // 일교차가 10도 이상인 경우에는 옷을 챙기라는 메시지를 표시
-                    if (tempDifference >= 10) {
-                        setShowTempDifferenceMessage(true);
-                    } else {
-                        setShowTempDifferenceMessage(false);
-                    }
-                    
-                    // 비가 오는 경우에는 우산을 챙기라는 메시지를 표시
-                    const currentWeather = response.data.current.weather[0].main.toLowerCase();
-                    const rainForecast = response.data.hourly.slice(1, 6).some(hourlyData => hourlyData.weather[0].main.toLowerCase().includes('rain'));
-                    if (currentWeather.includes('rain') || rainForecast) {
-                        setShowUmbrellaMessage(true);
-                    } else {
-                        setShowUmbrellaMessage(false);
-                    }
-
-                    // 온도가 30도 이상일 때 "오늘 너무 덥습니다" 메시지를 표시
-                    if (response.data.current.temp >= 30) {
-                        setShowHotMessage(true);
-                    } else {
-                        setShowHotMessage(false);
-                    }
+                // 최고 기온과 최저 기온을 가져와서 일교차를 계산
+                const dailyData = response.data.daily;
+                const maxTemp = dailyData[0].temp.max;
+                const minTemp = dailyData[0].temp.min;
+                const tempDifference = maxTemp - minTemp;
             
-                    setLoading(false);
-                });
+                // 일교차가 10도 이상인 경우에는 옷을 챙기라는 메시지를 표시
+                if (tempDifference >= 10) {
+                    setShowTempDifferenceMessage(true);
+                } else {
+                    setShowTempDifferenceMessage(false);
+                }
+                
+                // 비가 오는 경우에는 우산을 챙기라는 메시지를 표시
+                const currentWeather = response.data.current.weather[0].main.toLowerCase();
+                const rainForecast = response.data.hourly.slice(1, 6).some(hourlyData => hourlyData.weather[0].main.toLowerCase().includes('rain'));
+                if (currentWeather.includes('rain') || rainForecast) {
+                    setShowUmbrellaMessage(true);
+                } else {
+                    setShowUmbrellaMessage(false);
+                }
+
+                // 온도가 30도 이상일 때 "오늘 너무 덥습니다" 메시지를 표시
+                if (response.data.current.temp >= 30) {
+                    setShowHotMessage(true);
+                } else {
+                    setShowHotMessage(false);
+                }
+        
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching weather:', error);
                 setLoading(false);
@@ -178,5 +172,5 @@ function Weather() {
         </div>
     );
 }
-    
-    export default Weather;
+
+export default Weather;
