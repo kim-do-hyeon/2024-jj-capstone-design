@@ -1,11 +1,12 @@
 .welcomeSign {
     color: white;
     font-weight: 1000;
-    font-size: 200%;
+    font-size: 170%;
+    text-align: left
 }
 
 .userName {
-    font-size: 200%;
+    font-size: 170%;
     font-weight: 1000;
 }
 
