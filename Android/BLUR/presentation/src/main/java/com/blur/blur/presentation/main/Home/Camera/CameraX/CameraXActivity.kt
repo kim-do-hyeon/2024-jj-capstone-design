@@ -2,6 +2,7 @@ package com.blur.blur.presentation.Main.Home.Camera.CameraX
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaActionSound
 import android.os.Build
@@ -19,6 +20,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.blur.blur.presentation.Main.Home.Camera.CameraActivity
 import com.blur.blur.presentation.R
 import com.blur.blur.presentation.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
@@ -129,6 +131,13 @@ class CameraXActivity : AppCompatActivity() {
 
                     // 현재 액티비티 종료
                     finish()
+                    // 카메라 액티비티로 이동
+                    startActivity(
+                        Intent(
+                            this@CameraXActivity,
+                            CameraActivity::class.java
+                        )
+                    )
                 }
             }
         )

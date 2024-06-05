@@ -18,7 +18,8 @@ class LoginUseCaseImpl @Inject constructor(
                 if (responseBody?.result == "success") {
                     response.headers()["Set-Cookie"]?.let { cookie ->
                         // SharedPreferences를 사용하여 쿠키 저장
-                        SharedPreferencesManager.saveCookie(context, cookie)
+                        val expiryTimeMillis = System.currentTimeMillis() + (12 * 60 * 60 * 1000) // 12시간 후
+                        SharedPreferencesManager.saveCookie(context, cookie, expiryTimeMillis)
                         SharedPreferencesManager.saveUsername(context, username)
                     }
                     // 성공 메시지 반환. responseBody.message가 null이면 "Login successful"을 반환

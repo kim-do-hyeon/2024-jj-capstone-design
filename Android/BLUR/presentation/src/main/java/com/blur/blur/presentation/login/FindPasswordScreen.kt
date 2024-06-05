@@ -4,6 +4,7 @@ package com.blur.blur.presentation.Login
 
 import UsernameTextField
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -56,9 +57,20 @@ fun FindPasswordScreen(
     ) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
-    viewModel.collectSideEffect {
+    viewModel.collectSideEffect {sideEffect->
+        when (sideEffect) {
+            FindPasswordEffect.NavigateToLoginScreen -> {
+                context.startActivity(
+                    Intent(
+                        context, LoginActivity::class.java
+                    )
+                )
+            }
 
+            else -> {}
+        }
     }
+
 
     FindPasswordScreen(
         email = state.email,
@@ -124,7 +136,8 @@ fun FindPasswordScreen(
                 .padding(horizontal = 16.dp)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(contentPadding)
-                .verticalScroll(scrollState).pointerInput(Unit) {
+                .verticalScroll(scrollState)
+                .pointerInput(Unit) {
                     forEachGesture {
                         awaitPointerEventScope {
                             awaitFirstDown().also {

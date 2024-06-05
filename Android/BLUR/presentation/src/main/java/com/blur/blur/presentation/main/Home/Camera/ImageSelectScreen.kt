@@ -166,6 +166,9 @@ private fun ImageSelectScreen(
                                                 CameraXActivity::class.java
                                             )
                                         )
+                                        if (context is Activity) {
+                                            context.finish()
+                                        }
                                     },
                                 contentAlignment = Alignment.Center
                             ) {
