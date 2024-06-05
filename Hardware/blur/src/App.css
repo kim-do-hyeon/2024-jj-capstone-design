@@ -23,6 +23,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-grow: 1; /* 내용물들이 동일한 비율로 박스 안에 들어가도록 설정 */
+  text-align: center; /* 내용물을 가운데 정렬 */
+  overflow-wrap: break-word; /* 텍스트가 박스를 넘어가면 어절 단위로 줄 바꿈 */
+  max-width: 100%; /* 최대 너비를 100%로 설정하여 박스 크기 고정 */
+  max-height: 100%; /* 최대 높이를 100%로 설정하여 박스 높이 고정 */
+}
+
+.col * {
+  font-size: 1rem; /* 내부 요소의 글자 크기를 박스에 맞추기 위해 설정 */
 }
 
 html, body {
