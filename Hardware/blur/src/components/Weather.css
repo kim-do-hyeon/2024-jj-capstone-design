@@ -2,30 +2,36 @@
     font-size: 180%;
     font-weight: 1000%;
     color: #ffffff;
+    text-align: right;
 }
 
 .messageInfo {
-    font-size: 100%;
-    font-weight: 1000;  
+    font-size: 180%;
+    font-weight: 1000;
+    text-align: right;
 }
 
 .tempInfo {
-    font-size: 130%;
+    font-size: 180%;
     font-weight: 1000;
+    text-align: right;
 }
 
 .weatherInfo {
-    font-size: 130%;
+    font-size: 180%;
     font-weight: 1000;
+    text-align: right;
 }
 
 .cityInfo {
-    font-size: 130%;
+    font-size: 180%;
     font-weight: 1000;
+    text-align: right;
     
 }
 
 .weatherIcon{
     color: white;
     font-size: 120px;
+    float: left;
 }
