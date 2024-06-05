@@ -15,19 +15,21 @@
     font-size: 180%;
     font-weight: 1000;
     text-align: left;
+    padding-left: 40%;
 }
 
 .weatherInfo {
     font-size: 180%;
     font-weight: 1000;
     text-align: left;
+    padding-left: 40%;
 }
 
 .cityInfo {
     font-size: 180%;
     font-weight: 1000;
     text-align: left;
-    
+    padding-left: 40%;
 }
 
 .weatherIcon{
