@@ -22,51 +22,73 @@ function Weather() {
     const [city, setCity] = useState("");
     const [loading, setLoading] = useState(true);
     const [iconCode, setIconCode] = useState("");
-    const [showTempDifferenceMessage, setShowTempDifferenceMessage] = useState("");
-    const [showHotMessage, setShowHotMessage] = useState("");
-    const [showRainStopMessage, setShowRainStopMessage] = useState("");
-    const [showContinuousRainMessage, setShowContinuousRainMessage] = useState("");
-    const [showRainStartMessage, setShowRainStartMessage] = useState("");
-    const  rainStopMessages= [
+    const [showTempDifferenceMessage, setShowTempDifferenceMessage] = useState(false);
+    const [showHotMessage, setShowHotMessage] = useState(false);
+    const [showRainStopMessage, setShowRainStopMessage] = useState(false);
+    const [showContinuousRainMessage, setShowContinuousRainMessage] = useState(false);
+    const [showRainStartMessage, setShowRainStartMessage] = useState(false);
+    const [showFogMessage, setShowFogMessage] = useState(false);
+    const [fogDuration, setFogDuration] = useState(0);
+    const [fineDustMessage, setFineDustMessage] = useState("");
+    const [showIntermittentRainMessage, setShowIntermittentRainMessage] = useState(false);
+
+    const rainStopMessages = [
         '비가 그치고 있어서 다행이네요.',
-        '비가 멈추고 있으니 산책하기 좋은 날씨네요.',
+        '비가 멈추고 있으니 저녁에 산책하기 좋은 날씨네요.',
         '우산을 접어놓으셔도 될 것 같아요.',
         '비가 그치니 늦은 저녁 산책 어떠세요?',
         '비가 그치고 하늘이 맑아질 거에요.'
     ];
 
-    const  continuousRainMessages= [
+    const continuousRainMessages = [
         '비가 계속 오고 있으니 우산을 챙기세요.',
-        '비가 계속 내리고 있어서 실내에서 따뜻한 차 한 잔 어떠세요?',
         '비가 계속 오는데 우산을 꼭 챙기세요.',
         '비가 계속 오는데 감기 조심하세요.'
     ];
 
-    const  rainStartMessages= [
+    const rainStartMessages = [
+        '앞으로 비가 올 것 같아요. 우산을 챙기는 것을 잊지 마세요!',
         '비가 올 것 같습니다! 우산을 꼭 챙기세요.',
         '비가 살짝 내리기 시작했습니다. 우산을 챙기는 걸 잊지 마세요!',
         '비가 살짝씩 올 것 같아요. 우산을 챙기는 게 좋겠어요.',
     ];
 
     const tempDifferenceMessages = [
-        '오늘은 일교차가 크니까 옷을 적당히 입고 다니세요!',
-        '일교차가 커서 감기 조심하세요!',
+        '오늘은 일교차가 크니까 옷을 챙기고 다니세요!',
+        '일교차가 크니까 감기 조심하세요!',
         '낮과 밤의 기온 차가 크니까 옷을 적절히 입으세요!',
         '일교차가 크니까 간절기 옷차림을 해주세요.',
-        '기온 변화에 주의하세요. 체감 온도가 달라질 수 있습니다.',
-        '일교차가 심하면 몸에 부담이 될 수 있으니 조심하세요!',
+        '일교차가 심하니 조심하세요!',
         '낮과 밤의 온도 차이가 크니까 간절기 옷을 준비하세요.'
     ];
 
     const hotMessages = [
         '오늘은 정말 더워요! 물을 충분히 마시고 햇빛을 피하세요.',
         '더위에 약한 사람들은 실내에 있거나 그늘에서 쉬세요.',
-        '오늘은 더위가 특히 무더워요. 외출 시에는 모자와 선크림을 꼭 착용하세요!',
-        '더워도 웃음으로 이겨봐요! ^^',
-        '오늘은 물이 필요한 날입니다. 자주 마시세요!',
+        '날씨가 덥지만 웃음으로 이겨봐요! ^^',
         '햇빛이 강하니까 모자나 선글라스를 착용해주세요.',
-        '더운 날씨에는 가벼운 음료수를 즐겨보세요.',
-        '날씨가 더워도 에너지는 열정적으로 유지하세요!'
+    ];
+
+    const fogMessages = [
+        '안개가 짙습니다. 운전 시 조심하세요.',
+        '안개가 끼어 시야가 좋지 않습니다. 주의하세요.',
+        '안개 때문에 가시거리가 짧아졌습니다. 안전에 유의하세요.',
+        '안개가 끼어 있는 날씨입니다. 외출 시 조심하세요.',
+        '안개가 짙어서 앞이 잘 보이지 않습니다. 조심하세요.'
+    ];
+
+    const fineDustMessages = [
+        '오늘 미세먼지 농도가 높습니다. 외출을 자제하세요.',
+        '미세먼지가 많으니 마스크를 착용하세요.',
+        '미세먼지 농도가 높으니 창문을 닫고 실내에 계세요.',
+        '미세먼지 때문에 공기가 탁하니 실내 환기를 자제하세요.',
+        '미세먼지가 심한 날입니다. 건강에 유의하세요.'
+    ];
+
+    const intermittentRainMessages = [
+        '비가 오다 말다 해서 날씨가 변덕스럽네요.',
+        '비가 오다 말다 해서 외출 시 우산을 잊지 마세요.',
+        '비가 잠깐씩 내리니 우산을 가지고 다니세요.'
     ];
 
     const getWeatherIcon = (iconCode) => {
@@ -125,22 +147,61 @@ function Weather() {
                 // 현재 날씨 상태
                 const currentWeather = response.data.current.weather[0].main.toLowerCase();
 
-                // 1시간 뒤 날씨 상태
-                const nextHourWeather = response.data.hourly[1].weather[0].main.toLowerCase();
+                // 3시간 뒤 날씨 상태
+                const nextHourWeather = response.data.hourly[3].weather[0].main.toLowerCase();
 
-                // 이전 날씨 상태가 없는 경우 현재 날씨 상태를 이전 상태로 설정
+                // 안개 지속 시간 계산
+                let fogCount = 0;
+                for (let i = 0; i < response.data.hourly.length; i++) {
+                    if (response.data.hourly[i].weather[0].main.toLowerCase() === 'fog') {
+                        fogCount++;
+                    } else {
+                        break;
+                    }
+                }
+                setFogDuration(fogCount);
+
+                // 미세먼지 농도 API 호출
+                const airQualityResponse = await axios.get(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`);
+                const fineDustConcentration = airQualityResponse.data.list[0].components.pm10;
+
+                if (fineDustConcentration > 50) {
+                    setFineDustMessage(fineDustMessages[Math.floor(Math.random() * fineDustMessages.length)]);
+                } else {
+                    setFineDustMessage("");
+                }
+
+                // 비가 오다 말다 하는 경우와 계속 오는 경우 구분
                 if (!previousWeather) {
                     previousWeather = currentWeather;
                 } else {
-                    // 이전 날씨 상태와 현재 날씨 상태가 다른 경우에 메시지 표시
                     if (currentWeather.includes('rain') && !previousWeather.includes('rain')) {
-                        setShowRainStartMessage(true); // 비가 오다가 시작하는 경우 메시지 표시
+                        setShowRainStartMessage(true);
+                        setShowRainStopMessage(false);
+                        setShowContinuousRainMessage(false);
+                        setShowIntermittentRainMessage(false);
                     } else if (!currentWeather.includes('rain') && previousWeather.includes('rain')) {
-                        setShowRainStopMessage(true); // 비가 오다가 멈추는 경우 메시지 표시
+                        setShowRainStopMessage(true);
+                        setShowRainStartMessage(false);
+                        setShowContinuousRainMessage(false);
+                        setShowIntermittentRainMessage(false);
                     } else if (currentWeather.includes('rain') && previousWeather.includes('rain')) {
-                        setShowContinuousRainMessage(true); // 비가 계속 오는 경우 메시지 표시
+                        const currentPrecipitation = response.data.current.rain ? response.data.current.rain['1h'] : 0;
+                        const nextPrecipitation = response.data.hourly[1].rain ? response.data.hourly[1].rain['1h'] : 0;
+                        const secondNextPrecipitation = response.data.hourly[2].rain ? response.data.hourly[2].rain['1h'] : 0;
+
+                        if (currentPrecipitation > 0 && nextPrecipitation === 0 && secondNextPrecipitation > 0) {
+                            setShowIntermittentRainMessage(true); // 비가 오다 말다 하는 경우 메시지 표시
+                            setShowRainStartMessage(false);
+                            setShowRainStopMessage(false);
+                            setShowContinuousRainMessage(false);
+                        } else {
+                            setShowContinuousRainMessage(true); // 비가 계속 오는 경우 메시지 표시
+                            setShowRainStartMessage(false);
+                            setShowRainStopMessage(false);
+                            setShowIntermittentRainMessage(false);
+                        }
                     }
-                    // 현재 날씨 상태를 이전 상태로 설정
                     previousWeather = currentWeather;
                 }
 
@@ -174,6 +235,14 @@ function Weather() {
         const randomIndex = Math.floor(Math.random() * hotMessages.length);
         return hotMessages[randomIndex];
     };
+    const getRandomFogMessage = () => {
+        const randomIndex = Math.floor(Math.random() * fogMessages.length);
+        return fogMessages[randomIndex];
+    };
+    const getRandomIntermittentRainMessage = () => {
+        const randomIndex = Math.floor(Math.random() * intermittentRainMessages.length);
+        return intermittentRainMessages[randomIndex];
+    };
 
     return (
         <div className="weather">
@@ -186,7 +255,7 @@ function Weather() {
                 </div>
                 <div className="tempInfo">
                     {parseFloat(temperature).toFixed(1)}°C
-                    </div>
+                </div>
                 <div className="weatherInfo">{weather}</div>
                 <div className="cityInfo">{city}</div>
                     {showTempDifferenceMessage && (
@@ -195,7 +264,7 @@ function Weather() {
                     {showHotMessage && (
                         <div className="messageInfo">{getRandomHotMessage()}</div>
                     )}
-                    {showRainStartMessage && (
+                    {showRainStopMessage && (
                         <div className="messageInfo">{getRandomRainStopMessage()}</div>
                     )}
                     {showContinuousRainMessage && (
@@ -203,6 +272,15 @@ function Weather() {
                     )}
                     {showRainStartMessage && (
                         <div className="messageInfo">{getRandomRainStartMessage()}</div>
+                    )}
+                    {fogDuration > 5 && (
+                        <div className="messageInfo">{getRandomFogMessage()}</div>
+                    )}
+                    {fineDustMessage && (
+                        <div className="messageInfo">{fineDustMessage}</div>
+                    )}
+                    {showIntermittentRainMessage && (
+                        <div className="messageInfo">{getRandomIntermittentRainMessage()}</div>
                     )}
                 </div>
             )}
