@@ -244,20 +244,22 @@ function Weather() {
         return intermittentRainMessages[randomIndex];
     };
 
+    const defaultMessage = "오늘 날씨가 좋습니다! 좋은 하루 보내세요.";
+
     return (
         <div className="weather">
             {loading ? (
                 "날씨 로드 중..."
             ) : (
                 <div>
-                <div>
-                  {getWeatherIcon(iconCode)}
-                </div>
-                <div className="tempInfo">
-                    {parseFloat(temperature).toFixed(1)}°C
-                </div>
-                <div className="weatherInfo">{weather}</div>
-                <div className="cityInfo">{city}</div>
+                    <div>
+                      {getWeatherIcon(iconCode)}
+                    </div>
+                    <div className="tempInfo">
+                        {parseFloat(temperature).toFixed(1)}°C
+                    </div>
+                    <div className="weatherInfo">{weather}</div>
+                    <div className="cityInfo">{city}</div>
                     {showTempDifferenceMessage && (
                         <div className="messageInfo">{getRandomTempDifferenceMessage()}</div>
                     )}
@@ -281,6 +283,9 @@ function Weather() {
                     )}
                     {showIntermittentRainMessage && (
                         <div className="messageInfo">{getRandomIntermittentRainMessage()}</div>
+                    )}
+                    {!showTempDifferenceMessage && !showHotMessage && !showRainStopMessage && !showContinuousRainMessage && !showRainStartMessage && !showFogMessage && !fineDustMessage && !showIntermittentRainMessage && (
+                        <div className="messageInfo">{defaultMessage}</div>
                     )}
                 </div>
             )}
