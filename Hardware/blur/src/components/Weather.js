@@ -4,15 +4,40 @@ import './Weather.css';
 import { useWeather } from './WeatherContext';
 
 import { 
-    WiDaySunny, 
-    WiDayCloudyHigh, 
-    WiCloudy, 
+    WiDaySunny,
+    WiNightClear,
+    WiDayCloudy,
+    WiNightAltCloudy,
     WiCloud,
-    WiShowers,
-    WiRain,
-    WiThunderstorm,
+    WiCloudy,
+    WiDayShowers,
+    WiNightAltShowers,
+    WiDayRain,
+    WiNightAltRain,
+    WiDayThunderstorm,
+    WiNightAltThunderstorm,
+    WiSnow,
+    WiDaySnow,
+    WiNightAltSnow,
+    WiFog,
+    WiDayFog,
+    WiNightFog,
+    WiHail,
+    WiSleet,
+    WiStrongWind,
+    WiTornado,
+    WiHurricane,
+    WiDust,
+    WiSandstorm,
+    WiMeteor,
+    WiHot,
     WiSnowflakeCold,
-    WiFog
+    WiDayHaze,
+    WiDaySleet,
+    WiNightAltPartlyCloudy,
+    WiNightAltHail,
+    WiNightAltSleet,
+    WiNightAltSnowThunderstorm,
 } from "react-icons/wi"; 
 
 function Weather() {
@@ -116,18 +141,40 @@ function Weather() {
 
     const getWeatherIcon = (iconCode) => {
         switch (iconCode) {
-            case '01n': return <WiDaySunny className="weatherIcon" />;
             case '01d': return <WiDaySunny className="weatherIcon" />;
-            case '02n': return <WiDayCloudyHigh className="weatherIcon" />;
-            case '03n': return <WiCloudy className="weatherIcon" />;
-            case '04n': return <WiCloud className="weatherIcon" />;
-            case '04d': return <WiCloud className="weatherIcon" />;
-            case '09n': return <WiShowers className="weatherIcon" />;
-            case '10n': return <WiRain className="weatherIcon" />;
-            case '10d': return <WiRain className="weatherIcon" />;
-            case '11n': return <WiThunderstorm className="weatherIcon" />;
-            case '13n': return <WiSnowflakeCold className="weatherIcon" />;
-            case '50n': return <WiFog className="weatherIcon" />;
+            case '01n': return <WiNightClear className="weatherIcon" />;
+            case '02d': return <WiDayCloudy className="weatherIcon" />;
+            case '02n': return <WiNightAltCloudy className="weatherIcon" />;
+            case '03d': return <WiCloud className="weatherIcon" />;
+            case '03n': return <WiCloud className="weatherIcon" />;
+            case '04d': return <WiCloudy className="weatherIcon" />;
+            case '04n': return <WiCloudy className="weatherIcon" />;
+            case '09d': return <WiDayShowers className="weatherIcon" />;
+            case '09n': return <WiNightAltShowers className="weatherIcon" />;
+            case '10d': return <WiDayRain className="weatherIcon" />;
+            case '10n': return <WiNightAltRain className="weatherIcon" />;
+            case '11d': return <WiDayThunderstorm className="weatherIcon" />;
+            case '11n': return <WiNightAltThunderstorm className="weatherIcon" />;
+            case '13d': return <WiDaySnow className="weatherIcon" />;
+            case '13n': return <WiNightAltSnow className="weatherIcon" />;
+            case '50d': return <WiDayFog className="weatherIcon" />;
+            case '50n': return <WiNightFog className="weatherIcon" />;
+            case 'hail': return <WiHail className="weatherIcon" />;
+            case 'sleet': return <WiSleet className="weatherIcon" />;
+            case 'strong-wind': return <WiStrongWind className="weatherIcon" />;
+            case 'tornado': return <WiTornado className="weatherIcon" />;
+            case 'hurricane': return <WiHurricane className="weatherIcon" />;
+            case 'dust': return <WiDust className="weatherIcon" />;
+            case 'sandstorm': return <WiSandstorm className="weatherIcon" />;
+            case 'meteor': return <WiMeteor className="weatherIcon" />;
+            case 'hot': return <WiHot className="weatherIcon" />;
+            case 'cold': return <WiSnowflakeCold className="weatherIcon" />;
+            case 'day-haze': return <WiDayHaze className="weatherIcon" />;
+            case 'day-sleet': return <WiDaySleet className="weatherIcon" />;
+            case 'night-partly-cloudy': return <WiNightAltPartlyCloudy className="weatherIcon" />;
+            case 'night-hail': return <WiNightAltHail className="weatherIcon" />;
+            case 'night-sleet': return <WiNightAltSleet className="weatherIcon" />;
+            case 'night-snow-thunderstorm': return <WiNightAltSnowThunderstorm className="weatherIcon" />;
             default: return null;
         }
     };
