@@ -64,3 +64,11 @@ class Message(db.Model):
     content = db.Column(db.String(500), name='content')
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     is_read = db.Column(db.Boolean, default=False, name='is_read')
+
+class Todo(db.Model) :
+    __tablename__ = "todo"
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String)
+    localdate = db.Column(db.String)
+    message = db.Column(db.String)
+    complete = db.Column(db.Integer)

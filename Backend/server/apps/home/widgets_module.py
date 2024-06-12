@@ -4,7 +4,7 @@ from flask import request, jsonify, session
 
 ''' Import DB '''
 from apps import db
-from apps.authentication.models import Widget, CustomLocation, Production
+from apps.authentication.models import Widget, CustomLocation, Production, Todo
 
 def widgets_module() :
     try :
@@ -77,3 +77,51 @@ def get_guset_widgets_index_module() :
                                 })
     except Exception as e :
         return jsonify(result = "fail", type = "Logic Error", message = "Error : {}".format(str(e)))
+
+def daily_module(subpath) :
+    username = session['username']
+    data = request.args.to_dict()
+    if subpath == "add" :
+        try :
+            new_todo = Todo(username = username,
+                            localdate = data['localdate'],
+                            message = data['message'],
+                            complete = 0)
+            db.session.add(new_todo)
+            db.session.commit()
+            return jsonify(result = "success", type = "todo_add", message = "Successful save Todo")
+        except Exception as e :
+            return jsonify(result = "fail", type = "todo_add", message = "Error " + str(e))
+    elif subpath == "view" :
+        try :
+            todo_lists = []
+            todo_datas = Todo.query.filter_by(username = username, localdate = data['localdate']).all()
+            for i in todo_datas :
+                todo_lists.append([i.id, i.localdate, i.message, i.complete])
+            return jsonify(result = "success", type = "todo_view", message = str(todo_lists))
+        except Exception as e :
+            return jsonify(result = "fail", type = "todo_view", message = "Error " + str(e))
+    elif subpath == "check" :
+        try :
+            if Todo.query.filter_by(id = data['id']).first().complete == 0 :
+                Todo.query.filter_by(id = data['id']).update(dict(complete = 1))
+            else :
+                Todo.query.filter_by(id = data['id']).update(dict(complete = 0))
+            db.session.commit()
+            return jsonify(result = "success", type = "todo_check", message = "Successful save Todo")
+        except Exception as e :
+            return jsonify(result = "fail", type = "todo_check", message = "Error " + str(e))
+    elif subpath == "month" :
+        try :
+            filter_month = data['year'] + data['month'].zfill(2)
+            filtered_todos = Todo.query.filter(Todo.localdate.like(f"%{filter_month}%")).all()
+            print(filtered_todos)
+            datas = {}
+            for i in filtered_todos :
+                if i.localdate in datas :
+                    datas[i.localdate] += 1
+                else :
+                    datas[i.localdate] = 1
+            return jsonify(result = "success", type = "todo_month", message = str(datas))
+        except :
+            return jsonify(result = "fail", type = "todo_month", message = "Error" + str(e))

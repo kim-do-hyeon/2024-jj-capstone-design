@@ -107,3 +107,8 @@ def send_message():
 def get_messages(receiver_username):
     return get_message_module(receiver_username)
 ''' End Message Section '''
+
+''' Daily TODO Section '''
+@blueprint.route('/daily/<path:subpath>', methods = ['GET', 'POST'])
+def daily(subpath) :
+    return daily_module(subpath)
