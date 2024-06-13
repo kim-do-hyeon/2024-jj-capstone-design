@@ -4,6 +4,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+## `npm i`
+필요한 패키지들 설치.
+
 ## `yarn dev`
 Blur앱 개발자 모드에서 실행.
 localhost:3000 통해 실행, 실행에 시간 걸림.
@@ -16,6 +19,8 @@ Blur앱 빌드 및 일렉트론 실행
 빌드된 Blur앱 실행.
 바로 실행.
 빌드 완료되면 이 명령어만 실행하면 됨.
+
+
 
 ### Code Splitting
 
