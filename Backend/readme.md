@@ -430,7 +430,8 @@ GET /widgets_index
 }
 ```
 </details>
-<br>
+<br><br>
+
 ## List Users by Model Code
 
 모델 코드별 사용자 목록 조회 API
@@ -452,6 +453,10 @@ GET /get_model_user_list
 }
 ```
 <br>
+
+# ToDo Widget Services
+<details>
+<summary>접기/펼치기</summary>
 
 ## ToDo Widget for User
 
