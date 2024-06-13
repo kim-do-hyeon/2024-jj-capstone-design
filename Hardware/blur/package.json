@@ -9,7 +9,7 @@
     "@electron/remote": "^2.1.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0" ,
+    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "cheerio": "^1.0.0-rc.12",
@@ -34,9 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
-    "electron:build": "",
-    "electron:start": "wait-on tcp:3000 && electron ."
+    "dev": "cross-env NODE_ENV=development concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
+    "electron:start": "wait-on tcp:3000 && electron .",
+    "electron:build": "yarn build && electron-builder"
   },
   "eslintConfig": {
     "extends": [
