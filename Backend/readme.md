@@ -480,6 +480,7 @@ GET /daily/add
   "message": String
 }
 ```
+<br>
 
 ## ToDo Widget List for User
 
@@ -502,6 +503,7 @@ GET /daily/view
   "message": String
 }
 ```
+<br>
 
 ## ToDo Widget Monthly Data for User
 
@@ -525,6 +527,7 @@ GET /daily/month
   "message": String
 }
 ```
+<br>
 
 ## ToDo Widget Check
 
@@ -549,7 +552,6 @@ GET /daily/check
 ```
 </details>
 <br><br>
-
 
 
 
