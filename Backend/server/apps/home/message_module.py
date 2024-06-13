@@ -27,25 +27,29 @@ def send_message_module() :
     except Exception as e :
         return jsonify(result = "fail", type = "Logic Error", message = "Error : {}".format(str(e)))
 
-def get_message_module(receiver_username) :
-    try :
+def get_message_module(receiver_username, read_all=True):
+    try:
         receiver = Users.query.filter_by(username=receiver_username).first()
         
         if receiver:
-            # messages = Message.query.filter_by(receiver_id=receiver.id, is_read=False).all()
-            messages = Message.query.filter_by(receiver_id=receiver.id).all()
+            query = Message.query.filter_by(receiver_id=receiver.id)
+            if not read_all:
+                query = query.filter_by(is_read=False)
+            
+            messages = query.all()
             messages_data = [{
                 'sender': Users.query.get(m.sender_id).username, 
                 'content': m.content, 
                 'timestamp': m.timestamp.strftime("%Y-%m-%d %H:%M:%S")
             } for m in messages]
             
-            # for message in messages:
-            #     message.is_read = True
-            # db.session.commit()
+            if not read_all:
+                for message in messages:
+                    message.is_read = True
+                db.session.commit()
 
             return jsonify(result="success", type="messages_retrieved", messages=messages_data), 200
         else:
             return jsonify(result="fail", type="receiver_not_found", message="Receiver not found"), 404
-    except Exception as e :
-        return jsonify(result = "fail", type = "Logic Error", message = "Error : {}".format(str(e)))
+    except Exception as e:
+        return jsonify(result="fail", type="logic_error", message="Error: {}".format(str(e)))

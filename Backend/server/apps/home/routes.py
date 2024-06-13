@@ -47,7 +47,7 @@ def download_image(subpath) :
     PATH = upload_dir + subpath
     return send_file(PATH, as_attachment=True)
 ''' End User Section '''
- 
+
 ''' Start Face Section '''
 @blueprint.route('/face', methods = ['GET', 'POST'])
 def face() :
@@ -57,9 +57,9 @@ def face() :
 def distnace() :
     return distance_module()
 
-@blueprint.route("/personal_color", methods = ['GET', 'POST'])
+'''@blueprint.route("/personal_color", methods = ['GET', 'POST'])
 def personal_color() :
-    return personal_color_module()
+    return personal_color_module()'''
 ''' End Face Section '''
 
 ''' Start Admin Section '''
@@ -106,6 +106,10 @@ def send_message():
 @blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
 def get_messages(receiver_username):
     return get_message_module(receiver_username)
+
+@blueprint.route('/get_unread_messages/<receiver_username>', methods=['GET'])
+def get_unread_messages(receiver_username):
+    return get_message_module(receiver_username, read_all=False)
 ''' End Message Section '''
 
 ''' Daily TODO Section '''
