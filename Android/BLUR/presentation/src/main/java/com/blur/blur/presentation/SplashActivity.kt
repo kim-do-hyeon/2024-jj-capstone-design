@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.blur.blur.data.di.SharedPreferencesManager
 import com.blur.blur.presentation.Login.LoginActivity
+import com.blur.blur.presentation.Main.Calendar.CalendarActivity
 import com.blur.blur.presentation.Main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

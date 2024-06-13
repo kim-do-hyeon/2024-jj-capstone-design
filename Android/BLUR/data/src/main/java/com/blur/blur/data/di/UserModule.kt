@@ -16,6 +16,8 @@ import com.blur.blur.data.usecase.main.home.Camera.UpLoadFaceImageUseCaseImpl
 import com.blur.blur.data.usecase.main.home.sendmessage.GetMessageUseCaseImpl
 import com.blur.blur.data.usecase.main.home.sendmessage.GetModelUserUseCaseImpl
 import com.blur.blur.data.usecase.main.home.sendmessage.SendMessageUseCaseImpl
+import com.blur.blur.data.usecase.main.home.todo.TodoAddUseCaseImpl
+import com.blur.blur.data.usecase.main.home.todo.TodoViewUseCaseImpl
 import com.blur.blur.data.usecase.main.home.widget.GetWidgetsListUseCaseImpl
 import com.blur.blur.data.usecase.main.home.widget.SetWidgetUseCaseImpl
 import com.blur.blur.data.usecase.main.userinfo.ChangeEmailUseCaseImpl
@@ -31,6 +33,8 @@ import com.blur.blur.domain.usecase.main.home.SendMessage.GetModelUserUseCase
 import com.blur.blur.domain.usecase.main.home.SendMessage.SendMessageUseCase
 import com.blur.blur.domain.usecase.main.home.Widget.GetWidgetsListUseCase
 import com.blur.blur.domain.usecase.main.home.Widget.SetWidgetUseCase
+import com.blur.blur.domain.usecase.main.home.todo.TodoAddUseCase
+import com.blur.blur.domain.usecase.main.home.todo.TodoViewUseCase
 import com.blur.blur.domain.usecase.main.setting.ChangePasswordUseCase
 import com.blur.blur.domain.usecase.main.userinfo.ChangeEmailUseCase
 import com.blur.blur.domain.usecase.main.userinfo.ChangeNameUseCase
@@ -89,4 +93,11 @@ abstract class UserModule {
 
     @Binds
     abstract fun bindGetModelUserUseCase(uc: GetModelUserUseCaseImpl): GetModelUserUseCase
+
+    @Binds
+    abstract fun bindTodoAddUseCase(uc: TodoAddUseCaseImpl): TodoAddUseCase
+
+    @Binds
+    abstract fun bindTodoViewUseCase(uc: TodoViewUseCaseImpl): TodoViewUseCase
+
 }

@@ -35,7 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.blur.blur.presentation.Component.MenuListItems
+import com.blur.blur.presentation.component.Item.MenuListItems
 import com.blur.blur.presentation.Component.ProfileImage
 import com.blur.blur.presentation.Login.LoginActivity
 import com.blur.blur.presentation.Main.Setting.ChangeEmail.ChangeEmailActivity

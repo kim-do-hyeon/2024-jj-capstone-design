@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     id("kotlin-kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -60,6 +63,8 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -122,5 +127,24 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.8.8")
 
+    implementation("com.kizitonwose.calendar:compose:2.5.0") // Compose
+    implementation("com.kizitonwose.calendar:view:2.5.0") // View
+
+
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    // room 코루틴
+    implementation ("androidx.room:room-ktx:2.6.1")
+
+    // ViewModel - 라이프 사이클
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
+    // LiveData - 데이터의 변경 사항을 알 수 있음
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.1")
+
+    // 뷰모델 생성하기 쉽게 해줌
+    implementation ("androidx.fragment:fragment-ktx:1.1.0")
+
     implementation(project(":domain"))
+
+    implementation(libs.kotlinx.serialization.json)
 }

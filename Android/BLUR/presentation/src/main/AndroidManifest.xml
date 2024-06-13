@@ -13,11 +13,12 @@
         <activity android:name=".Main.Setting.ChangePassword.ChangePasswordActivity"/>
         <activity android:name=".Main.Setting.ChangeEmail.ChangeEmailActivity" />
         <activity android:name=".Main.Setting.ChangeName.ChangeNameActivity" />
-        <activity android:name=".Main.Home.SendMessage.SendMessageActivity"/>
-        <activity android:name=".Main.Home.Camera.CameraActivity"/>
-        <activity android:name=".Main.Home.Camera.CameraX.CameraXActivity"/>
-        <activity android:name=".Main.Home.Widgets.WidgetsActivity"/>
-        <activity android:name=".Main.Home.RegisterProduct.RegisterProductActivity"/>
+        <activity android:name=".Main.SendMessage.SendMessageActivity"/>
+        <activity android:name=".Main.Camera.CameraActivity"/>
+        <activity android:name=".Main.Camera.CameraX.CameraXActivity"/>
+        <activity android:name=".Main.Widgets.WidgetsActivity"/>
+        <activity android:name=".Main.Calendar.CalendarActivity"/>
+        <activity android:name=".Main.RegisterProduct.RegisterProductActivity"/>
         <activity android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>

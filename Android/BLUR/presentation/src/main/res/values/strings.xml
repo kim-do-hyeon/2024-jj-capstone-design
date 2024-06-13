@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Calendar</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="ok">OK</string>
+    <string name="item_name_req">내용</string>
+</resources>

@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.blur.blur.presentation.Main.Home.HomeScreen
 import com.blur.blur.presentation.Main.Setting.ModalDrawerSheetScreen
 import com.blur.blur.presentation.theme.BLURTheme
 import kotlinx.coroutines.launch
@@ -65,7 +64,7 @@ fun MainNavHost() {
                 },
                 content = { padding ->
                     // Apply padding to HomeScreen
-                    HomeScreen(modifier = Modifier.padding(padding))
+                    MenuScreen(modifier = Modifier.padding(padding))
                 }
             )
         }

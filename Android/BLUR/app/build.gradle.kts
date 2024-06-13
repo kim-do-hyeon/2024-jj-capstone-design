@@ -88,5 +88,7 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    kapt("androidx.room:room-compiler:2.6.1")
+
 
 }

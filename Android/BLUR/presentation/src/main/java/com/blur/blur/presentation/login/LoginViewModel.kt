@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import com.blur.blur.domain.usecase.login.LoginUseCase
+import kotlinx.coroutines.Job
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -34,15 +35,18 @@ class LoginViewModel @Inject constructor(
         }
     )
 
-    fun onLoginClick() = intent {
-        val username = state.username
-        val password = state.password
+    fun onLoginClick(): Job {
+        val intent = intent {
+            val username = state.username
+            val password = state.password
 
-        val result = loginUseCase(username, password).getOrThrow()
+            val result = loginUseCase(username, password).getOrThrow()
 
-        // 로그인 성공 처리, 메인 액티비티로 이동
-        postSideEffect(LoginSideEffect.NavigateToMainActivity)
+            // 로그인 성공 처리, 메인 액티비티로 이동
+            postSideEffect(LoginSideEffect.NavigateToMainActivity)
 
+        }
+        return intent
     }
 
 

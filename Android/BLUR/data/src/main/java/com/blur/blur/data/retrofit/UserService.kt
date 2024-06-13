@@ -8,6 +8,8 @@ import com.blur.blur.data.model.main.home.sendmessage.GetMessageResponse
 import com.blur.blur.data.model.main.home.sendmessage.GetModelUserResponse
 import com.blur.blur.data.model.main.home.sendmessage.SendMessageRequest
 import com.blur.blur.data.model.main.home.sendmessage.SendMessageResponse
+import com.blur.blur.data.model.main.home.todo.TodoAddResponse
+import com.blur.blur.data.model.main.home.todo.TodoViewResponse
 import com.blur.blur.data.model.main.home.widgets.SetWidgetResponse
 import com.blur.blur.data.model.main.home.widgets.WidgetListResponse
 import com.blur.blur.data.model.main.home.widgets.WidgetResponse
@@ -82,17 +84,17 @@ interface UserService {
 
     @POST("/register/product")
     suspend fun registerProduct(
-        @Query("code") code:String
+        @Query("code") code: String
     ): Response<ProductResponse>
 
     @GET("/widgets")
-    suspend fun getWidget():Response<WidgetListResponse>
+    suspend fun getWidget(): Response<WidgetListResponse>
 
 
     @POST("/widgets_custom")
     suspend fun setWidget(
-        @Query("model_code") model_code:String,
-        @Query("index")  index: String
+        @Query("model_code") model_code: String,
+        @Query("index") index: String
     ): Response<SetWidgetResponse>
 
     @GET("/get_widgets_custom/{username}")
@@ -102,8 +104,25 @@ interface UserService {
 
     @GET("/get_model_user_list")
     suspend fun getModelUser(
-        @Query("code") code:String,
-    ):Response<GetModelUserResponse>
+        @Query("code") code: String,
+    ): Response<GetModelUserResponse>
+
+    @GET("/daily/add")
+    suspend fun addtodo(
+        @Query("localdate") localdate: String,
+        @Query("message") message: String
+    ): Response<TodoAddResponse>
+
+    @GET("/daily/view")
+    suspend fun viewtodo(
+        @Query("localdate") localdate: String,
+    ): Response<TodoViewResponse>
+
+    @GET("/daily/check")
+    suspend fun TodoCheck(
+        @Query("id") id: Int,
+    ): Response<TodoAddResponse>
+
 
 }
 
