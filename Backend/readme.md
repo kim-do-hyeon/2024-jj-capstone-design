@@ -430,7 +430,121 @@ GET /widgets_index
 }
 ```
 </details>
+<br>
+## List Users by Model Code
+
+모델 코드별 사용자 목록 조회 API
+
+```http
+GET /get_model_user_list
+```
+
+| Parameter  | Type     | Description                       |
+|------------|----------|-----------------------------------|
+| `code`     | `string` | **Required**. Model code to query |
+
+### Responses
+```json
+{
+  "result": "success",
+  "type": "model_user_list",
+  "message": ["username1", "username2", ...]
+}
+```
+<br>
+
+## ToDo Widget for User
+
+사용자 Todo 위젯 설정 API
+
+```http
+GET /daily/add
+```
+
+| Parameter  | Type     | Description                       |
+|------------|----------|-----------------------------------|
+| `localdate`| `string` | **Required**. date to query       |
+| `message`  | `string` | **Required**. message to query    |
+
+
+### Responses
+```json
+{
+  "result": "success",
+  "type" : "todo_add",
+  "message": String
+}
+```
+
+## ToDo Widget List for User
+
+사용자 Todo 위젯 리스트 조회 API
+
+```http
+GET /daily/view
+```
+
+| Parameter  | Type     | Description                       |
+|------------|----------|-----------------------------------|
+| `localdate`| `string` | **Required**. date to query       |
+
+
+### Responses
+```json
+{
+  "result": "success",
+  "type" : "todo_view",
+  "message": String
+}
+```
+
+## ToDo Widget Monthly Data for User
+
+사용자 Todo 위젯 월별 리스트 조회 API
+
+```http
+GET /daily/month
+```
+
+| Parameter  | Type     | Description                       |
+|------------|----------|-----------------------------------|
+| `year`     | `Int`    | **Required**. year (ex: 2024)     |
+| `month`    | `Int`    | **Required**. month (ex: 06)      |
+
+
+### Responses
+```json
+{
+  "result": "success",
+  "type" : "todo_month",
+  "message": String
+}
+```
+
+## ToDo Widget Check
+
+사용자 Todo 위젯의 각 요소 체크값 변경 API
+
+```http
+GET /daily/check
+```
+
+| Parameter  | Type     | Description                       |
+|------------|----------|-----------------------------------|
+| `id`       | `Int`    | **Required**. Todo Database index id|
+
+
+### Responses
+```json
+{
+  "result": "success",
+  "type" : "todo_check",
+  "message": String
+}
+```
+</details>
 <br><br>
+
 
 
 
