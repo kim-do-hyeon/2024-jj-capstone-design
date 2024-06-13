@@ -615,4 +615,33 @@ GET /get_messages/<receiver_username>
   ]
 }
 ```
+<br>
+
+## Retrieve Unread Messages
+
+메세지 조회 API (읽지 않은 메시지)
+
+```http
+GET /get_unread_messages/<receiver_username>
+```
+
+| Parameter          | Type     | Description                                |
+|--------------------|----------|--------------------------------------------|
+| `receiver_username`| `string` | **Required**. Username of the message receiver |
+
+### Responses
+```json
+{
+  "result": "success",
+  "type": "messages_retrieved",
+  "messages": [
+    {
+      "sender": "username of the sender",
+      "content": "message content",
+      "timestamp": "YYYY-MM-DD HH:MM:SS"
+    },
+    ...
+  ]
+}
+```
 </details>
