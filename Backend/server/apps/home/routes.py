@@ -20,7 +20,7 @@ def index():
 def register(subpath) :
     path_type = subpath.split("/")
     return register_module(path_type)
-   
+
 @blueprint.route('/login', methods = ['GET', 'POST'])
 def login() :
     return login_module()
@@ -57,9 +57,9 @@ def face() :
 def distnace() :
     return distance_module()
 
-'''@blueprint.route("/personal_color", methods = ['GET', 'POST'])
+@blueprint.route("/personal_color", methods = ['GET', 'POST'])
 def personal_color() :
-    return personal_color_module()'''
+    return personal_color_module()
 ''' End Face Section '''
 
 ''' Start Admin Section '''
