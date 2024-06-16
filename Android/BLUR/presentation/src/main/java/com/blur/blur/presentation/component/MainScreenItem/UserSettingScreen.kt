@@ -28,9 +28,7 @@ fun UserSettingScreen(
         ),
         modifier = Modifier
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column() {
             ListItems(
                 headlineText = "이름 변경",
                 supportingText = "회원님의 이름을 변경해 보세요",
