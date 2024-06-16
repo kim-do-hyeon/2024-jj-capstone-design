@@ -108,8 +108,10 @@ def personal_color_module() :
         
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
+        now = datetime.now().strftime('%Y%m%d%H%M%S%f')
         filename = secure_filename(face_image.filename)
 
+        filename = now + "." + (face_image.filename).split(".")[-1]
         if len(filename.split(".")) == 1 :
             filename = "noname." + filename.split(".")[-1]
 
