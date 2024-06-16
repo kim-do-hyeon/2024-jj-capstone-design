@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.blur.blur.data.di.SharedPreferencesManager
 import com.blur.blur.domain.usecase.main.setting.ChangePasswordUseCase
+import com.blur.blur.presentation.Main.Setting.ChangeName.ChangeNameEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -75,6 +76,10 @@ class ChangePasswordViewModel @Inject constructor(
         postSideEffect(ChangePasswordEffect.NavigateToLoginActivity)
     }
 
+    fun onMainScreen() =intent {
+        postSideEffect(ChangePasswordEffect.NavigateToMainActivity)
+    }
+
 }
 
 @Immutable
@@ -88,5 +93,6 @@ data class ChangePasswordState(
 sealed interface ChangePasswordEffect {
     class Toast(val message: String) : ChangePasswordEffect // 토스트 메시지 출력
     object NavigateToLoginActivity : ChangePasswordEffect // 로그인 화면으로 이동
+    object NavigateToMainActivity : ChangePasswordEffect // 메인화면으로 이동
 }
 

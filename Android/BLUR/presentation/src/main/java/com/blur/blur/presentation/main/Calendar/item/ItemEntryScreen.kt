@@ -71,9 +71,7 @@ fun ItemEntryBody(
 
         onDismissRequest = { onDismissRequest() }
     ) {
-        ElevatedCard(
-
-        ) {
+        ElevatedCard() {
             Column(
                 modifier = modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -100,6 +98,7 @@ fun ItemEntryBody(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemInputForm(
     selectedDate: String,

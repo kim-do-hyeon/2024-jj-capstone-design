@@ -9,9 +9,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +45,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun RegisterProductScreen(
     viewModel: RegisterProductViewModel = hiltViewModel(),
-){
+) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
 
@@ -63,28 +71,48 @@ fun RegisterProductScreen(
         deviceCode = state.code,
         onDeviceCode = viewModel::onDeviceCode,
         onClick = viewModel::onClick,
+        onMainScreen = viewModel::onMainScreen
     )
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RegisterProductScreen(
-    deviceCode:String,
-    onDeviceCode:(String) ->Unit,
-    onClick:()->Unit
-
+    deviceCode: String,
+    onDeviceCode: (String) -> Unit,
+    onClick: () -> Unit,
+    onMainScreen: () -> Unit
 ) {
-    Surface {
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = { Text(text = "기기 등록") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onMainScreen
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "뒤로 가기")
+                    }
+                }
+            )
+        }
+    ) { contentPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
+                .padding(contentPadding),
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "등록하실 제품의 제품 코드를 입력해 주세요",
+                text = "제품의 제품 코드를 입력해 주세요",
                 style = TextStyle(
                     fontSize = 24.sp,
                     lineHeight = 39.sp,
@@ -132,6 +160,11 @@ private fun RegisterProductScreen(
 
 @Preview
 @Composable
-fun RegisterProductScreenPreview(){
-    RegisterProductScreen()
+fun RegisterProductScreenPreview() {
+    RegisterProductScreen(
+        deviceCode = "",
+        onDeviceCode = {},
+        onClick = {},
+        onMainScreen = {},
+    )
 }

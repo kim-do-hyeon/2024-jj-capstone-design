@@ -20,6 +20,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import java.util.Properties
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
+import javax.mail.AuthenticationFailedException
 import javax.mail.Message
 import javax.mail.MessagingException
 import javax.mail.Session
@@ -83,8 +84,6 @@ class FindPasswordViewModel @Inject constructor(
                 if (result == "success") {
                     // 임시 비밀번호 발급 성공 시, 성공 메시지를 Toast 메시지로 보여주고 로그인 화면으로 이동하는 사이드 이펙트 발생
                     postSideEffect(FindPasswordEffect.NavigateToLoginScreen)
-                    // 이메일 전송
-                    sendEmail(email, "임시 비밀번호: $tempPassword")
                 } else {
                     // 실패 처리
                 }
@@ -95,43 +94,10 @@ class FindPasswordViewModel @Inject constructor(
         )
     }
 
-    // 이메일을 보내는 함수
-    private fun sendEmail(userEmail: String, message: String) {
-        runBlocking {
-            launch(Dispatchers.IO) {
-                // 발신자 이메일 주소
-                val fromEmail = "yeller0828@gmail.com"
-                // 발신자 이메일 비밀번호
-                val password = "xqsg kewg jgak vsuq".toCharArray() // String 대신 CharArray로 변환
-
-                val properties = Properties().apply {
-                    put("mail.smtp.auth", "true")
-                    put("mail.smtp.starttls.enable", "true")
-                    put("mail.smtp.host", "smtp.gmail.com")
-                    put("mail.smtp.port", "587")
-                }
-
-                val session = Session.getInstance(properties, object : Authenticator() {
-                    override fun getPasswordAuthentication(): PasswordAuthentication {
-                        return PasswordAuthentication(fromEmail, String(password))
-                    }
-                })
-
-                try {
-                    val mimeMessage = MimeMessage(session).apply {
-                        setFrom(InternetAddress(fromEmail))
-                        addRecipient(Message.RecipientType.TO, InternetAddress(userEmail))
-                        subject = "임시 비밀번호"
-                        setText(message)
-                    }
-
-                    Transport.send(mimeMessage)
-                } catch (e: MessagingException) {
-                    e.printStackTrace()
-                }
-            }
-        }
+    fun NavLogin() = intent {
+        postSideEffect(FindPasswordEffect.NavigateToLoginScreen)
     }
+
 }
 
 @Immutable
@@ -144,4 +110,6 @@ data class FindPasswordState(
 // 사이드 이펙트 정의
 sealed interface FindPasswordEffect {
     object NavigateToLoginScreen : FindPasswordEffect // 로그인 화면으로 이동
+    data class ShowErrorMessage(val message: String) : FindPasswordEffect // 오류 메시지 표시
+
 }

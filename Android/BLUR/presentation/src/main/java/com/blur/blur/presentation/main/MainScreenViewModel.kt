@@ -9,7 +9,6 @@ import com.blur.blur.data.model.main.userinfo.UserMessage
 import com.blur.blur.data.retrofit.FileService
 import com.blur.blur.data.retrofit.UserService
 import com.blur.blur.data.usecase.main.userinfo.UpLoadProfileImageUseCaseImpl
-import com.blur.blur.presentation.Main.Setting.ModalDrawerSheetSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,9 +35,6 @@ class MainScreenViewModel @Inject constructor(
     private val _cookie = MutableStateFlow<String?>(null) // 사용자의 쿠키 정보를 저장하는 StateFlow입니다.
     val cookie = _cookie.asStateFlow()
 
-    private val _sessionTestResult = MutableStateFlow<String?>(null) // 세션 테스트 결과를 저장하는 StateFlow입니다.
-    val sessionTestResult = _sessionTestResult.asStateFlow()
-
     private val _userInfo = MutableStateFlow<UserMessage?>(null) // 사용자 정보를 저장하는 StateFlow입니다.
     val userInfo = _userInfo.asStateFlow()
 
@@ -53,7 +49,6 @@ class MainScreenViewModel @Inject constructor(
     init {
         loadUserInfo() // 사용자 정보를 불러옴
         loadCookie()   // 쿠키를 불러옴
-        checkSession() // 세션을 확인함
     }
 
     private fun loadCookie() {
@@ -64,16 +59,6 @@ class MainScreenViewModel @Inject constructor(
     }
 
 
-    private fun checkSession() {
-        viewModelScope.launch {
-            val response = userService.sessionTest() // 서버에 세션 유효성 테스트를 요청합니다.
-            if (response.isSuccessful) {
-                _sessionTestResult.value = response.body()?.message // 세션 테스트 성공 시 메시지를 저장합니다.
-            } else {
-                _sessionTestResult.value = "Session Test Failed: ${response.errorBody()?.string()}" // 실패 시 에러 메시지를 저장합니다.
-            }
-        }
-    }
 
     private fun loadUserInfo() {
         viewModelScope.launch {
@@ -94,18 +79,14 @@ class MainScreenViewModel @Inject constructor(
                     val file = uriToFile(nonNullUri, context) // Uri를 파일로 변환합니다.
                     val result = uploadProfileImageUseCase.invoke(file) // 파일을 서버로 업로드합니다.
                     if (result.isSuccess) {
-                        postSideEffect(MainScreenSideEffect.ImageUploadSuccess) // 업로드 성공 시 상태 업데이트
                         loadUserInfo() // 사용자 정보를 다시 로드합니다.
                     } else {
-                        postSideEffect(MainScreenSideEffect.ImageUploadFailure) // 업로드 실패 시 상태 업데이트
                     }
                     file.delete() // 임시 파일을 삭제합니다.
                 } catch (e: Exception) {
-                    postSideEffect(MainScreenSideEffect.ImageUploadFailure) // 예외 발생 시 업로드 실패 처리
                 }
             }
         } ?: run {
-            postSideEffect(MainScreenSideEffect.ImageSelectionCancelled) // 이미지 선택을 취소한 경우
         }
     }
 
@@ -154,7 +135,4 @@ sealed interface MainScreenSideEffect {
     object NavigateToChangePasswordScreen : MainScreenSideEffect
     object NavigateToEmailScreen : MainScreenSideEffect
     object NavigateToNameScreen : MainScreenSideEffect
-    object ImageSelectionCancelled : MainScreenSideEffect
-    object ImageUploadFailure : MainScreenSideEffect
-    object ImageUploadSuccess : MainScreenSideEffect
 }

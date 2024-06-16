@@ -1,4 +1,3 @@
-package com.blur.blur.presentation.Main
 
 import ListItems
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -57,7 +56,7 @@ fun MenuScreen(
         ) {
             ListItems(
                 headlineText = "얼굴 등록",
-                supportingText = "나의 사진을 찍어서 기기에 얼굴을 등록해보세요",
+                supportingText = "나의 사진을 찍어서 기기에 얼굴을 등록해 보세요",
                 icon = Icons.Filled.Person,
                 onClick = {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -77,7 +76,7 @@ fun MenuScreen(
             )
             ListItems(
                 headlineText = "일정 관리",
-                supportingText = "캘린더에 일정 관리를 해보세요",
+                supportingText = "캘린더에 일정 관리해 보세요",
                 icon = Icons.Filled.CalendarMonth,
                 onClick = {
                     context.startActivity(Intent(context, CalendarActivity::class.java))
@@ -93,7 +92,7 @@ fun MenuScreen(
             )
             ListItems(
                 headlineText = "위젯 설정",
-                supportingText = "스마트 미러의 위젯을 설정해보세요.",
+                supportingText = "스마트 미러의 위젯을 설정해 보세요.",
                 icon = Icons.Filled.Widgets,
                 onClick = {
                     context.startActivity(Intent(context, WidgetsActivity::class.java))
@@ -101,7 +100,7 @@ fun MenuScreen(
             )
             ListItems(
                 headlineText = "기기 등록",
-                supportingText = "제품을 등록해보세요",
+                supportingText = "제품을 등록해 보세요",
                 icon = Icons.Filled.DeviceHub,
                 onClick = {
                     context.startActivity(Intent(context, RegisterProductActivity::class.java))

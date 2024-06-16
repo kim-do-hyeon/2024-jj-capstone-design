@@ -72,6 +72,7 @@ fun WidgetsSettingsScreen(
             is WidgetsSettingSideEffect.Toast -> {
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
+
             else -> {}
         }
     }
@@ -93,7 +94,7 @@ fun WidgetsSettingsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WidgetsSettingsScreen(
-    onSetWidget:()->Unit,
+    onSetWidget: () -> Unit,
     message: Map<String, List<Int>>,
     widgetList: List<String>,
     onApplyClicked: (Map<String, List<Int>>?) -> Unit  // sendMessage를 전달하기 위한 함수
@@ -184,11 +185,12 @@ fun WidgetsSettingsScreen(
                             Button(
                                 onClick = {
                                     openDialog = false
-                                    val data = if (selectedOption != null && selectedLocation.isNotEmpty()) {
-                                        mapOf(selectedOption to selectedLocation)
-                                    } else {
-                                        null
-                                    }
+                                    val data =
+                                        if (selectedOption != null && selectedLocation.isNotEmpty()) {
+                                            mapOf(selectedOption to selectedLocation)
+                                        } else {
+                                            null
+                                        }
                                     onApplyClicked(data)
                                 },
                                 modifier = Modifier
@@ -232,16 +234,11 @@ fun WidgetsSettingsScreen(
                                     val widgetName = message.entries.firstOrNull {
                                         it.value == listOf(row, col)
                                     }?.key
-                                    val isDash = (row == 2 && (col == 2 || col == 3)) || (row == 3 && (col == 2 || col == 3))
+                                    val isDash =
+                                        (row == 2 && (col == 2 || col == 3)) || (row == 3 && (col == 2 || col == 3))
                                     Box(
                                         modifier = Modifier.run {
                                             val padding = size(80.dp) // 클릭 핸들러를 전달합니다.
-                                                .clickable(
-                                                    onClick = {
-                                                        selectedLocation = listOf(row, col) // 박스 클릭 시 위치 정보 저장
-                                                        openDialog = true
-                                                    }
-                                                )
                                                 .padding(8.dp)
                                             padding
                                         }, // 외부 패딩을 일정하게 설정
@@ -277,7 +274,17 @@ fun WidgetsSettingsScreen(
                                                 Icon(
                                                     Icons.Rounded.Add,
                                                     contentDescription = null,
-                                                    modifier = Modifier.size(50.dp),
+                                                    modifier = Modifier
+                                                        .size(50.dp)
+                                                        .clickable(
+                                                            onClick = {
+                                                                selectedLocation = listOf(
+                                                                    row,
+                                                                    col
+                                                                ) // 박스 클릭 시 위치 정보 저장
+                                                                openDialog = true
+                                                            }
+                                                        )
                                                 )
                                             }
                                         }

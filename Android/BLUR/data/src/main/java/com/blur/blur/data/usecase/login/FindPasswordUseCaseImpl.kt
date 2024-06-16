@@ -39,7 +39,7 @@ class FindPasswordUseCaseImpl @Inject constructor(
                 val tempPassword = jsonObject.getString("message")
 
                 // 임시 비밀번호를 사용하여 이메일을 전송하는 로직을 여기에 구현합니다.
-                sendEmail(email, "귀하의 임시 비밀번호는 $tempPassword 입니다.")
+                sendEmail(email, "귀하의 임시 비밀번호는 $tempPassword 입니다. \n 임시 비밀번호로 로그인 후 비밀번호를 변경해 주세요. ")
                 Result.success("임시 비밀번호가 이메일로 성공적으로 전송되었습니다.")
             } else {
                 // 요청이 실패한 경우
@@ -56,7 +56,7 @@ class FindPasswordUseCaseImpl @Inject constructor(
                 // 발신자 이메일 주소
                 val fromEmail = "yeller0828@gmail.com"
                 // 발신자 이메일 비밀번호
-                val password = "xqsg kewg jgak vsuq"
+                val password = "dxti dfxa wbhq bctv"
 
 
                 val properties = Properties().apply {

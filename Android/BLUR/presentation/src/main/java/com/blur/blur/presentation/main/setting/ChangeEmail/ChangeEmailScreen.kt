@@ -94,7 +94,7 @@ fun ChangeEmailScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
-                title = { Text(text = "Login") },
+                title = { Text(text = "이메일 변경") },
                 navigationIcon = {
                     IconButton(
                         onClick = onMainScreen

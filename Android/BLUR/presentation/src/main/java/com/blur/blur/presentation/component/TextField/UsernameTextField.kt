@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.blur.blur.presentation.R
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun UsernameTextField(
@@ -60,12 +61,12 @@ fun UsernameTextField(
             },
             modifier = modifier.fillMaxWidth(),
             singleLine = true,
-            label = { Text(text = "Username") },
-            placeholder = { Text("Username을 입력하세요.") },
+            label = { Text(text = "ID") },
+            placeholder = { Text("ID를 입력하세요.") },
             visualTransformation = visualTransformation, // 시각적 변환 적용
             supportingText = {
                 if (isErrorInUsername) {
-                    Text(text = "Username은 영어, 숫자만 가능합니다.")
+                    Text(text = "ID는 영어, 숫자만 가능합니다.")
                 }
             },
 
@@ -86,4 +87,12 @@ fun UsernameTextField(
             }
         )
     }
+}
+
+
+@Preview
+@Composable
+fun Preveiw(){
+    UsernameTextField(value = "", onValueChange = {})
+
 }

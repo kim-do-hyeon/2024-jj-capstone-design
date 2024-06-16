@@ -10,9 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +44,12 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun ChangeNameScreen(
     viewModel: ChangeNameViewModel = hiltViewModel(),
-){
+) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
 
-    viewModel.collectSideEffect {sideEffect ->
-        when(sideEffect){
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
             ChangeNameEffect.NavigateToMainActivity -> {
                 context.startActivity(
                     Intent(context, SplashActivity::class.java).apply {
@@ -49,9 +57,11 @@ fun ChangeNameScreen(
                     }
                 )
             }
+
             is ChangeNameEffect.Toast -> {
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
+
             else -> {}
         }
     }
@@ -60,25 +70,45 @@ fun ChangeNameScreen(
         name = state.name,
         onnameChange = viewModel::onnameChange,
         onChangeClick = viewModel::onChangeClick,
-
-        )
+        onMainScreen = viewModel::onMainScreen
+    )
 
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangenameScreen(
     name: String,
     onnameChange: (String) -> Unit,
-    onChangeClick: ()->Unit,
+    onChangeClick: () -> Unit,
+    onMainScreen: () -> Unit,
 ) {
-    Surface {
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = { Text(text = "이름 변경") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onMainScreen
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "뒤로 가기")
+                    }
+                }
+            )
+        }
+    ) { contentPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
+                .padding(contentPadding),
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -130,10 +160,11 @@ fun ChangenameScreen(
 
 @Preview
 @Composable
-fun ChangenameScreenPreview(){
+fun ChangenameScreenPreview() {
     ChangenameScreen(
         name = "ian.soto@example.com",
         onnameChange = {},
         onChangeClick = {},
+        onMainScreen = {}
     )
 }

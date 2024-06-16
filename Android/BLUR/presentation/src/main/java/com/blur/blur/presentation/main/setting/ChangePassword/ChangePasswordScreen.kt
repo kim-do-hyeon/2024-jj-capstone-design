@@ -11,11 +11,20 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -44,6 +53,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.blur.blur.presentation.R
 import com.blur.blur.presentation.Component.Button.FillButton
 import com.blur.blur.presentation.Login.LoginActivity
+import com.blur.blur.presentation.Main.Setting.ChangeName.ChangeNameEffect
+import com.blur.blur.presentation.SplashActivity
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -68,6 +79,14 @@ fun ChangePasswordScreen(
                 )
             }
 
+            ChangePasswordEffect.NavigateToMainActivity -> {
+                context.startActivity(
+                    Intent(context, SplashActivity::class.java).apply {
+
+                    }
+                )
+            }
+
             else -> {}
         }
     }
@@ -79,12 +98,13 @@ fun ChangePasswordScreen(
         oncurrent_passwordChange = viewModel::onPassword1Change,
         onPassword2Change = viewModel::onPassword2Change,
         onPassword3Change = viewModel::onPassword3Change,
-        onChangeClick = viewModel::onChangeClick
+        onChangeClick = viewModel::onChangeClick,
+        onMainScreen = viewModel::onMainScreen
     )
 }
 
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun ChangePasswordScreen(
     current_password: String,
@@ -93,10 +113,10 @@ private fun ChangePasswordScreen(
     oncurrent_passwordChange: (String) -> Unit,
     onPassword2Change: (String) -> Unit,
     onPassword3Change: (String) -> Unit,
-
+    onMainScreen: () -> Unit,
     onChangeClick: () -> Unit,
 ) {
-    val text = AnnotatedString("고객님의 개인정보 보호를 위해 \n 비밀번호를 다시 확인합니다.\n비밀번호가 타인에게 노출되지 않도록 주의해 주세요.")
+    val text = AnnotatedString("안전한 비밀번호 변경을 위해 현재 비밀번호를 다시 입력해 주세요. 비밀번호가 타인에게 노출되지 않도록 주의해 주세요.")
     val password1FocusRequester = remember { FocusRequester() }
     val password2FocusRequester = remember { FocusRequester() }
     val password3FocusRequester = remember { FocusRequester() }
@@ -108,13 +128,32 @@ private fun ChangePasswordScreen(
         fontWeight = FontWeight(600),
         fontSize = 15.sp,
     )
-    Surface {
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = { Text(text = "비밀번호 변경") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onMainScreen
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "뒤로 가기")
+                    }
+                }
+            )
+        }
+    ) { contentPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
+                .padding(contentPadding),
         ) {
             Box(
                 modifier = Modifier
@@ -124,12 +163,16 @@ private fun ChangePasswordScreen(
                 Text(
                     text = buildAnnotatedString {
                         withStyle(style = spanStyle) {
-                            append(text.substring(0, 12)) // "고객님의 개인정보 보호" 부분
+                            append(text.substring(0, 11)) // "안전한 비밀번호 변경" 부분
                         }
-                        append(text.substring(12)) // 나머지 텍스트
+                        append(text.substring(11)) // 나머지 텍스트
                     },
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(16.dp)
+                    fontSize = 16.sp, // 기본 폰트 크기 설정
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .wrapContentSize()
                 )
             }
             Divider()
@@ -144,24 +187,6 @@ private fun ChangePasswordScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "비밀번호 확인",
-                            style = TextStyle(
-                                fontSize = 30.sp,
-                                lineHeight = 28.sp,
-                                fontFamily = FontFamily(Font(R.font.roboto_bold)),
-                                fontWeight = FontWeight(400),
-                                color = Color(0xFF1D1B20),
-                            )
-                        )
-                    }
-
-
                     Text(
                         modifier = Modifier
                             .padding(top = 30.dp),
@@ -260,6 +285,7 @@ fun ChangePasswordScreenPreview() {
         oncurrent_passwordChange = {},
         onPassword2Change = {},
         onPassword3Change = {},
-        onChangeClick = {}
+        onChangeClick = {},
+        onMainScreen = {}
     )
 }

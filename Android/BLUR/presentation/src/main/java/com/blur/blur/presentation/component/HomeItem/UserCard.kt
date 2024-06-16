@@ -56,14 +56,23 @@ fun UserCard(
             ) {
                 Column (
                     modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ){
                     Text(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         modifier = Modifier
-                            .padding(top = 20.dp)
                             .fillMaxWidth(),
-                        text = "좋은 하루 보내세요.\n${originalname}님",
+                        text = "좋은 하루 보내세요.",
+                        style = MaterialTheme.typography.headlineLarge,
+                    )
+                    Text(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = "${originalname}님",
                         style = MaterialTheme.typography.headlineLarge,
                     )
 

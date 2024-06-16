@@ -3,6 +3,7 @@ package com.blur.blur.presentation.Main.Setting.ChangeName
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.blur.blur.domain.usecase.main.userinfo.ChangeNameUseCase
+import com.blur.blur.presentation.Main.Setting.ChangeEmail.ChangeEmailEffect
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -61,6 +62,9 @@ class ChangeNameViewModel @Inject constructor(
                 // 필요에 따라 추가적인 액션을 수행할 수 있습니다.
             }
         )
+    }
+    fun onMainScreen() =intent {
+        postSideEffect(ChangeNameEffect.NavigateToMainActivity)
     }
 }
 

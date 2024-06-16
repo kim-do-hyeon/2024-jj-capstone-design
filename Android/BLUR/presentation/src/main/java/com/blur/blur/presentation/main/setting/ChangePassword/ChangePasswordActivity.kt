@@ -13,7 +13,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             BLURTheme {
-                ChangePasswordActivity()
+                ChangePasswordScreen()
             }
         }
     }

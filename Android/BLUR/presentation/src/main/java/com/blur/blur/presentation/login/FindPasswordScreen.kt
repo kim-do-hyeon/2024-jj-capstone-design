@@ -5,6 +5,7 @@ package com.blur.blur.presentation.Login
 import UsernameTextField
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -57,14 +58,20 @@ fun FindPasswordScreen(
     ) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
-    viewModel.collectSideEffect {sideEffect->
+
+    viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             FindPasswordEffect.NavigateToLoginScreen -> {
-                context.startActivity(
-                    Intent(
-                        context, LoginActivity::class.java
-                    )
-                )
+                Toast.makeText(
+                    context,
+                    "임시 비밀번호가 이메일로 전송되었습니다. 로그인 화면으로 이동합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                context.startActivity(Intent(context, LoginActivity::class.java))
+            }
+
+            is FindPasswordEffect.ShowErrorMessage -> {
+                Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
 
             else -> {}
@@ -83,7 +90,7 @@ fun FindPasswordScreen(
 
         showUsernameField = state.showUsernameField,
 
-
+        NavLogin = viewModel::NavLogin,
         )
 }
 
@@ -98,7 +105,7 @@ fun FindPasswordScreen(
     onUsernameChange: (String) -> Unit,
 
     onFindPasswordClick: () -> Unit,
-
+    NavLogin:() -> Unit,
     showUsernameField: Boolean,
 ) {
     // FocusRequester 인스턴스 생성
@@ -202,7 +209,10 @@ fun FindPasswordScreen(
                     .padding(vertical = 24.dp)
                     .fillMaxWidth(),
                 text = "비밀번호 찾기",
-                onClick = onFindPasswordClick
+                onClick = {
+                    onFindPasswordClick()
+                    NavLogin()
+                }
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -223,6 +233,7 @@ fun FindPasswordScreenPreview() {
             onUsernameChange = {},
             showUsernameField = true,
             onFindPasswordClick = {},
+            NavLogin = {}
         )
     }
 }

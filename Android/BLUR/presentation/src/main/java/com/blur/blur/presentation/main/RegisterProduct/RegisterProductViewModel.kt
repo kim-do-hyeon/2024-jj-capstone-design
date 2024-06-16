@@ -2,6 +2,7 @@ package com.blur.blur.presentation.Main.RegisterProduct
 
 import androidx.lifecycle.ViewModel
 import com.blur.blur.domain.usecase.login.registerProductUseCase
+import com.blur.blur.presentation.Main.Setting.ChangeName.ChangeNameEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container
@@ -40,14 +41,12 @@ class RegisterProductViewModel @Inject constructor(
 
         registerProductUseCase(code).fold(
             onSuccess = {
-                // 성공적으로 변경된 경우
-                postSideEffect(RegisterProductSideEffect.Toast(""))
                 // 필요에 따라 추가적인 액션을 수행할 수 있습니다.
                 postSideEffect(RegisterProductSideEffect.NavigateToMainActivity)
             },
             onFailure = { throwable ->
                 // 변경 실패한 경우
-                postSideEffect(RegisterProductSideEffect.Toast(throwable.message ?: ""))
+                postSideEffect(RegisterProductSideEffect.Toast(throwable.message ?: "기기등록에 실패 했습니다."))
                 // 필요에 따라 추가적인 액션을 수행할 수 있습니다.
             }
         )
@@ -62,6 +61,9 @@ class RegisterProductViewModel @Inject constructor(
             formattedCode.append(this[i])
         }
         return formattedCode.toString()
+    }
+    fun onMainScreen() =intent {
+        postSideEffect(RegisterProductSideEffect.NavigateToMainActivity)
     }
 
 }

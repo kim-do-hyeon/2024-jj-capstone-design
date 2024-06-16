@@ -117,7 +117,6 @@ private fun SendMessageScreen(
                         .fillMaxSize()
                         .padding(16.dp)
                         .padding(contentPadding)
-
                 ) {
                     LazyColumn(
                         modifier = Modifier
