@@ -4,6 +4,8 @@ import * as faceapi from 'face-api.js';
 
 const CameraFeed = ({ onUserDetected }) => {
     const videoRef = useRef(null);
+    const [userDetected, setUserDetected] = useState(false);
+    const [userLostTimeout, setUserLostTimeout] = useState(null);
 
     useEffect(() => {
         const loadModels = async () => {
@@ -17,10 +19,7 @@ const CameraFeed = ({ onUserDetected }) => {
                 .then((stream) => {
                     const video = videoRef.current;
                     video.srcObject = stream;
-                    console.log('Stream set to video srcObject');
-
                     video.onloadedmetadata = () => {
-                        console.log('Metadata loaded, video will play now');
                         video.play();
                         setupCanvas(video);
                     };
@@ -34,24 +33,39 @@ const CameraFeed = ({ onUserDetected }) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const context = canvas.getContext('2d');
-        startProcessing(video, canvas, context);
+        processVideo(video, canvas, context);
     };
 
-    const startProcessing = (video, canvas, context) => {
-        const interval = setInterval(async () => {
+    const processVideo = (video, canvas, context) => {
+        let previousDetected = userDetected;
+        function detectFaces() {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
-            if (detections.length > 0) {
-                console.log('Face detected');
-                canvas.toBlob(blob => {
-                    sendFrame(blob);
-                }, 'image/jpeg');
-            }else {
-                onUserDetected(false, "Guest", "Guest");
-            }
-        }, 10000);
-
-        return () => clearInterval(interval);
+            faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).then(detections => {
+                const detected = detections.length > 0;
+                if (detected !== previousDetected) {
+                    setUserDetected(detected);
+                    if (detected) {
+                        console.log('Face detected, sending data');
+                        canvas.toBlob(blob => {
+                            sendFrame(blob);
+                        }, 'image/jpeg');
+                        if (userLostTimeout) {
+                            clearTimeout(userLostTimeout);
+                            setUserLostTimeout(null);
+                        }
+                    } else {
+                        console.log('No face detected, switching to Guest');
+                        const timeout = setTimeout(() => {
+                            onUserDetected(false, "Guest", "Guest");
+                        }, 5000);
+                        setUserLostTimeout(timeout);
+                    }
+                    previousDetected = detected;
+                }
+                requestAnimationFrame(detectFaces);
+            });
+        }
+        detectFaces();
     };
 
     const sendFrame = (blob) => {
@@ -62,12 +76,8 @@ const CameraFeed = ({ onUserDetected }) => {
         })
         .then(response => {
             console.log('Response received:', response);
-            const detectedFace = response.data.face;
-            const detectedUsername = response.data.username;
-            if (detectedFace && detectedFace !== "Unknown" && detectedUsername) {
-                onUserDetected(true, detectedFace, detectedUsername);
-            } else {
-                onUserDetected(false, "Guest", "Guest");
+            if (response.data.face && response.data.username) {
+                onUserDetected(true, response.data.face, response.data.username);
             }
         })
         .catch(error => {
@@ -75,7 +85,7 @@ const CameraFeed = ({ onUserDetected }) => {
         });
     };
 
-    return <video ref={videoRef} style={{ width: "100%", display: 'none'}} autoPlay />;
+    return <video ref={videoRef} style={{ width: "100%", display: 'none' }} autoPlay />;
 };
 
 export default CameraFeed;
