@@ -644,4 +644,26 @@ GET /get_unread_messages/<receiver_username>
   ]
 }
 ```
+<br>
+
+## Mark Messages as Read
+
+메세지 읽음 상태로 표시 API
+
+```http
+POST /mark_messages_as_read/<receiver_username>
+```
+
+| Parameter          | Type     | Description                                |
+|--------------------|----------|--------------------------------------------|
+| `receiver_username`| `string` | **Required**. Username of the message receiver |
+
+### Responses
+```json
+{
+  "result": "success",
+  "type": "messages_marked_as_read",
+  "message": "All unread messages marked as read"
+}
+```
 </details>
