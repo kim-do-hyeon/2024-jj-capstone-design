@@ -492,6 +492,7 @@ GET /daily/view
 
 | Parameter  | Type     | Description                       |
 |------------|----------|-----------------------------------|
+| `username` | `string` | **Required**. username to query   |
 | `localdate`| `string` | **Required**. date to query       |
 
 
@@ -515,6 +516,7 @@ GET /daily/month
 
 | Parameter  | Type     | Description                       |
 |------------|----------|-----------------------------------|
+| `username` | `string` | **Required**. username to query   |
 | `year`     | `Int`    | **Required**. year (ex: 2024)     |
 | `month`    | `Int`    | **Required**. month (ex: 06)      |
 

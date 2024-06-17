@@ -79,8 +79,8 @@ def get_guset_widgets_index_module() :
         return jsonify(result = "fail", type = "Logic Error", message = "Error : {}".format(str(e)))
 
 def daily_module(subpath) :
-    username = session['username']
     data = request.args.to_dict()
+    username = data['username']
     if subpath == "add" :
         try :
             new_todo = Todo(username = username,
@@ -114,7 +114,10 @@ def daily_module(subpath) :
     elif subpath == "month" :
         try :
             filter_month = data['year'] + data['month'].zfill(2)
-            filtered_todos = Todo.query.filter(Todo.localdate.like(f"%{filter_month}%")).all()
+            filtered_todos = Todo.query.filter(
+                Todo.localdate.like(f"%{filter_month}%"),
+                Todo.username == username
+            ).all()
             print(filtered_todos)
             datas = {}
             for i in filtered_todos :
