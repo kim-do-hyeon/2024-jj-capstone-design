@@ -55,12 +55,21 @@ const CameraFeed = ({ onUserDetected }) => {
                         }
                     } else {
                         console.log('No face detected, switching to Guest');
-                        const timeout = setTimeout(() => {
-                            onUserDetected(false, "Guest", "Guest");
-                        }, 5000);
-                        setUserLostTimeout(timeout);
+                        if (!userLostTimeout) {
+                            const timeout = setTimeout(() => {
+                                setUserDetected(false); // 얼굴 감지 상태를 false로 설정
+                                onUserDetected(false, "Guest", "Guest");
+                                setUserLostTimeout(null);
+                            }, 5000);
+                            setUserLostTimeout(timeout);
+                        }
                     }
                     previousDetected = detected;
+                } else if (detected) {
+                    if (userLostTimeout) {
+                        clearTimeout(userLostTimeout);
+                        setUserLostTimeout(null);
+                    }
                 }
                 requestAnimationFrame(detectFaces);
             });
@@ -78,6 +87,7 @@ const CameraFeed = ({ onUserDetected }) => {
             console.log('Response received:', response);
             if (response.data.face && response.data.username) {
                 onUserDetected(true, response.data.face, response.data.username);
+                setUserDetected(true); // 얼굴 감지 상태를 true로 설정
             }
         })
         .catch(error => {

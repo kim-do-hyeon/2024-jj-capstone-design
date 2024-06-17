@@ -20,6 +20,7 @@ function App() {
     const [userid, setUserId] = useState("Guest");
     const [isActive, setIsActive] = useState(false);
     const [showStart, setShowStart] = useState(false);
+    const [lastUserId, setLastUserId] = useState("Guest");
 
     useEffect(() => {
         const fetchWidgets = async () => {
@@ -43,43 +44,55 @@ function App() {
     }, []);
 
     const handleUserDetection = async (active, name = "Guest", id = "Guest") => {
-        setIsActive(active);
-        setUserName(name);
-        setUserId(id);
         if (active) {
-            if (!showStart) {
+            if (id !== lastUserId) {
+                setUserName(name);
+                setUserId(id);
+                setLastUserId(id);
                 setShowStart(true);
-                setTimeout(() => setShowStart(false), 1000);
-            }
-            try {
-                const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
-                if (loginResponse.data.message === "Empty Database") {
-                    try {
-                        const response = await axios.get('https://jj.system32.kr/widgets_index');
-                        const messageOnly = response.data.message;
-                        const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                try {
+                    const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
+                    if (loginResponse.data.message === "Empty Database") {
+                        try {
+                            const response = await axios.get('https://jj.system32.kr/widgets_index');
+                            const messageOnly = response.data.message;
+                            const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                                type,
+                                row: position[0],
+                                col: position[1]
+                            }));
+                            setWidgets(mappedWidgets);
+                        } catch (error) {
+                            console.error('Error fetching widgets:', error);
+                        }
+                    } else {
+                        const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
                             type,
                             row: position[0],
                             col: position[1]
                         }));
                         setWidgets(mappedWidgets);
-                    } catch (error) {
-                        console.error('Error fetching widgets:', error);
                     }
-                } else {
-                    const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
-                        type,
-                        row: position[0],
-                        col: position[1]
-                    }));
-                    setWidgets(mappedWidgets);
+                } catch (error) {
+                    console.error('Error logging in:', error);
+                } finally {
+                    setTimeout(() => setShowStart(false), 1000);
                 }
-            } catch (error) {
-                console.error('Error logging in:', error);
+            } else {
+                // 동일한 사용자가 다시 인식되면 Start 화면 생략
+                setShowStart(false);
             }
         } else {
-            setWidgets([]);
+            setIsActive(false);
+            setUserName("Guest");
+            setUserId("Guest");
+            setTimeout(() => {
+                if (!isActive) {
+                    setWidgets([]);
+                }
+            }, 5000);
         }
+        setIsActive(active);
     };
 
     return (
