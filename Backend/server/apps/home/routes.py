@@ -102,14 +102,18 @@ def widgets_index() :
 @blueprint.route('/send_message', methods=['POST'])
 def send_message():
     return send_message_module()
-    
+
 @blueprint.route('/get_messages/<receiver_username>', methods=['GET'])
 def get_messages(receiver_username):
     return get_message_module(receiver_username)
 
 @blueprint.route('/get_unread_messages/<receiver_username>', methods=['GET'])
 def get_unread_messages(receiver_username):
-    return get_message_module(receiver_username, read_all=False)
+    return get_unread_message_module(receiver_username)
+
+@blueprint.route('/mark_messages_as_read/<receiver_username>', methods=['POST'])
+def mark_messages_as_read(receiver_username):
+    return mark_messages_as_read_module(receiver_username)
 ''' End Message Section '''
 
 ''' Daily TODO Section '''
