@@ -21,6 +21,7 @@ function App() {
     const [isActive, setIsActive] = useState(false);
     const [showStart, setShowStart] = useState(false);
     const [lastUserId, setLastUserId] = useState("Guest");
+    const [userLostTimeout, setUserLostTimeout] = useState(null);
 
     useEffect(() => {
         const fetchWidgets = async () => {
@@ -79,20 +80,25 @@ function App() {
                     setTimeout(() => setShowStart(false), 1000);
                 }
             } else {
-                // 동일한 사용자가 다시 인식되면 Start 화면 생략
                 setShowStart(false);
             }
+            setIsActive(true);
+            if (userLostTimeout) {
+                clearTimeout(userLostTimeout);
+                setUserLostTimeout(null);
+            }
         } else {
-            setIsActive(false);
-            setUserName("Guest");
-            setUserId("Guest");
-            setTimeout(() => {
-                if (!isActive) {
+            if (!userLostTimeout) {
+                const timeout = setTimeout(() => {
+                    setIsActive(false);
+                    setUserName("Guest");
+                    setUserId("Guest");
                     setWidgets([]);
-                }
-            }, 5000);
+                    setUserLostTimeout(null);
+                }, 5000);
+                setUserLostTimeout(timeout);
+            }
         }
-        setIsActive(active);
     };
 
     return (

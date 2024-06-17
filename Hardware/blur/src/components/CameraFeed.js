@@ -54,10 +54,10 @@ const CameraFeed = ({ onUserDetected }) => {
                             setUserLostTimeout(null);
                         }
                     } else {
-                        console.log('No face detected, switching to Guest');
+                        console.log('No face detected, setting timeout for black screen');
                         if (!userLostTimeout) {
                             const timeout = setTimeout(() => {
-                                setUserDetected(false); // 얼굴 감지 상태를 false로 설정
+                                setUserDetected(false);
                                 onUserDetected(false, "Guest", "Guest");
                                 setUserLostTimeout(null);
                             }, 5000);
@@ -87,7 +87,7 @@ const CameraFeed = ({ onUserDetected }) => {
             console.log('Response received:', response);
             if (response.data.face && response.data.username) {
                 onUserDetected(true, response.data.face, response.data.username);
-                setUserDetected(true); // 얼굴 감지 상태를 true로 설정
+                setUserDetected(true);
             }
         })
         .catch(error => {
