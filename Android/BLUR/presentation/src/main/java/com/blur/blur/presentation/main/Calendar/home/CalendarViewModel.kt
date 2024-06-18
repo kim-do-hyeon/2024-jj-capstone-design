@@ -4,6 +4,7 @@ package com.blur.blur.presentation.Main.Calendar.home
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.blur.blur.data.di.SharedPreferencesManager
 import com.blur.blur.data.model.main.home.todo.TodoMessage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -31,6 +32,8 @@ class TodoViewModel @Inject constructor(
     private val userService: UserService
 ) : ViewModel(), ContainerHost<TodoState, TodoSideEffect> {
 
+    val sharedPreferencesManager = SharedPreferencesManager
+    val getUsernameFromPrefs = sharedPreferencesManager.getUsername(context) ?: ""
     private val _selectedDate = MutableStateFlow<LocalDate?>(null)
 
     private val _TodoList = MutableStateFlow<List<TodoMessage>?>(null)
@@ -55,7 +58,7 @@ class TodoViewModel @Inject constructor(
     fun onStatus(itemId: Int) {
         intent {
             try {
-                val response = userService.TodoCheck(itemId)
+                val response = userService.TodoCheck(getUsernameFromPrefs,itemId)
                 if (response.isSuccessful && response.body()?.result == "success") {
                     val updatedList = _TodoList.value?.map {
                         if (it.id == itemId) it.copy(status = it.status) else it
@@ -76,7 +79,7 @@ class TodoViewModel @Inject constructor(
         intent {
             try {
                 val formattedDate = selectedDate?.format(DateTimeFormatter.ISO_LOCAL_DATE)
-                val response = formattedDate?.let { userService.addtodo(it, itemText) }
+                val response = formattedDate?.let { userService.addtodo(getUsernameFromPrefs,it, itemText) }
 
                 if (response != null && response.isSuccessful && response.body()?.result == "success") {
                     loadTodoItems(selectedDate)
@@ -102,7 +105,7 @@ class TodoViewModel @Inject constructor(
             selectedDate?.let {
                 _selectedDate.value = it
                 Log.d("로그3", "날짜에 대한 할 일 항목 로드 중: $selectedDate")
-                val response = userService.viewtodo(it.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                val response = userService.viewtodo(getUsernameFromPrefs,it.format(DateTimeFormatter.ISO_LOCAL_DATE))
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {

@@ -8,11 +8,13 @@ class TodoAddUseCaseImpl @Inject constructor(
     private val userService: UserService
 ) : TodoAddUseCase {
     override suspend fun invoke(
+        username: String,
         localdate: String,
         message: String
     ): Result<String> {
         return try {
             userService.addtodo(
+                username = username,
                 localdate = localdate,
                 message = message
             )

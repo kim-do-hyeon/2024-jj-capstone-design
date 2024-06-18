@@ -109,17 +109,20 @@ interface UserService {
 
     @GET("/daily/add")
     suspend fun addtodo(
+        @Query("username") username: String,
         @Query("localdate") localdate: String,
         @Query("message") message: String
     ): Response<TodoAddResponse>
 
     @GET("/daily/view")
     suspend fun viewtodo(
+        @Query("username") username: String,
         @Query("localdate") localdate: String,
     ): Response<TodoViewResponse>
 
     @GET("/daily/check")
     suspend fun TodoCheck(
+        @Query("username") username: String,
         @Query("id") id: Int,
     ): Response<TodoAddResponse>
 

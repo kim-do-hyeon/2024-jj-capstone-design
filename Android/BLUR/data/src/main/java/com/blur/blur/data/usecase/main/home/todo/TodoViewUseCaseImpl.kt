@@ -8,10 +8,11 @@ class TodoViewUseCaseImpl @Inject constructor(
     private val userService: UserService
 ) : TodoViewUseCase {
     override suspend fun invoke(
+        username: String,
         localdate: String
     ): Result<String> {
         return try {
-            val response = userService.viewtodo(localdate)
+            val response = userService.viewtodo(username,localdate)
             if (response.isSuccessful) {
                 val todoResponse = response.body()
                 // 여기서 todoResponse를 적절히 처리하고 결과를 반환합니다.
