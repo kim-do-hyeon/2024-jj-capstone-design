@@ -251,12 +251,12 @@ fun WidgetsSettingsScreen(
                                             if (widgetName != null) {
                                                 Text(
                                                     text = widgetName,
-                                                    color = Color.Black,
+                                                    color = MaterialTheme.colorScheme.onBackground,
                                                     style = TextStyle(
                                                         fontSize = 12.sp,
                                                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                                         fontWeight = FontWeight(700),
-                                                        color = primaryLight,
+                                                        color = MaterialTheme.colorScheme.onBackground,
                                                         textAlign = TextAlign.End
                                                     )
                                                 )
