@@ -17,7 +17,11 @@ const Schedule = ({ username, localdate }) => {
                     }
                 });
                 if (response.data.result === "success" && response.data.type === "todo_view") {
-                    setSchedule(response.data.message.split('\n'));
+                    let items = response.data.message.split('\n');
+                    if (items.length > 1) {
+                        items = items.slice(0, -1);
+                    }
+                    setSchedule(items);
                     setError(null);
                 } else {
                     setSchedule([]);
