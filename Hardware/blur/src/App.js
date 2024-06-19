@@ -12,6 +12,7 @@ import Traffic from './components/Traffic';
 import DHT from './components/DHT';
 import PersonalColor from './components/PersonalColor';
 import Start from './components/Start';
+import Schedule from './components/Schedule';
 import axios from 'axios';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     const [showStart, setShowStart] = useState(false);
     const [lastUserId, setLastUserId] = useState("Guest");
     const [userLostTimeout, setUserLostTimeout] = useState(null);
+    const [localDate, setLocalDate] = useState('');
 
     useEffect(() => {
         const fetchWidgets = async () => {
@@ -40,7 +42,15 @@ function App() {
             }
         };
 
+        const getCurrentDate = () => {
+            const today = new Date();
+            console.log("Current Date in App.js:", today.toISOString().split('T')[0]);
+            setLocalDate(today.toISOString().split('T')[0]);
+        };
+
         fetchWidgets();
+        getCurrentDate();
+
         const timer = setTimeout(() => setShowText(true), 1000);
         return () => clearTimeout(timer);
     }, []);
@@ -129,6 +139,7 @@ function App() {
                                                     case 'Message': return <Message key={`${row}-${col}`} userName={userName} />;
                                                     case 'Room': return <DHT key={`${row}-${col}`} />;
                                                     case 'PersonalColor': return <PersonalColor key={`${row}-${col}`} />;
+                                                    case 'Schedule': return <Schedule key={`${row}-${col}`} username={userName} localdate={localDate} />;
                                                     default: return null;
                                                 }
                                             })()
