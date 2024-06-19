@@ -17,9 +17,8 @@ function App() {
     const [widgets, setWidgets] = useState([]);
     const [showText, setShowText] = useState(false);
     const [userName, setUserName] = useState("Guest");
-    const [userId, setUserId] = useState("Guest");
-    const [lastUserId, setLastUserId] = useState("Guest");
-    const [userLostTimeout, setUserLostTimeout] = useState(null);
+    const [userid, setUserId] = useState("Guest");
+    const [isActive, setIsActive] = useState(false);
     const [localDate, setLocalDate] = useState('');
 
     useEffect(() => {
@@ -51,48 +50,35 @@ function App() {
     }, []);
 
     const handleUserDetection = async (active, name = "Guest", id = "Guest") => {
-        if (active) {
-            if (id !== lastUserId) {
-                setUserName(name);
-                setUserId(id);
-                setLastUserId(id);
+        setIsActive(active);
+        setUserName(name);
+        setUserId(id);
+        try {
+            const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
+            if(loginResponse.data.message === "Empty Database"){
                 try {
-                    const loginResponse = await axios.post('https://jj.system32.kr/get_widgets_custom/username=' + id);
-                    if (loginResponse.data.message === "Empty Database") {
-                        const response = await axios.get('https://jj.system32.kr/widgets_index');
-                        const messageOnly = response.data.message;
-                        const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
-                            type,
-                            row: position[0],
-                            col: position[1]
-                        }));
-                        setWidgets(mappedWidgets);
-                    } else {
-                        const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
-                            type,
-                            row: position[0],
-                            col: position[1]
-                        }));
-                        setWidgets(mappedWidgets);
-                    }
+                    const response = await axios.get('https://jj.system32.kr/widgets_index');
+                    const messageOnly = response.data.message;
+                    const mappedWidgets = Object.entries(messageOnly).map(([type, position]) => ({
+                        type,
+                        row: position[0],
+                        col: position[1]
+                    }));
+                    setWidgets(mappedWidgets);
                 } catch (error) {
-                    console.error('Error logging in:', error);
+                    console.error('Error fetching widgets:', error);
                 }
+            }else{
+                const mappedWidgets = Object.entries(loginResponse.data.message).map(([type, position]) => ({
+                    type,
+                    row: position[0],
+                    col: position[1]
+                }));
+                console.log(mappedWidgets);
+                setWidgets(mappedWidgets);
             }
-            if (userLostTimeout) {
-                clearTimeout(userLostTimeout);
-                setUserLostTimeout(null);
-            }
-        } else {
-            if (!userLostTimeout) {
-                const timeout = setTimeout(() => {
-                    setUserName("Guest");
-                    setUserId("Guest");
-                    setWidgets([]);
-                    setUserLostTimeout(null);
-                }, 5000);
-                setUserLostTimeout(timeout);
-            }
+        } catch (error) {
+            console.error('Error logging in:', error);
         }
     };
 
