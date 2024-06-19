@@ -10,11 +10,9 @@ import News from './components/News';
 import Message from './components/Message';
 import Traffic from './components/Traffic';
 import DHT from './components/DHT';
-import PersonalColor from './components/PersonalColor';
 import Start from './components/Start';
 import Schedule from './components/Schedule';
 import axios from 'axios';
-
 function App() {
     const [widgets, setWidgets] = useState([]);
     const [showText, setShowText] = useState(false);
@@ -54,7 +52,6 @@ function App() {
         const timer = setTimeout(() => setShowText(true), 1000);
         return () => clearTimeout(timer);
     }, []);
-
     const handleUserDetection = async (active, name = "Guest", id = "Guest") => {
         if (active) {
             if (id !== lastUserId) {
@@ -155,5 +152,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
