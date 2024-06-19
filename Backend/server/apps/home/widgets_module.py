@@ -128,3 +128,12 @@ def daily_module(subpath) :
             return jsonify(result = "success", type = "todo_month", message = str(datas))
         except :
             return jsonify(result = "fail", type = "todo_month", message = "Error" + str(e))
+    elif subpath == "view_rasp" :
+        try :
+            todo_lists = ""
+            todo_datas = Todo.query.filter_by(username = username, localdate = data['localdate']).all()
+            for i in todo_datas :
+                todo_lists += str(i.message) + "\n"
+            return jsonify(result = "success", type = "todo_view", message = str(todo_lists))
+        except Exception as e :
+            return jsonify(result = "fail", type = "todo_view", message = "Error " + str(e))
