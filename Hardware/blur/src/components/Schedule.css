@@ -15,12 +15,16 @@
 
 .schedule-box h2, .schedule-box h3 {
     margin: 10px 0;
+    font-size: 1.5em; /* 글씨 크기 조정 */
+    font-weight: bold; /* 글씨 두께 조정 */
 }
 
 .schedule-box ul {
     list-style-type: none; /* 기본 목록 스타일 제거 */
     padding-left: 0;
     text-align: left;
+    font-size: 1.2em; /* 글씨 크기 조정 */
+    font-weight: bold; /* 글씨 두께 조정 */
 }
 
 .schedule-box ul li {
@@ -38,4 +42,6 @@
 
 .schedule-box .error {
     color: #ff0000; /* 에러 메시지 색상을 빨강으로 설정 */
+    font-size: 1.2em; /* 글씨 크기 조정 */
+    font-weight: bold; /* 글씨 두께 조정 */
 }
