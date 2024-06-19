@@ -91,35 +91,31 @@ class WidgetsSettingViewModel @Inject constructor(
         }
     }
 
-    fun sendMessage(message: Map<String, List<Int>>?) {
+
+    fun sendMessage(message: Map<String, List<Int>>) {
         intent {
             reduce {
                 state.copy(
                     sendMessage = message
                 )
             }
+            ChangeMessage()
         }
-        ChangeMessage()
     }
 
     fun ChangeMessage() = intent {
-        // 1. messages를 새로운 맵에 복사하여 원본 상태를 수정하지 않도록 합니다.
         val updatedMessages = state.messages?.toMutableMap() ?: mutableMapOf()
-
-        // 2. sendMessage가 null이 아닌지 확인하고 updatedMessages에 추가합니다.
-        if (state.sendMessage != null) {
-            updatedMessages.putAll(state.sendMessage!!)
+        state.sendMessage?.forEach { (key, value) ->
+            updatedMessages.entries.removeIf { it.value == value }
+            updatedMessages[key] = value
         }
-
-        // 3. 업데이트된 messages로 상태를 줄입니다.
         reduce {
             state.copy(
-                messages = updatedMessages.toMap(), // 불변 맵으로 다시 변환
-                sendMessage = null // 사용 후 sendMessage 지우기
+                messages = updatedMessages.toMap(),
+                sendMessage = null
             )
         }
     }
-
 
     fun onSetWidget() = intent {
         val modelCode = sharedPreferencesManager.getProductCode(context) ?: ""

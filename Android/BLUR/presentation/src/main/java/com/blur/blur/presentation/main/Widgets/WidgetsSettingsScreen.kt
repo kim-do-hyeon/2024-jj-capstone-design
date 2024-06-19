@@ -1,4 +1,4 @@
-package com.blur.blur.presentation.Main.Widgets
+package com.blur.blur.presentation.Main.Home.Widgets
 
 import android.app.Activity
 import android.widget.Toast
@@ -54,6 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.blur.blur.presentation.Main.Widgets.WidgetsSettingSideEffect
+import com.blur.blur.presentation.Main.Widgets.WidgetsSettingViewModel
 import com.blur.blur.presentation.R
 import com.blur.blur.presentation.theme.primaryLight
 import org.orbitmvi.orbit.compose.collectAsState
@@ -72,7 +74,6 @@ fun WidgetsSettingsScreen(
             is WidgetsSettingSideEffect.Toast -> {
                 Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
-
             else -> {}
         }
     }
@@ -97,16 +98,14 @@ fun WidgetsSettingsScreen(
     onSetWidget: () -> Unit,
     message: Map<String, List<Int>>,
     widgetList: List<String>,
-    onApplyClicked: (Map<String, List<Int>>?) -> Unit  // sendMessage를 전달하기 위한 함수
+    onApplyClicked: (Map<String, List<Int>>) -> Unit
 ) {
     val context = LocalContext.current
     var openDialog by remember { mutableStateOf(false) }
-    // 라디오버튼의 옵션들을 위젯 리스트로 설정합니다.
-    // 선택된 옵션을 추적하는 MutableState를 생성합니다.
     val (selectedOption, onOptionSelected) = remember {
         mutableStateOf(if (widgetList.isNotEmpty()) widgetList[0] else null)
     }
-    var selectedLocation: List<Int> by remember { mutableStateOf(emptyList()) }
+    var selectedLocation by remember { mutableStateOf(emptyList<Int>()) }
 
     Surface {
         Scaffold(
@@ -118,7 +117,6 @@ fun WidgetsSettingsScreen(
                     ),
                     title = { Text(text = "위젯 설정") },
                     navigationIcon = {
-                        // 뒤로 가기 버튼에 뒤로 가기 기능을 추가합니다.
                         IconButton(onClick = {
                             (context as? Activity)?.onBackPressed()
                         }) {
@@ -142,7 +140,7 @@ fun WidgetsSettingsScreen(
                             shape = RoundedCornerShape(16.dp),
                         ) {
                             Text(
-                                text = "선택된 위치: $selectedLocation", // 선택된 위치 출력
+                                text = "선택된 위치: $selectedLocation",
                                 modifier = Modifier
                                     .padding(vertical = 16.dp)
                                     .align(alignment = Alignment.CenterHorizontally),
@@ -153,18 +151,14 @@ fun WidgetsSettingsScreen(
                                 verticalArrangement = Arrangement.Center,
                                 modifier = Modifier.padding(20.dp)
                             ) {
-
                                 items(widgetList) { option ->
-                                    // 각 라디오버튼 옵션을 순회하며 표시합니다.
                                     Row(
                                         horizontalArrangement = Arrangement.Center,
                                         verticalAlignment = Alignment.CenterVertically,
                                         modifier = Modifier
                                             .selectable(
                                                 selected = (option == selectedOption),
-                                                onClick = {
-                                                    onOptionSelected(option)
-                                                },
+                                                onClick = { onOptionSelected(option) },
                                                 role = Role.RadioButton
                                             )
                                     ) {
@@ -174,7 +168,6 @@ fun WidgetsSettingsScreen(
                                             textAlign = TextAlign.Center
                                         )
                                         Spacer(modifier = Modifier.weight(1f))
-                                        // 선택된 옵션에 따라 라디오버튼 상태를 표시합니다.
                                         RadioButton(
                                             selected = (option == selectedOption),
                                             onClick = null
@@ -185,13 +178,9 @@ fun WidgetsSettingsScreen(
                             Button(
                                 onClick = {
                                     openDialog = false
-                                    val data =
-                                        if (selectedOption != null && selectedLocation.isNotEmpty()) {
-                                            mapOf(selectedOption to selectedLocation)
-                                        } else {
-                                            null
-                                        }
-                                    onApplyClicked(data)
+                                    selectedOption?.let {
+                                        onApplyClicked(mapOf(it to selectedLocation))
+                                    }
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -211,19 +200,16 @@ fun WidgetsSettingsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-
                     Spacer(modifier = Modifier.weight(1f))
 
                     Column(
                         modifier = Modifier
                             .border(1.dp, Color.Black)
-
                     ) {
-                        val rows = 3 // 전체 행 수
-                        val cols = 4 // 전체 열 수
+                        val rows = 3
+                        val cols = 4
 
                         for (row in 1..rows) {
-                            // 행 간격 추가
                             Spacer(modifier = Modifier.height(16.dp))
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -234,14 +220,15 @@ fun WidgetsSettingsScreen(
                                     val widgetName = message.entries.firstOrNull {
                                         it.value == listOf(row, col)
                                     }?.key
-                                    val isDash =
-                                        (row == 2 && (col == 2 || col == 3)) || (row == 3 && (col == 2 || col == 3))
+                                    val isDash = (row == 2 && (col == 2 || col == 3)) || (row == 3 && (col == 2 || col == 3))
                                     Box(
-                                        modifier = Modifier.run {
-                                            val padding = size(80.dp) // 클릭 핸들러를 전달합니다.
-                                                .padding(8.dp)
-                                            padding
-                                        }, // 외부 패딩을 일정하게 설정
+                                        modifier = Modifier
+                                            .size(80.dp)
+                                            .clickable {
+                                                selectedLocation = listOf(row, col)
+                                                openDialog = true
+                                            }
+                                            .padding(8.dp),
                                         contentAlignment = Alignment.Center,
                                     ) {
                                         Column(
@@ -256,7 +243,7 @@ fun WidgetsSettingsScreen(
                                                         fontSize = 12.sp,
                                                         fontFamily = FontFamily(Font(R.font.roboto_bold)),
                                                         fontWeight = FontWeight(700),
-                                                        color = MaterialTheme.colorScheme.onBackground,
+                                                        color = primaryLight,
                                                         textAlign = TextAlign.End
                                                     )
                                                 )
@@ -274,17 +261,7 @@ fun WidgetsSettingsScreen(
                                                 Icon(
                                                     Icons.Rounded.Add,
                                                     contentDescription = null,
-                                                    modifier = Modifier
-                                                        .size(50.dp)
-                                                        .clickable(
-                                                            onClick = {
-                                                                selectedLocation = listOf(
-                                                                    row,
-                                                                    col
-                                                                ) // 박스 클릭 시 위치 정보 저장
-                                                                openDialog = true
-                                                            }
-                                                        )
+                                                    modifier = Modifier.size(50.dp),
                                                 )
                                             }
                                         }
