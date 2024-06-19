@@ -135,8 +135,7 @@ function App() {
                                                     case 'Traffic': return <Traffic key={`${row}-${col}`} />;
                                                     case 'Message': return <Message key={`${row}-${col}`} userName={userName} />;
                                                     case 'Room': return <DHT key={`${row}-${col}`} />;
-                                                    case 'PersonalColor': return <PersonalColor key={`${row}-${col}`} />;
-                                                    case 'Schedule': return <Schedule key={`${row}-${col}`} username={userName} localdate={localDate} />;
+                                                    case 'Todo': return <Schedule key={`${row}-${col}`} username={userName} localdate={localDate} />;
                                                     default: return null;
                                                 }
                                             })()

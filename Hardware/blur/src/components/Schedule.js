@@ -10,7 +10,7 @@ const Schedule = ({ username, localdate }) => {
     useEffect(() => {
         const fetchSchedule = async () => {
             try {
-                const response = await axios.get('https://jj.system32.kr/daily/view', {
+                const response = await axios.get('https://jj.system32.kr/daily/view_rasp', {
                     params: {
                         username: username,
                         localdate: localdate
