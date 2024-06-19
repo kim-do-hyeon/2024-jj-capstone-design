@@ -182,10 +182,13 @@ function Weather() {
     useEffect(() => {
         const fetchWeather = async () => {
             try {
-                const locationResponse = await axios.get('https://ipapi.co/json/');
-                const { latitude, longitude, city } = locationResponse.data;
-                setLocation({ latitude, longitude });
-                setCity(city);
+                //const locationResponse = await axios.get('https://ipapi.co/json/');
+                //const { latitude, longitude, city } = locationResponse.data;
+                const latitude = 35.8461;
+                const longitude = 127.1295;
+                
+                //setLocation({ latitude, longitude });
+                setCity("Jeonju");
 
                 const API_KEY = 'e4699688bda8af6d121b61b33727cbe4';
                 const response = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
